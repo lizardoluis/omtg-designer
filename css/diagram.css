@@ -1,0 +1,71 @@
+@CHARSET "UTF-8";
+
+div.diagram_container {
+	display: inline-block;
+	position: absolute !important;
+	margin: 5px;
+	padding: 0px;
+	max-width: 300px;
+}
+
+div.diagram_container:active {
+	cursor: move !important;
+}
+
+div.diagram_container:hover {
+	cursor: pointer;
+}
+
+table.diagram {
+	min-height: 70px;
+	background-color: #fff;
+	box-shadow: 3px 3px 10px #888888;
+	max-width: 300px;
+}
+
+table.diagram_selected {
+	border: 2px solid black;
+}
+
+td.diagram_icon {
+	border: 1px solid black;
+	text-align: center;
+	padding: 5px 5px 5px 5px;
+	min-width: 25px !important;
+}
+
+.img_icon {
+ 	width: 100%;
+}
+
+td.diagram_title {
+	text-align: center;
+	padding: 9px 8px 8px 8px;
+	border: 1px solid black;
+	font-weight: bold;
+	min-width: 90px !important;
+}
+
+td.diagram_attribute {
+	text-align: left;
+	padding: 5px 5px 5px 5px;
+	border: 1px solid black;
+	font-weight: normal;
+	width: 100%;
+	height: 23px;
+}
+
+img.diagram_key {
+	width: 13px;
+}
+
+span.close_diagram {
+	display: none;
+	position: absolute;
+	top: -5px;
+	right: -5px;
+}
+
+span.close_diagram:hover {
+	background: #465163;
+}
