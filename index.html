@@ -22,7 +22,7 @@
   <body>
 
 		<!-- Header -->
-		<nav class="navbar navbar-default navbar-static-top">
+		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<a class="navbar-brand" href="#">OMT-G Designer</a>
@@ -38,17 +38,20 @@
 			</div>
 		</nav>
 		
+		
 		<!-- Menu -->
 		<div id="section-sidebar" class="section-sidebar"></div>
 		
 		<!-- Canvas -->
-		<div class="canvas_container">
-			<div id="canvas" class="canvas">Canvas</div>
-		</div>
+		<div class="section-canvas">
+			<div id="canvas" class="canvas"></div>
+		</div>       	
+		
     
     	<!-- Libraries -->
 		<script src="js/libs/underscore/underscore-min.js"></script>
 		<script src="js/libs/jquery/jquery-1.11.2.min.js"></script>
+<!-- 		<script src="js/libs/jquery-ui/jquery-ui.min.js"></script> -->
 		<script src="js/libs/backbone/backbone-min.js"></script>
 		<script src="js/libs/bootstrap/bootstrap.min.js"></script>
 		
@@ -57,6 +60,7 @@
 		<script src="js/models/diagram.js"></script>
 		<script src="js/models/tool.js"></script>
 		<script src="js/models/toolbox.js"></script>
+<!-- 		<script src="js/models/canvas.js"></script> -->
 		
 		<!-- Collections -->
 		<script src="js/collections/attributes.js"></script>
@@ -65,29 +69,37 @@
 		<script src="js/collections/toolboxes.js"></script>
 		
 		<!-- Views -->
-		<script src="js/views/diagrams/conventional-view.js"></script>
-		<script src="js/views/diagrams-view.js"></script>
+		<script src="js/views/diagrams/omtg-view.js"></script>
+<!-- 		<script src="js/views/diagrams-view.js"></script> -->
 		<script src="js/views/tool-view.js"></script>
 		<script src="js/views/tools-view.js"></script>
 		<script src="js/views/toolbox-view.js"></script>
 		<script src="js/views/toolboxes-view.js"></script>
+		<script src="js/views/canvas-view.js"></script>
+		<script src="js/views/app-view.js"></script>
+		
+		<!-- App -->
+		<script src="js/app.js"></script>
 		
 		
 		<!-- Templates -->
-		<script type="text/template" id="conventional-template">
-		<div id='<%= id %>' class='diagram_container'>
-			<span class='badge badge-inverse close_diagram'>x</span>
+		<script type="text/template" id="omtg-diagram-template">
+		<div id='<%= id %>' class='diagram-container'>
+			<span class='badge close-diagram'>x</span>
 			<table class='diagram'>
 				<thead>
 					<tr>
-						<td class='diagram_title'>
+						<td class='diagram-icon'>
+							<img class="img-icon" alt="icone" src="imgs/omtg/<%= type %>.png">
+						</td>
+						<td class='diagram-title'>
 							<%= name %>				
 						</td>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td class='diagram_attribute'>
+						<td class='diagram-attribute' colspan='2'>
 							<table>
 								<tbody>
 									<%= attributes %>

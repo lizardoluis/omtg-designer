@@ -1,4 +1,4 @@
-var ConventionalView = Backbone.View.extend({
+var ConventionalDiagramView = Backbone.View.extend({
 	model : new Diagram(),
 //	tagName : 'div',
 	events : {
@@ -7,7 +7,7 @@ var ConventionalView = Backbone.View.extend({
 		'blur .status' : 'close',
 		'keypress .status' : 'onEnterUpdate'
 	},
-//	el: $('#diagrams-container'),
+	el: $('#canvas'),
 	initialize : function() {
 		this.template = _.template($('#conventional-template').html());
 	},

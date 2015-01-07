@@ -1,12 +1,17 @@
-'use strict';
+var app = app || {};
 
-var Diagram = Backbone.Model.extend({
-	defaults : function() {
-		return {
-			id : this.cid,
-			type : '',
-			name : '',
-			attributes: new Attributes()
+(function() {
+	'use strict';
+
+	app.Diagram = Backbone.Model.extend({
+		defaults : function() {
+			return {
+				id : this.cid,
+				type : '',
+				name : '',
+				attributes : new Attributes()
+			}
 		}
-	}
-});
+	});
+
+})();

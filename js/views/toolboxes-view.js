@@ -1,16 +1,21 @@
-//var tools = relationsTools;
+var app = app || {};
 
-var ToolboxesView = Backbone.View.extend({
-	el: $('#section-sidebar'),
-
-	render: function() {
-	    this.$el.empty();
+(function($) {
+	'use strict';
 	
-	    this.model.each(function( toolbox ){	    	
-	    	var toolboxView = new ToolboxView({model : toolbox});
-	    	this.$el.append(toolboxView.render().el);
-	    }, this);
-	    
-	    
-	}
-});
+	app.ToolboxesView = Backbone.View.extend({
+		el : $('#section-sidebar'),
+
+		render : function() {
+			this.$el.empty();
+
+			this.model.each(function(toolbox) {
+				var toolboxView = new app.ToolboxView({
+					model : toolbox
+				});
+				this.$el.append(toolboxView.render().el);
+			}, this);
+
+		}
+	});
+})(jQuery);
