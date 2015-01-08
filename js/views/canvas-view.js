@@ -2,6 +2,9 @@ var app = app || {};
 
 (function ($) {
 	'use strict';
+	
+	// Canvas View
+	// ----------
 
 	app.CanvasView = Backbone.View.extend({
 
@@ -9,10 +12,10 @@ var app = app || {};
 
 		initialize: function () {
 						
-			this.listenTo(app.diagrams, 'add', this.addDiagram);
+			this.listenTo(app.diagrams, 'add', this.addOMTGDiagram);
 		},
 		
-		addDiagram: function(diagram) {			
+		addOMTGDiagram: function(diagram) {			
 			var diagramView = new app.OMTGDiagramView({model: diagram});
 			this.$el.append(diagramView.render().el);
 		}		

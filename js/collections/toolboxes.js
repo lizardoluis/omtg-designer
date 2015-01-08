@@ -6,32 +6,32 @@ var Toolboxes = Backbone.Collection.extend({
 
 //Diagrams
 var diagramsTools = new Tools([
-     { name : 'polygon', type : 'georeferenced', tooltip: 'Polygon', icon: 'imgs/omtg/polygon.png' },
-     { name : 'line', type : 'georeferenced', tooltip: 'Line', icon: 'imgs/omtg/line.png' },	
-     { name : 'point', type : 'georeferenced', tooltip: 'Point', icon: 'imgs/omtg/point.png' },
-     { name : 'node', type : 'georeferenced', tooltip: 'Node', icon: 'imgs/omtg/node.png' },
-     { name : 'isolines', type : 'georeferenced', tooltip: 'Isolines', icon: 'imgs/omtg/isolines.png' },
-     { name : 'planar-subdivision', type : 'georeferenced', tooltip: 'Planar Subdivision', icon: 'imgs/omtg/planar-subdivision.png' },
-     { name : 'TIN', type : 'georeferenced', tooltip: 'Triangular Irregular Network', icon: 'imgs/omtg/TIN.png' },
-     { name : 'tesselation', type : 'georeferenced', tooltip: 'Tesselation', icon: 'imgs/omtg/tesselation.png' },
-     { name : 'sample', type : 'georeferenced', tooltip: 'Sample', icon: 'imgs/omtg/sample.png' },
-     { name : 'un-line', type : 'georeferenced', tooltip: 'Unidirectional Line', icon: 'imgs/omtg/un-line.png' },
-     { name : 'bi-line', type : 'georeferenced', tooltip: 'Bidirectional Line', icon: 'imgs/omtg/bi-line.png' },
-     { name : 'conventional', type : 'conventional', tooltip: 'Conventional', icon: 'imgs/omtg/conventional.png' }
+     { name : 'polygon', model : 'omtgDiagram', tooltip: 'Polygon', icon: 'imgs/omtg/polygon.png' },
+     { name : 'line', model : 'omtgDiagram', tooltip: 'Line', icon: 'imgs/omtg/line.png' },	
+     { name : 'point', model : 'omtgDiagram', tooltip: 'Point', icon: 'imgs/omtg/point.png' },
+     { name : 'node', model : 'omtgDiagram', tooltip: 'Node', icon: 'imgs/omtg/node.png' },
+     { name : 'isolines', model : 'omtgDiagram', tooltip: 'Isolines', icon: 'imgs/omtg/isolines.png' },
+     { name : 'planar-subdivision', model : 'omtgDiagram', tooltip: 'Planar Subdivision', icon: 'imgs/omtg/planar-subdivision.png' },
+     { name : 'TIN', model : 'omtgDiagram', tooltip: 'Triangular Irregular Network', icon: 'imgs/omtg/TIN.png' },
+     { name : 'tesselation', model : 'omtgDiagram', tooltip: 'Tesselation', icon: 'imgs/omtg/tesselation.png' },
+     { name : 'sample', model : 'omtgDiagram', tooltip: 'Sample', icon: 'imgs/omtg/sample.png' },
+     { name : 'un-line', model : 'omtgDiagram', tooltip: 'Unidirectional Line', icon: 'imgs/omtg/un-line.png' },
+     { name : 'bi-line', model : 'omtgDiagram', tooltip: 'Bidirectional Line', icon: 'imgs/omtg/bi-line.png' },
+     { name : 'conventional', model : 'omtgDiagram', tooltip: 'Conventional', icon: 'imgs/omtg/conventional.png' }
 ]);
 
 // Relations
 var relationsTools = new Tools([
-     { name : 'aggregation', type : 'relation', tooltip: 'Aggregation', icon: 'imgs/relation/aggregation.png' },
-     { name : 'association', type : 'relation', tooltip: 'Association', icon: 'imgs/relation/association.png' },
-     { name : 'cartographic-generalization-overlapping', type : 'relation', tooltip: 'Cartographic Generalization Overlapping', icon: 'imgs/relation/cartographic-generalization-overlapping.png' },
-     { name : 'generalization-disjoint-partial', type : 'relation', tooltip: 'Generalization Disjoint-Partial', icon: 'imgs/relation/generalization-disjoint-partial.png' },
-     { name : 'generalization-disjoint-total', type : 'relation', tooltip: 'Generalization Disjoint-Total', icon: 'imgs/relation/generalization-disjoint-total.png' },
-     { name : 'generalization-overlapping-partial', type : 'relation', tooltip: 'Generalization Overlapping-Partial', icon: 'imgs/relation/generalization-overlapping-partial.png' },
-     { name : 'generalization-overlapping-total', type : 'relation', tooltip: 'Generalization Overlapping-Total', icon: 'imgs/relation/generalization-overlapping-total.png' },
-     { name : 'spatial-aggregation', type : 'relation', tooltip: 'Spatial Aggregation', icon: 'imgs/relation/spatial-aggregation.png' },
-     { name : 'spatial-association', type : 'relation', tooltip: 'Spatial Association', icon: 'imgs/relation/spatial-association.png' },
-     { name : 'arc-network', type : 'relation', tooltip: 'Arc Network', icon: 'imgs/relation/arc-network.png' }
+     { name : 'aggregation', model : 'omtgRelation', tooltip: 'Aggregation', icon: 'imgs/relation/aggregation.png' },
+     { name : 'association', model : 'omtgRelation', tooltip: 'Association', icon: 'imgs/relation/association.png' },
+     { name : 'cartographic-generalization-overlapping', model : 'omtgRelation', tooltip: 'Cartographic Generalization Overlapping', icon: 'imgs/relation/cartographic-generalization-overlapping.png' },
+     { name : 'generalization-disjoint-partial', model : 'omtgRelation', tooltip: 'Generalization Disjoint-Partial', icon: 'imgs/relation/generalization-disjoint-partial.png' },
+     { name : 'generalization-disjoint-total', model : 'omtgRelation', tooltip: 'Generalization Disjoint-Total', icon: 'imgs/relation/generalization-disjoint-total.png' },
+     { name : 'generalization-overlapping-partial', model : 'omtgRelation', tooltip: 'Generalization Overlapping-Partial', icon: 'imgs/relation/generalization-overlapping-partial.png' },
+     { name : 'generalization-overlapping-total', model : 'omtgRelation', tooltip: 'Generalization Overlapping-Total', icon: 'imgs/relation/generalization-overlapping-total.png' },
+     { name : 'spatial-aggregation', model : 'omtgRelation', tooltip: 'Spatial Aggregation', icon: 'imgs/relation/spatial-aggregation.png' },
+     { name : 'spatial-association', model : 'omtgRelation', tooltip: 'Spatial Association', icon: 'imgs/relation/spatial-association.png' },
+     { name : 'arc-network', model : 'omtgRelation', tooltip: 'Arc Network', icon: 'imgs/relation/arc-network.png' }
 ]);
 
 // List of toolboxes

@@ -3,6 +3,9 @@ var app = app || {};
 (function($) {
 	'use strict';
 	
+	// Toolbox View
+	// ----------
+	
 	app.ToolboxView = Backbone.View.extend({
 
 		tagName : 'div',
@@ -10,6 +13,7 @@ var app = app || {};
 		className : 'widget',
 
 		initialize : function() {
+						
 			this.template = _.template($('#toolbox-template').html());
 		},
 

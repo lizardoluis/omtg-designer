@@ -3,7 +3,11 @@ var app = app || {};
 (function($) {
 	'use strict';
 	
+	// Toolboxes View
+	// ----------
+	
 	app.ToolboxesView = Backbone.View.extend({
+		
 		el : $('#section-sidebar'),
 
 		render : function() {

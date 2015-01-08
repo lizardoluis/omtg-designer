@@ -2,14 +2,17 @@ var app = app || {};
 
 (function() {
 	'use strict';
+	
+	// Diagram Model
+	// ----------
 
-	app.Diagram = Backbone.Model.extend({
+	app.OMTGDiagram = Backbone.Model.extend({
 		defaults : function() {
 			return {
 				id : this.cid,
 				type : '',
 				name : '',
-				attributes : new Attributes()
+				attributes : new app.OMTGAttributes()
 			}
 		}
 	});

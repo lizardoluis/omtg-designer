@@ -2,15 +2,18 @@ var app = app || {};
 
 (function($) {
 	'use strict';
+	
+	// Tool View
+	// ----------
 
 	app.ToolView = Backbone.View.extend({
 
-		initialize : function() {
-			this.template = _.template($('#tool-template').html());
-		},
-
 		events : {
 			'click' : 'clicked',
+		},
+		
+		initialize : function() {
+			this.template = _.template($('#tool-template').html());
 		},
 
 		render : function() {
@@ -21,13 +24,12 @@ var app = app || {};
 
 		clicked : function() {
 			
-			var type = this.model.get('type');
-			if (type == 'georeferenced' || type == 'conventional'){
+			if (this.model.get('model') == 'omtgDiagram'){
 				
-				var newDiagram = new app.Diagram();
+				var newDiagram = new app.OMTGDiagram();
 				newDiagram.set('name', 'Class Name');
 				newDiagram.set('type', this.model.get('name'));
-				
+								
 				app.diagrams.add(newDiagram);				
 			}
 		}

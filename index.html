@@ -51,26 +51,24 @@
     	<!-- Libraries -->
 		<script src="js/libs/underscore/underscore-min.js"></script>
 		<script src="js/libs/jquery/jquery-1.11.2.min.js"></script>
-<!-- 		<script src="js/libs/jquery-ui/jquery-ui.min.js"></script> -->
 		<script src="js/libs/backbone/backbone-min.js"></script>
 		<script src="js/libs/bootstrap/bootstrap.min.js"></script>
 		
 		<!-- Models -->
-		<script src="js/models/attribute.js"></script>
-		<script src="js/models/diagram.js"></script>
+		<script src="js/models/omtg/omtgAttribute.js"></script>
+		<script src="js/models/omtg/omtgDiagram.js"></script>
 		<script src="js/models/tool.js"></script>
 		<script src="js/models/toolbox.js"></script>
-<!-- 		<script src="js/models/canvas.js"></script> -->
 		
 		<!-- Collections -->
-		<script src="js/collections/attributes.js"></script>
-		<script src="js/collections/diagrams.js"></script>
+		<script src="js/collections/omtg/omtgAttributes.js"></script>
+		<script src="js/collections/omtg/omtgDiagrams.js"></script>
 		<script src="js/collections/tools.js"></script>
 		<script src="js/collections/toolboxes.js"></script>
 		
 		<!-- Views -->
-		<script src="js/views/diagrams/omtg-view.js"></script>
-<!-- 		<script src="js/views/diagrams-view.js"></script> -->
+		<script src="js/views/omtg/omtgAttribute-view.js"></script>
+		<script src="js/views/omtg/omtgDiagram-view.js"></script>
 		<script src="js/views/tool-view.js"></script>
 		<script src="js/views/tools-view.js"></script>
 		<script src="js/views/toolbox-view.js"></script>
@@ -83,7 +81,7 @@
 		
 		
 		<!-- Templates -->
-		<script type="text/template" id="omtg-diagram-template">
+		<script type="text/template" id="omtg-georeferenced-template">
 		<div id='<%= id %>' class='diagram-container'>
 			<span class='badge close-diagram'>x</span>
 			<table class='diagram'>
@@ -102,7 +100,31 @@
 						<td class='diagram-attribute' colspan='2'>
 							<table>
 								<tbody>
-									<%= attributes %>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		</script>
+		
+		<script type="text/template" id="omtg-conventional-template">
+		<div id='<%= id %>' class='diagram-container'>
+			<span class='badge close-diagram'>x</span>
+			<table class='diagram'>
+				<thead>
+					<tr>
+						<td class='diagram-title'>
+							<%= name %>				
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class='diagram-attribute'>
+							<table>
+								<tbody>
 								</tbody>
 							</table>
 						</td>
