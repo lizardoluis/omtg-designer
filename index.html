@@ -69,6 +69,7 @@
 		<!-- Views -->
 		<script src="js/views/omtg/omtgAttribute-view.js"></script>
 		<script src="js/views/omtg/omtgDiagram-view.js"></script>
+		<script src="js/views/omtg/omtgDiagramEditor-view.js"></script>
 		<script src="js/views/tool-view.js"></script>
 		<script src="js/views/tools-view.js"></script>
 		<script src="js/views/toolbox-view.js"></script>
@@ -81,57 +82,64 @@
 		
 		
 		<!-- Templates -->
+		<script type="text/template" id="omtg-diagram-editor-template">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="inputDiagramName" class="col-sm-2 control-label">Name:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="inputDiagramName" placeholder="<%= name %>">
+				</div>
+			</div>
+		</form>
+		</script>
+
 		<script type="text/template" id="omtg-georeferenced-template">
-		<div id='<%= id %>' class='diagram-container'>
-			<span class='badge close-diagram'>x</span>
-			<table class='diagram'>
-				<thead>
-					<tr>
-						<td class='diagram-icon'>
-							<img class="img-icon" alt="icone" src="imgs/omtg/<%= type %>.png">
-						</td>
-						<td class='diagram-title'>
-							<%= name %>				
-						</td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class='diagram-attribute' colspan='2'>
-							<table>
-								<tbody>
-								</tbody>
-							</table>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+		<span class='badge badge-delete hidden'>x</span>
+		<table class='diagram'>
+			<thead>
+				<tr>
+					<td class='diagram-icon'>
+						<img class="img-icon" alt="icone" src="imgs/omtg/<%= type %>.png">
+					</td>
+					<td class='diagram-title'>
+						<%= name %>				
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class='diagram-attribute' colspan='2'>
+						<table>
+							<tbody>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 		</script>
 		
 		<script type="text/template" id="omtg-conventional-template">
-		<div id='<%= id %>' class='diagram-container'>
-			<span class='badge close-diagram'>x</span>
-			<table class='diagram'>
-				<thead>
-					<tr>
-						<td class='diagram-title'>
-							<%= name %>				
-						</td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class='diagram-attribute'>
-							<table>
-								<tbody>
-								</tbody>
-							</table>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+		<span class='badge badge-delete hidden'>x</span>
+		<table class='diagram'>
+			<thead>
+				<tr>
+					<td class='diagram-title'>
+						<%= name %>				
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class='diagram-attribute'>
+						<table>
+							<tbody>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 		</script>
 		
 		<script type="text/template" id="toolbox-template">

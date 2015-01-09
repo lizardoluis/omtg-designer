@@ -12,8 +12,14 @@ var app = app || {};
 				id : this.cid,
 				type : '',
 				name : '',
-				attributes : new app.OMTGAttributes()
+				attributes : new app.OMTGAttributes(),
+				selected : false
 			}
+		},
+		
+		// Toggle the `selected` state of this diagram.
+		toggleSelected: function () {
+			this.set('selected', !this.get('selected'));
 		}
 	});
 

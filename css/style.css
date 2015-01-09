@@ -82,7 +82,7 @@
  */
 .diagram-container {
 	display: inline-block;
-/* 	position: absolute !important; */
+ 	position: absolute !important;
 	margin: 5px;
 	padding: 0px;
 	max-width: 300px;
@@ -103,8 +103,8 @@
 	max-width: 200px;
 }
 
-.diagram-container .diagram-selected {
-	border: 2px solid black;
+.diagram-container .selected {
+	border: 3px solid black;
 }
 
 .diagram-container .diagram-icon {
@@ -140,13 +140,13 @@
 	width: 13px;
 }
 
-.diagram-container .close-diagram {
-	display: none;
+.diagram-container .badge-delete {
 	position: absolute;
-	top: -5px;
-	right: -5px;
+	top: -8px;
+	right: -8px;
+	background: #333;
 }
 
-.diagram-container .close-diagram:hover {
+.diagram-container .badge-delete:hover {
 	background: #465163;
 }
