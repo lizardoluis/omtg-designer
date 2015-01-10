@@ -82,7 +82,7 @@
  */
 .diagram-container {
 	display: inline-block;
- 	position: absolute !important;
+	position: absolute !important;
 	margin: 5px;
 	padding: 0px;
 	max-width: 300px;
@@ -149,4 +149,22 @@
 
 .diagram-container .badge-delete:hover {
 	background: #465163;
+}
+
+/*
+ * OMT-G Diagram Modal
+ */
+.modal-dialog .drop-icon {
+	width: 18px;
+}
+
+.modal-dialog #inputDiagramType {
+	width: 244px;
+	text-align: left;
+}
+
+.modal-dialog .dropdown-menu {
+	max-height: 140px;
+	overflow: hidden;
+	overflow-y: auto;
 }

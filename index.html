@@ -8,7 +8,7 @@
 	    <title>OMT-G Designer V2</title>
 	
 	    <!-- Bootstrap -->
-	    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
+	    <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- 	    <link href="css/designer.css" rel="stylesheet"> -->
 	    <link href="css/style.css" rel="stylesheet">
 	
@@ -52,7 +52,7 @@
 		<script src="js/libs/underscore/underscore-min.js"></script>
 		<script src="js/libs/jquery/jquery-1.11.2.min.js"></script>
 		<script src="js/libs/backbone/backbone-min.js"></script>
-		<script src="js/libs/bootstrap/bootstrap.min.js"></script>
+		<script src="libs/bootstrap/js/bootstrap.min.js"></script>
 		
 		<!-- Models -->
 		<script src="js/models/omtg/omtgAttribute.js"></script>
@@ -83,23 +83,72 @@
 		
 		<!-- Templates -->
 		<script type="text/template" id="omtg-diagram-editor-template">
-		<form class="form-horizontal">
-			<div class="form-group">
-				<label for="inputDiagramName" class="col-sm-2 control-label">Name:</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" id="inputDiagramName" placeholder="<%= name %>">
-				</div>
-			</div>
-		</form>
+		<div class="modal-dialog">
+    		<div class="modal-content">
+
+      			<div class="modal-header">
+        			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+					<h4 class="modal-title">Diagram Editor</h4>
+      			</div>
+
+      			<div class="modal-body">
+        			<form class="form-horizontal">
+						<fieldset>
+
+							<!-- Diagram type -->
+							<div class="form-group">
+								<label for="inputDiagramType" class="col-sm-4 control-label">Type:</label>
+								<div class="col-sm-6">
+									<div class="btn-group">
+  										<button id="inputDiagramType" type="button" class="btn btn-default"><img class="drop-icon" alt="<%= diagramsTools.getTooltip(type) %>" src=" imgs/omtg/<%= type %>.png"> <%= diagramsTools.getTooltip(type) %></a></button>
+ 										<button id="inputDiagramTypeToggle" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+ 				  							<span class="caret"></span>
+    										<span class="sr-only">Toggle Dropdown</span>
+  										</button>
+  										<ul id="ulDiagramType" class="dropdown-menu" role="menu">
+											<li><a href="#" data-type-name="polygon"><img class="drop-icon" alt="Polygon" src=" imgs/omtg/polygon.png"> Polygon</a></li>
+											<li><a href="#" data-type-name="line"><img class="drop-icon" alt="Line" src=" imgs/omtg/line.png"> Line</a></li>
+											<li><a href="#" data-type-name="point"><img class="drop-icon" alt="Point" src=" imgs/omtg/point.png"> Point</a></li>
+											<li><a href="#" data-type-name="node"><img class="drop-icon" alt="Node" src=" imgs/omtg/node.png"> Node</a></li>
+											<li><a href="#" data-type-name="isolines"><img class="drop-icon" alt="Isoline" src=" imgs/omtg/isolines.png"> Isoline</a></li>
+											<li><a href="#" data-type-name="planar-subdivision"><img class="drop-icon" alt="Planar Subdivision" src=" imgs/omtg/planar-subdivision.png"> Planar Subdivision</a></li>            
+											<li><a href="#" data-type-name="TIN"><img class="drop-icon" alt="Triangular Irregular Network" src=" imgs/omtg/TIN.png"> Triangular Irregular Network</a></li>
+											<li><a href="#" data-type-name="tesselation"><img class="drop-icon" alt="Tesselation" src=" imgs/omtg/tesselation.png"> Tesselation</a></li>
+											<li><a href="#" data-type-name="sample"><img class="drop-icon" alt="Sampling" src=" imgs/omtg/sample.png"> Sampling</a></li>
+											<li><a href="#" data-type-name="un-line"><img class="drop-icon" alt="Unidirectional Line" src=" imgs/omtg/un-line.png"> Unidirectional Line</a></li>
+											<li><a href="#" data-type-name="bi-line"><img class="drop-icon" alt="Bidirectional Line" src=" imgs/omtg/bi-line.png"> Bidirectional Line</a></li>
+											<li><a href="#" data-type-name="conventional"><img class="drop-icon" alt="Conventional" src=" imgs/omtg/conventional.png"> Conventional</a></li>																						
+  										</ul>
+									</div>
+								</div>
+							</div>
+
+							<!-- Diagram name -->
+							<div class="form-group">
+								<label for="inputDiagramName" class="col-sm-4 control-label">Name:</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="inputDiagramName" placeholder="<%= name %>" maxlength="50">
+								</div>
+							</div>						
+						</fieldset>
+					</form>
+      			</div><!-- /.modal-body -->
+
+      			<div class="modal-footer">
+        			<button id="btnUpdate" type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+      			</div>
+
+    		</div><!-- /.modal-content -->
+  		</div><!-- /.modal-dialog -->
 		</script>
 
 		<script type="text/template" id="omtg-georeferenced-template">
-		<span class='badge badge-delete hidden'>x</span>
+		<span class='badge badge-delete hidden'><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>
 		<table class='diagram'>
 			<thead>
 				<tr>
 					<td class='diagram-icon'>
-						<img class="img-icon" alt="icone" src="imgs/omtg/<%= type %>.png">
+						<img class="img-icon" alt="<%= name %>" src="imgs/omtg/<%= type %>.png">
 					</td>
 					<td class='diagram-title'>
 						<%= name %>				
@@ -120,7 +169,7 @@
 		</script>
 		
 		<script type="text/template" id="omtg-conventional-template">
-		<span class='badge badge-delete hidden'>x</span>
+		<span class='badge badge-delete hidden'><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>
 		<table class='diagram'>
 			<thead>
 				<tr>

@@ -81,8 +81,7 @@ var app = app || {};
 		},
 		
 		edit : function() {
-			console.log("edit");
-			new app.OMTGDiagramEditorView({model : this.model, diagram: this.$el});
+			var modal = new app.OMTGDiagramEditorView({model : this.model});
 		},
 		
 		delete : function() {
