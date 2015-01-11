@@ -20,7 +20,7 @@ var app = app || {};
 		// Toggle the `selected` state of this diagram.
 		toggleSelected: function () {
 			this.set('selected', !this.get('selected'));
-		}
+		},
 	});
-
+	
 })();

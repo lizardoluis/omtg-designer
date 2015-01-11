@@ -7,9 +7,5 @@ var Tools = Backbone.Collection.extend({
 	getTooltip: function (name) {
 		return this.findWhere({name: name}).get('tooltip');
 	},
-	
-	getName: function(tooltip) {
-		return this.findWwhere({tooltip: tooltip}).get('name');
-	}
 });
 

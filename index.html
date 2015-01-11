@@ -91,7 +91,7 @@
 					<h4 class="modal-title">Diagram Editor</h4>
       			</div>
 
-      			<div class="modal-body">
+      			<div class="modal-body modal-body-scroll">
         			<form class="form-horizontal">
 						<fieldset>
 
@@ -129,7 +129,27 @@
 								<div class="col-sm-6">
 									<input type="text" class="form-control" id="inputDiagramName" placeholder="<%= name %>" maxlength="50">
 								</div>
-							</div>						
+							</div>
+
+							<!-- Separator -->
+							<hr>
+
+							<table id="attrTable" class="table table-hover table-condensed">
+<thead>
+	<th class="col-md-0">Key</th>
+	<th class="col-md-4">Name</th>
+	<th class="col-md-1">Type</th>
+	<th class="col-md-0">Null</th>
+	<th class="col-md-4">Default Value</th>									
+	<th class="col-md-2"></th>
+</thead>
+<tbody>		
+	<tr>
+		<td colspan="6"><button id="btnAddRow" type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button></td>
+	</tr>
+</tbody>	
+</table>
+					
 						</fieldset>
 					</form>
       			</div><!-- /.modal-body -->
@@ -140,6 +160,34 @@
 
     		</div><!-- /.modal-content -->
   		</div><!-- /.modal-dialog -->
+		</script>
+		
+		<script type="text/template" id="omtg-attribute-row-editor-template">
+		<tr>										
+			<td><input class="toggleKey" type="checkbox" <% if( isKey ){ %> checked <% } %> ></td>
+			<td class="name-editable" contenteditable="true"><%= name %></td>
+			<td>
+			<div class="dropdown">
+				<button class="btn btn-default btn-xs dropdown-toggle btnAttributeType" type="button" data-toggle="dropdown" aria-expanded="true"><%= type %> <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu ulAttributeType" role="menu" aria-labelledby="dropdownMenu1">
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Date </a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Number </a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Varchar </a></li>
+				</ul>
+				</div>
+			</td>		
+			<td><input class="toggleNotNull" type="checkbox" <% if(isNotNull){ %> checked <% } %> ></td>		
+			<td class="value-editable" contenteditable="true"><%= defaultValue %></td>
+			<td>							
+
+				<div class="btn-group btn-group-xs" role="group" aria-label="...">
+					<button type="button" class="btn btn-link btnRowUp"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></button>
+					<button type="button" class="btn btn-link btnRowDown"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button>
+					<button type="button" class="btn btn-link btnRowDelete"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+				</div>
+			</td>
+		</tr>
 		</script>
 
 		<script type="text/template" id="omtg-georeferenced-template">

@@ -159,12 +159,22 @@
 }
 
 .modal-dialog #inputDiagramType {
-	width: 244px;
+	width: 236px;
 	text-align: left;
+}
+
+.modal-dialog .modal-body-scroll {
+	max-height: 400px;
+	overflow-y: scroll;
 }
 
 .modal-dialog .dropdown-menu {
 	max-height: 140px;
 	overflow: hidden;
 	overflow-y: auto;
+	width: 100%;
+}
+
+.modal-dialog .btnAttributeType {
+	width: 100%;
 }

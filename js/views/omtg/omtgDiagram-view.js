@@ -42,6 +42,16 @@ var app = app || {};
 			// Listeners
 			this.listenTo(this.model, 'change', this.render);
 			this.listenTo(this.model, 'destroy', this.remove);
+//			
+//			var attrs = new app.OMTGAttributes();
+//			attrs.add(new app.OMTGAttribute({isKey : true, name : 'id', type : 'Number'}));
+//			attrs.add(new app.OMTGAttribute({name : 'nome', type : 'Varchar', isNotNull : true, defaultValue : "Cruzeiro"}));
+//			attrs.add(new app.OMTGAttribute({name : 'cidade parapeito', type : 'Varchar'}));
+//			attrs.add(new app.OMTGAttribute({isKey : true, name : 'id', type : 'Number'}));
+//			attrs.add(new app.OMTGAttribute({name : 'nome', type : 'Varchar', isNotNull : true, defaultValue : "Cruzeiro"}));
+//			attrs.add(new app.OMTGAttribute({name : 'cidade parapeito', type : 'Varchar'}));
+//			
+//			this.model.set('attributes', attrs);
 		},
 
 		render : function() {

@@ -10,7 +10,7 @@ var app = app || {};
 		defaults : function() {
 			return {
 				name : '',
-				type : '',
+				type : 'Varchar',
 				defaultValue : '',
 				isKey : false,
 				length : '',
