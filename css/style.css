@@ -178,3 +178,7 @@
 .modal-dialog .btnAttributeType {
 	width: 100%;
 }
+
+.modal-dialog .btnRowDelete {
+	color: black;
+}

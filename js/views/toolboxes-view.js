@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function($) {
 	'use strict';
 	
@@ -7,8 +5,10 @@ var app = app || {};
 	// ----------
 	
 	app.ToolboxesView = Backbone.View.extend({
-		
-		el : $('#section-sidebar'),
+				
+		initialize : function() {
+			this.render();
+		},
 
 		render : function() {
 			this.$el.empty();

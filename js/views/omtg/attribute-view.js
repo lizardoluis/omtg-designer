@@ -1,12 +1,10 @@
-var app = app || {};
-
 (function($) {
 	'use strict';
 
 	// OMTGDiagram View
 	// ----------
 
-	app.OMTGAttributeView = Backbone.View.extend({
+	app.omtg.AttributeView = Backbone.View.extend({
 
 		tagName : 'tr',
 
@@ -16,7 +14,7 @@ var app = app || {};
 
 		render : function() {
 			// TODO: include other attr fields
-			var attrText = this.model.get('name');
+			var attrText = this.model.escape('name');
 			this.$el.html(this.template({attr : attrText}));
 			return this;
 		},

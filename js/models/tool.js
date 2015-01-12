@@ -1,12 +1,18 @@
-'use strict';
+(function() {
+	'use strict';
 
-var Tool = Backbone.Model.extend({
-	defaults : function() {
-		return {
-			name : '',
-			type : '',
-			tooltip: '',
-			icon: ''
+	// Tool Model
+	// ----------
+
+	app.Tool = Backbone.Model.extend({
+		defaults : function() {
+			return {
+				name : '',
+				type : '',
+				tooltip: '',
+				icon: ''
+			}
 		}
-	}
-});
+	});
+
+})();

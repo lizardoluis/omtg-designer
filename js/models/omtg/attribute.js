@@ -1,12 +1,10 @@
-var app = app || {};
-
 (function() {
 	'use strict';
 
 	// OMTGAttribute Model
 	// ----------
 
-	app.OMTGAttribute = Backbone.Model.extend({
+	app.omtg.Attribute = Backbone.Model.extend({
 		defaults : function() {
 			return {
 				name : '',

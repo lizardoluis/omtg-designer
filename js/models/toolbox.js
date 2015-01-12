@@ -1,10 +1,16 @@
-'use strict';
+(function() {
+	'use strict';
 
-var Toolbox = Backbone.Model.extend({
-	defaults : function() {
-		return {
-			name : '',
-			tools : null
+	// Toolbox Model
+	// ----------
+
+	app.Toolbox = Backbone.Model.extend({
+		defaults : function() {
+			return {
+				name : '',
+				tools : null
+			}
 		}
-	}
-});
+	});
+
+})();

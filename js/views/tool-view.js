@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function($) {
 	'use strict';
 	
@@ -26,7 +24,7 @@ var app = app || {};
 			
 			if (this.model.get('model') == 'omtgDiagram'){
 				
-				var newDiagram = new app.OMTGDiagram();
+				var newDiagram = new app.omtg.Diagram();
 				newDiagram.set('name', 'Class Name');
 				newDiagram.set('type', this.model.get('name'));
 								

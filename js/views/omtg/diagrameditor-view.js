@@ -1,12 +1,10 @@
-var app = app || {};
-
 (function($) {
 	'use strict';
 
-	// OMTGDiagram View
+	// OMTG Diagram Editor View
 	// ----------
 
-	app.OMTGDiagramEditorView = Backbone.View.extend({
+	app.omtg.DiagramEditorView = Backbone.View.extend({
 
 		id : 'diagram-editor',
 
@@ -38,7 +36,7 @@ var app = app || {};
 			this.template = _.template($('#omtg-diagram-editor-template').html());
 			
 			// Copy of attributes
-			this.attributes = this.model.get('attributes');
+			this.attrsClone = this.model.get('attributes').clone();
 
 			this.render();
 		},
@@ -54,8 +52,8 @@ var app = app || {};
 			});
 
 			// Render table rows
-			this.attributes.each(function(attribute) {
-				this.addAttribute(attribute);
+			this.attrsClone.each(function(attr) {
+				this.addAttribute(attr);
 			}, this);
 
 			return this;
@@ -77,7 +75,7 @@ var app = app || {};
 		},
 
 		updateDiagram : function() {
-
+			
 			// Diagram type
 			var type = this.$('#inputDiagramType').data('type-name');
 			if (type) {
@@ -91,16 +89,16 @@ var app = app || {};
 			}
 			
 			// Diagram attributes
-			this.model.set({'attributes': this.attributes});
+			this.model.set({'attributes': this.attrsClone});
 			this.model.trigger('change', this.model);
 
 			this.teardown();
 		},
 
 		newAttribute : function() {
-			var attr = new app.OMTGAttribute();
+			var attr = new app.omtg.Attribute();
 			this.addAttribute(attr);
-			this.attributes.add(attr);
+			this.attrsClone.add(attr);
 		},
 
 		addAttribute : function(attribute) {
@@ -111,7 +109,7 @@ var app = app || {};
 
 		deleteAttribute : function(event) {	
 			var $row = this.$(event.currentTarget).closest('tr');
-			this.attributes.remove(this.attributes.at($row.index()));
+			this.attrsClone.remove(this.attrsClone.at($row.index()));
 			$row.remove();
 		},
 		
@@ -120,9 +118,9 @@ var app = app || {};
 
 			if ($row.index() > 0) {
 
-				var att = this.attributes.at($row.index());
-				this.attributes.remove(att);
-				this.attributes.add(att, {at : $row.index() - 1});
+				var att = this.attrsClone.at($row.index());
+				this.attrsClone.remove(att);
+				this.attrsClone.add(att, {at : $row.index() - 1});
 
 				$row.insertBefore($row.prev());
 			}
@@ -131,11 +129,11 @@ var app = app || {};
 		moveAttributeDown : function(event) {
 			var $row = this.$(event.currentTarget).closest('tr');
 			
-			if($row.index() < this.attributes.length - 1){
+			if($row.index() < this.attrsClone.length - 1){
 				
-				var att = this.attributes.at($row.index()+1);
-				this.attributes.remove(att);
-				this.attributes.add(att, {at : $row.index()});
+				var att = this.attrsClone.at($row.index()+1);
+				this.attrsClone.remove(att);
+				this.attrsClone.add(att, {at : $row.index()});
 				
 				$row.insertAfter($row.next());
 			}
@@ -143,22 +141,22 @@ var app = app || {};
 		
 		editName : function(event, ha) {
 			var index = this.$(event.currentTarget).closest('tr').index();
-			this.attributes.at(index).set('name', this.$(event.currentTarget).text());
+			this.attrsClone.at(index).set('name', this.$(event.currentTarget).text());
 		},
 		
 		editValue : function(event) {
 			var index = this.$(event.currentTarget).closest('tr').index();
-			this.attributes.at(index).set('defaultValue', this.$(event.currentTarget).text());
+			this.attrsClone.at(index).set('defaultValue', this.$(event.currentTarget).text());
 		},
 		
 		toggleKey : function(event) {
 			var index = this.$(event.currentTarget).closest('tr').index();
-			this.attributes.at(index).set('isKey', this.$(event.currentTarget).prop('checked') );
+			this.attrsClone.at(index).set('isKey', this.$(event.currentTarget).prop('checked') );
 		},
 		
 		toggleNotNull : function(event) {
 			var index = this.$(event.currentTarget).closest('tr').index();
-			this.attributes.at(index).set('isNotNull', this.$(event.currentTarget).prop('checked') );
+			this.attrsClone.at(index).set('isNotNull', this.$(event.currentTarget).prop('checked') );
 		},
 		
 		selectAttributeType : function(event) {
@@ -167,7 +165,7 @@ var app = app || {};
 			var selected = this.$(event.currentTarget).text();
 			this.$(event.currentTarget).parent().parent().siblings('button.btnAttributeType:first').html(selected + ' <span class="caret"></span>');
 			
-			this.attributes.at(index).set('type', selected );
+			this.attrsClone.at(index).set('type', selected );
 		},
 	});
 

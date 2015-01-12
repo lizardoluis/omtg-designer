@@ -1,5 +1,3 @@
-var app = app || {};
-
 (function ($) {
 	'use strict';
 	
@@ -8,15 +6,13 @@ var app = app || {};
 
 	app.CanvasView = Backbone.View.extend({
 
-		el: '#canvas',
-
 		initialize: function () {
 						
-			this.listenTo(app.diagrams, 'add', this.addOMTGDiagram);
+			this.listenTo(this.model, 'add', this.addOMTGDiagram);
 		},
 		
 		addOMTGDiagram: function(diagram) {			
-			var diagramView = new app.OMTGDiagramView({model: diagram});
+			var diagramView = new app.omtg.DiagramView({model: diagram});
 			this.$el.append(diagramView.render().el);
 		}		
 	});

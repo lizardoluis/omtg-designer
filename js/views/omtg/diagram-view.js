@@ -1,12 +1,10 @@
-var app = app || {};
-
 (function($) {
 	'use strict';
 
-	// OMTGDiagram View
+	// OMTG Diagram View
 	// ----------
 	
-	app.OMTGDiagramView = Backbone.View.extend({
+	app.omtg.DiagramView = Backbone.View.extend({
 
 		tagName : 'div',
 
@@ -19,8 +17,8 @@ var app = app || {};
 			
 			// Toggle the selection of the diagram
 			'click' : _.debounce(function(e) {
-		            if (this.doucleckicked) {
-		                this.doucleckicked = false;
+		            if (this.doucleclicked) {
+		                this.doucleclicked = false;
 		            } else {
 		                this.toggleSelected.call(this, e);
 		            }
@@ -28,7 +26,7 @@ var app = app || {};
 		      
 		    // Open diagram editor popover
 		    'dblclick' : function(e) {
-		            this.doucleckicked = true;
+		            this.doucleclicked = true;
 		            this.edit.call(this, e);
 		        }
 		},
@@ -42,16 +40,16 @@ var app = app || {};
 			// Listeners
 			this.listenTo(this.model, 'change', this.render);
 			this.listenTo(this.model, 'destroy', this.remove);
-//			
-//			var attrs = new app.OMTGAttributes();
-//			attrs.add(new app.OMTGAttribute({isKey : true, name : 'id', type : 'Number'}));
-//			attrs.add(new app.OMTGAttribute({name : 'nome', type : 'Varchar', isNotNull : true, defaultValue : "Cruzeiro"}));
-//			attrs.add(new app.OMTGAttribute({name : 'cidade parapeito', type : 'Varchar'}));
-//			attrs.add(new app.OMTGAttribute({isKey : true, name : 'id', type : 'Number'}));
-//			attrs.add(new app.OMTGAttribute({name : 'nome', type : 'Varchar', isNotNull : true, defaultValue : "Cruzeiro"}));
-//			attrs.add(new app.OMTGAttribute({name : 'cidade parapeito', type : 'Varchar'}));
-//			
-//			this.model.set('attributes', attrs);
+			
+			var attrs = new app.omtg.Attributes();
+			attrs.add(new app.omtg.Attribute({isKey : true, name : 'id', type : 'Number'}));
+			attrs.add(new app.omtg.Attribute({name : 'nome', type : 'Varchar', isNotNull : true, defaultValue : "Cruzeiro"}));
+			attrs.add(new app.omtg.Attribute({name : 'cidade parapeito', type : 'Varchar'}));
+			attrs.add(new app.omtg.Attribute({isKey : true, name : 'id', type : 'Number'}));
+			attrs.add(new app.omtg.Attribute({name : 'nome', type : 'Varchar', isNotNull : true, defaultValue : "Cruzeiro"}));
+			attrs.add(new app.omtg.Attribute({name : 'cidade parapeito', type : 'Varchar'}));
+			
+			this.model.set('attributes', attrs);
 		},
 
 		render : function() {
@@ -72,7 +70,7 @@ var app = app || {};
 			// Render attributes
 			var attributes = this.model.get('attributes');						
 			attributes.each(function(attribute) {				
-				var attributeView = new app.OMTGAttributeView({model : attribute});
+				var attributeView = new app.omtg.AttributeView({model : attribute});
 				this.$('.diagram-attribute > table > tbody').append(attributeView.render().el);
 			}, this);
 			
@@ -91,7 +89,7 @@ var app = app || {};
 		},
 		
 		edit : function() {
-			var modal = new app.OMTGDiagramEditorView({model : this.model});
+			var modal = new app.omtg.DiagramEditorView({model : this.model});
 		},
 		
 		delete : function() {
