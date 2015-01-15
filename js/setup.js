@@ -3,7 +3,7 @@
 $(function () {
 	'use strict';
 	
-	//Diagrams
+	// Diagrams
 	app.diagramsTools = new app.Tools([
 	     { name : 'polygon', model : 'omtgDiagram', tooltip: 'Polygon', icon: 'imgs/omtg/polygon.png' },
 	     { name : 'line', model : 'omtgDiagram', tooltip: 'Line', icon: 'imgs/omtg/line.png' },	
@@ -19,6 +19,7 @@ $(function () {
 	     { name : 'conventional', model : 'omtgDiagram', tooltip: 'Conventional', icon: 'imgs/omtg/conventional.png' }
 	]);
 
+	
 	// Relations
 	app.relationsTools = new app.Tools([
 	     { name : 'aggregation', model : 'omtgRelation', tooltip: 'Aggregation', icon: 'imgs/relation/aggregation.png' },
@@ -33,16 +34,40 @@ $(function () {
 	     { name : 'arc-network', model : 'omtgRelation', tooltip: 'Arc Network', icon: 'imgs/relation/arc-network.png' }
 	]);
 
+	
 	// List of toolboxes
 	app.toolboxes = new app.Toolboxes([
 	     {name: "Diagrams", tools : app.diagramsTools},
 	     {name: "Relations", tools : app.relationsTools}
 	]);	
 
-	// Global list of diagrams
-	app.diagrams = new app.omtg.Diagrams();	
+	
+	// Plumbing setup
+	app.plumb = jsPlumb.getInstance({
+		Anchor : "Continuous",
+		ConnectionsDetachable : false,
+		Connector : "Flowchart",
+		Container : "canvas",
+		Endpoint : "Blank",
+	});
+	
+	app.plumbing = {			
+			
+			dragOptions : {
+				  containment : '#canvas',
+				  scroll : true,
+			},
+			
+			targetOptions : {
+				anchor: 'Continuous',
+				endpoint:"Blank",
+			},
+	};
+	
+	// Canvas Model
+	app.canvas = new app.Canvas();
 	
 	// Initialize Backbone views.
-	new app.ToolboxesView({el: $('#section-sidebar'), model: app.toolboxes});
-	new app.CanvasView({el: '#canvas', model: app.diagrams});
+	app.toolboxesView = new app.ToolboxesView({el: $('#section-sidebar'), model: app.toolboxes});
+	app.canvasView = new app.CanvasView({el: '#canvas', model: app.canvas});
 });

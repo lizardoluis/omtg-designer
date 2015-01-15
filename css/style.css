@@ -66,9 +66,10 @@
 	left: 251px;
 }
 
-.section-canvas .canvas {
+.section-canvas #canvas {
 	height: 4000px;
 	width: 2000px;
+	position: relative;
 	padding: 5px 5px 5px 5px;
 	background-image: linear-gradient(rgba(200, 200, 200, .2) 1px,
 		transparent 1px), linear-gradient(90deg, rgba(200, 200, 200, .2) 1px,

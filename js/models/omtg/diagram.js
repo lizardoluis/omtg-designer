@@ -11,7 +11,9 @@
 				type : '',
 				name : '',
 				attributes : new app.omtg.Attributes(),
-				selected : false
+				selected : false,
+				top : 10,
+				left : 10,
 			}
 		},
 		

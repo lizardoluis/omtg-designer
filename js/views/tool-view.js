@@ -1,6 +1,6 @@
 (function($) {
 	'use strict';
-	
+
 	// Tool View
 	// ----------
 
@@ -9,28 +9,37 @@
 		events : {
 			'click' : 'clicked',
 		},
-		
+
 		initialize : function() {
 			this.template = _.template($('#tool-template').html());
+
+			// Listener
+			this.listenTo(this.model, 'change:active', this.toggle);
 		},
 
 		render : function() {
 			var html = this.template(this.model.toJSON());
 			this.setElement(html);
+
 			return this;
 		},
 
 		clicked : function() {
+			this.model.toggleActive();
+		},
+
+		toggle : function() {
 			
-			if (this.model.get('model') == 'omtgDiagram'){
+			if (this.model.get('active')) {
+				this.$el.addClass('active');
+				app.canvas.set('activeTool', this.model);				
 				
-				var newDiagram = new app.omtg.Diagram();
-				newDiagram.set('name', 'Class Name');
-				newDiagram.set('type', this.model.get('name'));
-								
-				app.diagrams.add(newDiagram);				
+			} else {
+				this.$el.removeClass('active');
+				app.canvas.set('activeTool', null);
 			}
-		}
+		},
+
 	});
-	
+
 })(jQuery);

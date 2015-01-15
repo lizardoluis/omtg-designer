@@ -20,7 +20,7 @@
 		            if (this.doucleclicked) {
 		                this.doucleclicked = false;
 		            } else {
-		                this.toggleSelected.call(this, e);
+		            	this.model.toggleSelected();
 		            }
 		        }, 200),
 		      
@@ -28,7 +28,9 @@
 		    'dblclick' : function(e) {
 		            this.doucleclicked = true;
 		            this.edit.call(this, e);
-		        }
+		        },
+		        
+		    'mouseup' : 'updatePosition',
 		},
 
 		initialize : function() {
@@ -40,16 +42,6 @@
 			// Listeners
 			this.listenTo(this.model, 'change', this.render);
 			this.listenTo(this.model, 'destroy', this.remove);
-			
-			var attrs = new app.omtg.Attributes();
-			attrs.add(new app.omtg.Attribute({isKey : true, name : 'id', type : 'Number'}));
-			attrs.add(new app.omtg.Attribute({name : 'nome', type : 'Varchar', isNotNull : true, defaultValue : "Cruzeiro"}));
-			attrs.add(new app.omtg.Attribute({name : 'cidade parapeito', type : 'Varchar'}));
-			attrs.add(new app.omtg.Attribute({isKey : true, name : 'id', type : 'Number'}));
-			attrs.add(new app.omtg.Attribute({name : 'nome', type : 'Varchar', isNotNull : true, defaultValue : "Cruzeiro"}));
-			attrs.add(new app.omtg.Attribute({name : 'cidade parapeito', type : 'Varchar'}));
-			
-			this.model.set('attributes', attrs);
 		},
 
 		render : function() {
@@ -62,8 +54,16 @@
 			}
 			
 			
-			// Render class id, name and type
+			// Render class id
 			this.el.id = this.model.get('id');
+			
+			// Set position
+			this.$el.css({        
+				'top': this.model.get('top'),
+				'left': this.model.get('left'),
+			});			
+			
+			// Render name and type
 			this.$el.html(this.template(this.model.toJSON()));
 			
 			
@@ -80,12 +80,11 @@
 				this.$('.diagram').addClass('selected');
 				this.$('.badge-delete').removeClass('hidden');
 			}
+						
+			// Plumbing
+			app.plumb.draggable(this.el, app.plumbing.dragOptions);
 
 			return this;
-		},
-		
-		toggleSelected : function() {
-			this.model.toggleSelected();
 		},
 		
 		edit : function() {
@@ -95,6 +94,13 @@
 		delete : function() {
 			this.model.trigger('destroy', this.model);
 		},
+		
+		updatePosition : function(event) {
+			this.model.set({
+				'left': this.$el.position().left, 
+				'top' : this.$el.position().top,
+			});
+		}
 
 	});
 

@@ -10,9 +10,15 @@
 				name : '',
 				type : '',
 				tooltip: '',
-				icon: ''
+				icon: '',
+				active: false,
 			}
-		}
+		},
+		
+		// Toggle the `selected` state of this tool
+		toggleActive: function () {
+			this.set('active', !this.get('active'));
+		},
 	});
 
 })();
