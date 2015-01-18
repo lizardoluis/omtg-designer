@@ -71,19 +71,20 @@
 			var attributes = this.model.get('attributes');						
 			attributes.each(function(attribute) {				
 				var attributeView = new app.omtg.AttributeView({model : attribute});
-				this.$('.diagram-attribute > table > tbody').append(attributeView.render().el);
+				this.$('.d-body > table > tbody').append(attributeView.render().el);
 			}, this);
 			
 			
 			// Render the `selected` state
 			if(this.model.get('selected')){
-				this.$('.diagram').addClass('selected');
+				this.$el.addClass('selected');
 				this.$('.badge-delete').removeClass('hidden');
 			}
+			else{
+				this.$el.removeClass('selected');
+			}
 						
-			// Plumbing
-			app.plumb.draggable(this.el, app.plumbing.dragOptions);
-
+			
 			return this;
 		},
 		

@@ -41,29 +41,6 @@ $(function () {
 	     {name: "Relations", tools : app.relationsTools}
 	]);	
 
-	
-	// Plumbing setup
-	app.plumb = jsPlumb.getInstance({
-		Anchor : "Continuous",
-		ConnectionsDetachable : false,
-		Connector : "Flowchart",
-		Container : "canvas",
-		Endpoint : "Blank",
-	});
-	
-	app.plumbing = {			
-			
-			dragOptions : {
-				  containment : '#canvas',
-				  scroll : true,
-			},
-			
-			targetOptions : {
-				anchor: 'Continuous',
-				endpoint:"Blank",
-			},
-	};
-	
 	// Canvas Model
 	app.canvas = new app.Canvas();
 	

@@ -54,8 +54,8 @@
 		<script src="js/libs/jquery/jquery-ui.min.js"></script>
 		<script src="js/libs/backbone/backbone-min.js"></script>
 		<script src="libs/bootstrap/js/bootstrap.min.js"></script>
-		<script src="js/libs/jsplumb/jquery.jsPlumb-1.7.2-min.js"></script>
-
+<!-- 		<script src="js/libs/jsplumb/jquery.jsPlumb-1.7.2-min.js"></script> -->
+		<script src="js/libs/jsplumb/jquery.jsPlumb-1.7.2.js"></script>
 		
 		<!-- Namespace -->
 		<script src="js/app.js"></script>
@@ -84,6 +84,7 @@
 		<script src="js/views/canvas-view.js"></script>
 		
 		<!-- Setup -->
+		<script src="js/plumb.js"></script>
 		<script src="js/setup.js"></script>
 		
 		
@@ -196,53 +197,38 @@
 		</tr>
 		</script>
 
+
 		<script type="text/template" id="omtg-georeferenced-template">
 		<span class='badge badge-delete hidden'><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>
-		<table class='diagram'>
-			<thead>
-				<tr>
-					<td class='diagram-icon'>
-						<img class="img-icon" alt="<%= name %>" src="imgs/omtg/<%= type %>.png">
-					</td>
-					<td class='diagram-title'>
-						<%- name %>				
-					</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class='diagram-attribute' colspan='2'>
-						<table>
-							<tbody>
-							</tbody>
-						</table>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<div class='d-header'>
+			<div class='d-icon'>
+				<img class="img-icon" alt="<%= name %>" src="imgs/omtg/<%= type %>.png">
+			</div>
+			<div class='d-title'>
+				<%- name %>
+			</div>
+		</div>
+		<div class='d-body'>
+			<table>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
 		</script>
-		
+
 		<script type="text/template" id="omtg-conventional-template">
 		<span class='badge badge-delete hidden'><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>
-		<table class='diagram'>
-			<thead>
-				<tr>
-					<td class='diagram-title'>
-						<%- name %>				
-					</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class='diagram-attribute'>
-						<table>
-							<tbody>
-							</tbody>
-						</table>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<div class='d-header'>
+			<div class='d-title'>
+				<%- name %>
+			</div>
+		</div>
+		<div class='d-body'>
+			<table>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
 		</script>
 		
 		<script type="text/template" id="toolbox-template">

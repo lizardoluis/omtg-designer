@@ -86,7 +86,10 @@
 	position: absolute !important;
 	margin: 5px;
 	padding: 0px;
-	max-width: 300px;
+	
+	
+	background-color: #fff;
+	box-shadow: 3px 3px 10px #888888;
 }
 
 .diagram-container:hover {
@@ -97,49 +100,52 @@
 	cursor: move;
 }
 
-.diagram-container .diagram {
-	min-height: 70px;
-	background-color: #fff;
-	box-shadow: 3px 3px 10px #888888;
-	max-width: 200px;
+
+.diagram-container .d-header {
+	height: 38px;
+	display: block;
 }
 
-.diagram-container .selected {
-	border: 3px solid black;
-}
-
-.diagram-container .diagram-icon {
-	border: 1px solid black;
+.diagram-container .d-header .d-icon {
+	width: 37px;
+	height: 100%;
+	float: left;
+	display: inline-block;
+	
+	border-top: 1px solid black;
+	border-left: 1px solid black;
+	border-bottom: 1px solid black;
 	text-align: center;
 	padding: 5px 5px 5px 5px;
-	width: 37px !important;
+}
+
+.diagram-container .d-header .d-title {
 	height: 100%;
-}
-
-.diagram-container .diagram-icon .img-icon {
-	width: 100%;
-}
-
-.diagram-container .diagram .diagram-title {
+	min-width: 90px;
+	display: inline-block;
+	
 	text-align: center;
-	padding: 9px 8px 8px 8px;
+	padding: 8px 5px 5px 5px;
 	border: 1px solid black;
 	font-weight: bold;
-	min-width: 90px !important;
 }
 
-.diagram-container .diagram .diagram-attribute {
-	text-align: left;
-	padding: 5px 5px 5px 5px;
-	border: 1px solid black;
+.diagram-container .d-body {
+	min-height: 30px;
+	padding: 8px 5px 5px 5px;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	border-bottom: 1px solid black;
 	font-weight: normal;
-	width: 100%;
-	height: 23px;
 }
 
-.diagram-container .diagram .diagram-attribute .diagram-key {
-	width: 13px;
+.selected {
+	border: 2px solid black;
 }
+
+/* .diagram-container .diagram .diagram-attribute .diagram-key { */
+/* 	width: 13px; */
+/* } */
 
 .diagram-container .badge-delete {
 	position: absolute;
