@@ -47,6 +47,10 @@
 		},		
 		
 		addOMTGDiagram : function(diagram) {
+			
+			app.plumb.setSuspendDrawing(true);
+			
+			
 			var diagramView = new app.omtg.DiagramView({
 				model : diagram
 			});
@@ -55,13 +59,8 @@
 			this.$el.append(dObject);
 			
 			
-			
-			//Plumbing
-			app.plumb.setSuspendDrawing(true);
-			
+			//Plumbing	
 			app.plumb.makeSource(dObject, {
-				type : "spatial-association",
-				
 				filter : function() {
 					var tool = app.canvas.get('activeTool');
 					if(tool && tool.get('model') == 'omtgRelation')

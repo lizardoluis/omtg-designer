@@ -22,15 +22,16 @@ $(function () {
 	
 	// Relations
 	app.relationsTools = new app.Tools([
-	     { name : 'aggregation', model : 'omtgRelation', tooltip: 'Aggregation', icon: 'imgs/relation/aggregation.png' },
 	     { name : 'association', model : 'omtgRelation', tooltip: 'Association', icon: 'imgs/relation/association.png' },
-	     { name : 'cartographic-generalization-overlapping', model : 'omtgRelation', tooltip: 'Cartographic Generalization Overlapping', icon: 'imgs/relation/cartographic-generalization-overlapping.png' },
-	     { name : 'generalization-disjoint-partial', model : 'omtgRelation', tooltip: 'Generalization Disjoint-Partial', icon: 'imgs/relation/generalization-disjoint-partial.png' },
-	     { name : 'generalization-disjoint-total', model : 'omtgRelation', tooltip: 'Generalization Disjoint-Total', icon: 'imgs/relation/generalization-disjoint-total.png' },
-	     { name : 'generalization-overlapping-partial', model : 'omtgRelation', tooltip: 'Generalization Overlapping-Partial', icon: 'imgs/relation/generalization-overlapping-partial.png' },
-	     { name : 'generalization-overlapping-total', model : 'omtgRelation', tooltip: 'Generalization Overlapping-Total', icon: 'imgs/relation/generalization-overlapping-total.png' },
-	     { name : 'spatial-aggregation', model : 'omtgRelation', tooltip: 'Spatial Aggregation', icon: 'imgs/relation/spatial-aggregation.png' },
 	     { name : 'spatial-association', model : 'omtgRelation', tooltip: 'Spatial Association', icon: 'imgs/relation/spatial-association.png' },
+	     { name : 'aggregation', model : 'omtgRelation', tooltip: 'Aggregation', icon: 'imgs/relation/aggregation.png' },
+	     { name : 'spatial-aggregation', model : 'omtgRelation', tooltip: 'Spatial Aggregation', icon: 'imgs/relation/spatial-aggregation.png' },
+	     { name : 'cartographic-generalization-overlapping', model : 'omtgRelation', tooltip: 'Cartographic Generalization Overlapping', icon: 'imgs/relation/cartographic-generalization-overlapping.png' },
+	     { name : 'cartographic-generalization-disjoint', model : 'omtgRelation', tooltip: 'Cartographic Generalization Disjoint', icon: 'imgs/relation/cartographic-generalization-disjoint.png' },
+	     { name : 'generalization-disjoint-partial', model : 'omtgRelation', tooltip: 'Generalization Disjoint-Partial', icon: 'imgs/relation/generalization-disjoint-partial.png' },
+	     { name : 'generalization-overlapping-partial', model : 'omtgRelation', tooltip: 'Generalization Overlapping-Partial', icon: 'imgs/relation/generalization-overlapping-partial.png' },
+	     { name : 'generalization-disjoint-total', model : 'omtgRelation', tooltip: 'Generalization Disjoint-Total', icon: 'imgs/relation/generalization-disjoint-total.png' },	     
+	     { name : 'generalization-overlapping-total', model : 'omtgRelation', tooltip: 'Generalization Overlapping-Total', icon: 'imgs/relation/generalization-overlapping-total.png' },
 	     { name : 'arc-network', model : 'omtgRelation', tooltip: 'Arc Network', icon: 'imgs/relation/arc-network.png' }
 	]);
 

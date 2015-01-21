@@ -189,3 +189,16 @@
 .modal-dialog .btnRowDelete {
 	color: black;
 }
+
+
+
+/*
+ * Diagrams
+ */
+
+.arc-network-label,
+.cartographic-label {
+	font-weight: bold;
+	font-size: 14px;
+	padding-bottom: 22px;
+}

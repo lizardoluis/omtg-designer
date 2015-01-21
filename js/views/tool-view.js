@@ -39,7 +39,6 @@
 				app.canvas.set('activeTool', null);
 			}
 		},
-
 	});
 
 })(jQuery);
