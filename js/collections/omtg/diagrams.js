@@ -7,10 +7,11 @@
 	app.omtg.Diagrams = Backbone.Collection.extend({
 		model : app.omtg.Diagram,
 		
-		getType : function(id) {
-			return this.findWhere({
-				id : id
-			}).get('type');
+		getType : function(id) {			
+			var diagram = this.findWhere({id : id});
+			if(diagram)
+				return diagram.get('type');			
+			return null;
 		},
 	});
 

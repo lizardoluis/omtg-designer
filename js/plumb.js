@@ -42,8 +42,9 @@ jsPlumb.ready(function() {
 			paintStyle:{
 				strokeStyle:"black",
 				fillStyle:color	            
-			} 
-		} ];	
+			},
+			id: "generalization-triangle",
+		}];	
 	}
 	
 	var circle = function(position){
@@ -58,10 +59,10 @@ jsPlumb.ready(function() {
 	var square = function(color, position){
 		return ["Custom", {
         	create: function(component) {
-        		return $('<svg width="16px" height="16px"><rect width="15px" height="15px"  stroke="black" stroke-width="2" fill="'+ color +'" /></svg>');                
+        		return $('<svg id="cartographic-square" width="16px" height="16px"><rect width="15px" height="15px"  stroke="black" stroke-width="2" fill="'+ color +'" /></svg>');                
         	},
+        	location: position,    
         	id: "cartographic-square",
-        	location: position,        	
         }];	
 	};	
 	
@@ -132,32 +133,44 @@ jsPlumb.ready(function() {
 //			parameters: {"type" : "arc-network-sibling"},
 		},
 		"cartographic-generalization-disjoint" : {
-			connector: ["Flowchart", {stub: 70, alwaysRespectStubs: true}],
+			connector: ["Flowchart", {stub: [70, 50], alwaysRespectStubs: true}],
 			paintStyle : dashedConnectorStyle,
-			overlays : [square("white", 70)/*, [ "Label", { label:"scale", location:0.5, cssClass: "cartographic-label" }]*/],
+			overlays : [square("white", 70), [ "Label", { label:"scale", location:0.5, cssClass: "cartographic-label" }]],
 //			parameters: {"type" : "cartographic-generalization-disjoint"},
 		},
 		"cartographic-generalization-overlapping" : {
-			connector: ["Flowchart", {stub: 70, alwaysRespectStubs: true}],
+			connector: ["Flowchart", {stub: [70, 50], alwaysRespectStubs: true}],
 			paintStyle : dashedConnectorStyle,
 			overlays : [square("black", 70), [ "Label", { label:"scale", location:0.5, cssClass: "cartographic-label" }]],
 //			parameters: {"type" : "cartographic-generalization-overlapping"},
 		},
+		"cartographic-leg" : {
+			connector: ["Flowchart", {stub: [0, 50], alwaysRespectStubs: true}],
+			paintStyle : dashedConnectorStyle,
+		},
 	});
 
-	app.plumb.bind("connectionDrag", function(connection) {
-//		console.log("drag");
+	app.plumb.bind("connectionDrag", function(connection) {		
+		
 		var tool = app.canvas.get('activeTool');	
 		if (tool && tool.get('model') == 'omtgRelation') {
 			connection.setType(tool.get('name'));
+			return;
 		}		
+		
+		// if connection comes from a cartographic square, set type as cartographic-leg
+		if(connection.sourceId == "cartographic-square"){
+			connection.setType("cartographic-leg");
+		}
 	});
 		
 	app.plumb.bind("connection", function (info, originalEvent) {
+				
 		var type = info.connection.getType()[0];
-
+		
+		switch(type){
 		//Adds the second line in network relationships
-		if(type == "arc-network"){		
+		case "arc-network":
 			var sibling = app.plumb.connect({
 				source:info.sourceId, 
 				target:info.targetId,
@@ -167,28 +180,12 @@ jsPlumb.ready(function() {
 				}
 			});
 			info.connection.setParameter("sibling", sibling);
-		}
-		else if (type == "generalization-disjoint-partial"
-			|| type == "generalization-disjoint-total"
-				|| type == "generalization-overlapping-partial"
-					|| type == "generalization-overlapping-total") {
-
-			// Set connection anchors, due to the drag
-			// change of anchors, default in jsplumb, the
-			// connection must be detached and re-atached
-			// with the Bottom and Top anchors
-			app.plumb.detach(info.connection);
-			app.plumb.connect({
-				source : info.connection.sourceId,
-				target : info.connection.targetId,
-				anchors : [ "Bottom", "Top" ],
-				endpoint : "Blank",
-				type : type,
-			});
-		}
-		else if (type == "cartographic-generalization-disjoint"
-			|| type == "cartographic-generalization-overlapping") {
-
+			break;
+			
+		case "generalization-disjoint-partial":
+		case "generalization-disjoint-total":
+		case "generalization-overlapping-partial":
+		case "generalization-overlapping-total":
 			// Set connection anchors, due to the drag
 			// change of anchors, default in jsplumb, the
 			// connection must be detached and re-atached
@@ -198,21 +195,38 @@ jsPlumb.ready(function() {
 				source : info.connection.sourceId,
 				target : info.connection.targetId,
 				anchors : [ "Bottom", "Top" ],
-				endpoint : "Blank",
 				type : type,
+				fireEvent: false // avoids connect event loop
+			});
+			
+			// Make generalization overlay a source of more connections
+			app.plumb.makeSource(newConn.getOverlay("generalization-triangle").getElement());	
+			break;
+			
+		case "cartographic-generalization-disjoint":
+		case "cartographic-generalization-overlapping":
+			// Set connection anchors, due to the drag
+			// change of anchors, default in jsplumb, the
+			// connection must be detached and re-atached
+			// with the Bottom and Top anchors
+			app.plumb.detach(info.connection);
+			var newConn = app.plumb.connect({
+				source : info.connection.sourceId,
+				target : info.connection.targetId,
+				anchors : [ "Bottom", "Top" ],
+				type : type,
+				fireEvent: false  // avoids this event loop
 			});
 			
 			// Make the middle square of the connection a source of connections
-			app.plumb.makeSource(newConn.getOverlay("cartographic-square").getElement(), {
-				connector: ["Flowchart", {stub: 20}],
-				connectorStyle: dashedConnectorStyle,
-			});	
+			app.plumb.makeSource(newConn.getOverlay("cartographic-square").getElement());	
+			break;
+			
+		// Cartographic leg type connection with top target anchor
+		case "cartographic-leg":
+			info.connection.endpoints[1].setAnchor("Top");
+			break;
 		}
-		// TODO: set a type to the cartographic legs.
-//		else if (type == "cartographic-leg"){
-//			app.con = info.connection;
-//			info.connection.endpoints[1].setAnchor("Top");
-//		}
 	});
 	
 	app.plumb.bind("beforeDrop", function(info) {
@@ -244,6 +258,9 @@ jsPlumb.ready(function() {
 		case "cartographic-generalization-disjoint":
 		case "cartographic-generalization-disjoint":
 			return (sourceType == "conventional") && (targetType != "conventional");
+			
+		case "cartographic-leg":
+			return targetType != "conventional";
 			
 		// Both classes must be georeferenced	
 		case "spatial-association":
