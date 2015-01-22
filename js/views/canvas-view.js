@@ -48,8 +48,7 @@
 		
 		addOMTGDiagram : function(diagram) {
 			
-			app.plumb.setSuspendDrawing(true);
-			
+			app.plumb.setSuspendDrawing(true);			
 			
 			var diagramView = new app.omtg.DiagramView({
 				model : diagram

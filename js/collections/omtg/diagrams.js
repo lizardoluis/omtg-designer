@@ -5,7 +5,13 @@
 	// ----------
 	
 	app.omtg.Diagrams = Backbone.Collection.extend({
-		model : app.omtg.Diagram
+		model : app.omtg.Diagram,
+		
+		getType : function(id) {
+			return this.findWhere({
+				id : id
+			}).get('type');
+		},
 	});
 
 })();

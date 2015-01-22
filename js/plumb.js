@@ -154,7 +154,7 @@ jsPlumb.ready(function() {
 	});
 		
 	app.plumb.bind("connection", function (info, originalEvent) {
-		var type = info.connection.getType();
+		var type = info.connection.getType()[0];
 
 		//Adds the second line in network relationships
 		if(type == "arc-network"){		
@@ -207,17 +207,58 @@ jsPlumb.ready(function() {
 				connector: ["Flowchart", {stub: 20}],
 				connectorStyle: dashedConnectorStyle,
 			});	
-
-			console.log(newConn.getOverlay("cartographic-square"));
 		}
-		else if (type == "cartographic-leg"){
-			app.con = info.connection;
-			info.connection.endpoints[1].setAnchor("Top");
-		}
+		// TODO: set a type to the cartographic legs.
+//		else if (type == "cartographic-leg"){
+//			app.con = info.connection;
+//			info.connection.endpoints[1].setAnchor("Top");
+//		}
 	});
 	
-	app.plumb.bind("overlayMoved", function(connection, event) {
-		console.log("moved");		
+	app.plumb.bind("beforeDrop", function(info) {
+		
+		// Avoid self loop. 
+		// TODO: support network self loop
+		if(info.sourceId == info.targetId)
+			return false;
+
+		// Get type of the connection and type of the diagrams
+		var type = info.connection.getType()[0];
+		var sourceType = app.canvas.get('diagrams').getType(info.sourceId);
+		var targetType = app.canvas.get('diagrams').getType(info.targetId);
+				
+		switch(type){		
+		// Superclass and subclasses must have the same type
+		case "generalization-disjoint-partial":
+		case "generalization-overlapping-partial":
+		case "generalization-disjoint-total":
+		case "generalization-overlapping-total":
+			return sourceType == targetType;
+			
+		// Aggregation must be between conventional classes	
+		case "aggregation":
+			return sourceType == targetType == "conventional";			
+
+		// Superclass must be conventional and subclasses georeferenced
+		// TODO: conceptual legs cannot connect conventional classes 
+		case "cartographic-generalization-disjoint":
+		case "cartographic-generalization-disjoint":
+			return (sourceType == "conventional") && (targetType != "conventional");
+			
+		// Both classes must be georeferenced	
+		case "spatial-association":
+		case "spatial-aggregation":
+			return (sourceType != "conventional") && (targetType != "conventional")
+			
+		// If source == target, they must bi bi-line or un-line.
+		// if source or target is a node, the other side must be bi-line or un-line.
+		case "arc-network":			
+			return (sourceType == targetType && (sourceType == "bi-line" || sourceType == "un-line")) ||
+			(sourceType == "node" && (targetType == "bi-line" || targetType == "un-line")) ||
+			(targetType == "node" && (sourceType == "bi-line" || sourceType == "un-line"));
+		}
+		
+		return true;		
 	});
 
 });
