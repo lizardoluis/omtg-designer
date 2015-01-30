@@ -71,10 +71,15 @@
 			app.plumb.makeTarget(dObject);	
 			
 			app.plumb.draggable(dObject, {
-				  containment : '#canvas',
-				  scroll : true,
+				containment : '#canvas',
+				scroll : true,
+				drag:function(e,ui) {
+					// TODO: remove this drag function and repaint for performance reasons
+					if($(".cartographic-square").length > 0 || $(".generalization-triangle").length > 0)
+						app.plumb.repaintEverything();
+				}
 			});
-			
+
 			app.plumb.setSuspendDrawing(false, true);
 		},
 		

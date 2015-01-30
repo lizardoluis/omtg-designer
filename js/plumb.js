@@ -1,4 +1,3 @@
-
 jsPlumb.ready(function() {
 
 	var defaultConnectorStyle = { 
@@ -34,17 +33,25 @@ jsPlumb.ready(function() {
 	} ] ];
 	
 	var triangle = function(color, position){
-		return [ "PlainArrow", { 
-			length:25, 
-			width: 25, 
-			location: position, 
-			direction:-1, 
-			paintStyle:{
-				strokeStyle:"black",
-				fillStyle:color	            
-			},
-			id: "generalization-triangle",
-		}];	
+//		return [ "PlainArrow", { 
+//			length:25, 
+//			width: 25, 
+//			location: position, 
+//			direction:-1, 
+//			paintStyle:{
+//				strokeStyle:"black",
+//				fillStyle:color	            
+//			},
+//			id: "generalization-triangle",
+//		}];	
+		
+		return ["Custom", {
+        	create:function(component) {
+        		return $('<svg id="generalization-triangle" class="generalization-triangle" height="26" width="26"><polygon points="1,25 13,1 25,25" stroke="black" stroke-width="1" fill="'+ color +'" /></svg>');                
+        	},
+        	location:position,
+        	id: "generalization-triangle",
+        }];	
 	}
 	
 	var circle = function(position){
@@ -59,7 +66,7 @@ jsPlumb.ready(function() {
 	var square = function(color, position){
 		return ["Custom", {
         	create: function(component) {
-        		return $('<svg id="cartographic-square" width="16px" height="16px"><rect width="15px" height="15px"  stroke="black" stroke-width="2" fill="'+ color +'" /></svg>');                
+        		return $('<svg id="cartographic-square" class="cartographic-square" width="16px" height="16px"><rect width="15px" height="15px"  stroke="black" stroke-width="2" fill="'+ color +'" /></svg>');                
         	},
         	location: position,    
         	id: "cartographic-square",
@@ -98,28 +105,32 @@ jsPlumb.ready(function() {
 		},
 		"generalization-disjoint-partial" : {
 			anchors : [ "Bottom", "Top" ],
-			connector: ["Flowchart", {stub: 50, alwaysRespectStubs: true}],
+			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
-			overlays : [ triangle("white", 2) ],
+			overlays : [ triangle("white", 13) ],
 //			parameters: {"type" : "generalization-disjoint-partial"},
 		},
 		"generalization-overlapping-partial" : {
-			connector: ["Flowchart", {stub: 50, alwaysRespectStubs: true}],
+			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
-			overlays : [ triangle("black", 2) ],
+			overlays : [ triangle("black", 13) ],
 //			parameters: {"type" : "generalization-overlapping-partial"},
 		},
 		"generalization-disjoint-total" : {
-			connector: ["Flowchart", {stub: 50, alwaysRespectStubs: true}],
+			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
-			overlays : [circle(9), triangle("white", 17) ],
+			overlays : [circle(9), triangle("white", 30) ],
 //			parameters: {"type" : "generalization-disjoint-total"},
 		},
 		"generalization-overlapping-total" : {
-			connector: ["Flowchart", {stub: 50, alwaysRespectStubs: true}],
+			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
-			overlays : [circle(9), triangle("black", 17) ],
+			overlays : [circle(9), triangle("black", 30) ],
 //			parameters: {"type" : "generalization-overlapping-total"},
+		},
+		"generalization-leg" : {
+			connector: ["Flowchart", {stub: [30, 30], alwaysRespectStubs: true}],
+			paintStyle : defaultConnectorStyle,
 		},
 		"arc-network" : {
 			connector: "Straight",
@@ -150,6 +161,9 @@ jsPlumb.ready(function() {
 		},
 	});
 
+	
+	// This events checks which type of connection the user chose in the
+	// toolbox, and set the type of the connection to the selected one.
 	app.plumb.bind("connectionDrag", function(connection) {		
 		
 		var tool = app.canvas.get('activeTool');	
@@ -162,8 +176,15 @@ jsPlumb.ready(function() {
 		if(connection.sourceId == "cartographic-square"){
 			connection.setType("cartographic-leg");
 		}
+		else if(connection.sourceId == "generalization-triangle"){
+			connection.setType("generalization-leg");
+		}
 	});
 		
+	
+	// This events it is used to set some properties, like specific
+	// anchors, to some connections. Here the second line of the
+	// arc-network connection is also connected.
 	app.plumb.bind("connection", function (info, originalEvent) {
 				
 		var type = info.connection.getType()[0];
@@ -200,7 +221,16 @@ jsPlumb.ready(function() {
 			});
 			
 			// Make generalization overlay a source of more connections
-			app.plumb.makeSource(newConn.getOverlay("generalization-triangle").getElement());	
+			app.newconn = newConn;
+			app.plumb.makeSource(newConn.getOverlay("generalization-triangle").getElement(),{
+				anchor: [ 0, 0.5, 0, 1 ],
+//				parameters: {"sourceDiagramID" : info.connection.sourceId},
+			});	
+			break;
+			
+		// Generalization leg type connection with top target anchor
+		case "generalization-leg":
+			info.connection.endpoints[1].setAnchor("Top");
 			break;
 			
 		case "cartographic-generalization-disjoint":
@@ -229,6 +259,10 @@ jsPlumb.ready(function() {
 		}
 	});
 	
+
+	// Event that checks for relationship restrictions. Before
+	// dropping a connection to its target, the Designer checks if
+	// this relationship is valid accordingly to OMT-G restrictions.
 	app.plumb.bind("beforeDrop", function(info) {
 		
 		// Avoid self loop. 
@@ -277,5 +311,16 @@ jsPlumb.ready(function() {
 		
 		return true;		
 	});
+	
+	app.plumb.bind("dblclick", function(conn, originalEvent) {
+
+//		var type = conn.getType()[0];
+		
+		var modal = new app.omtg.ConnectionEditorView();
+//		var modal = new app.omtg.DiagramEditorView({model : new app.omtg.Diagram()});
+//		console.log()
+	});
 
 });
+
+function(open)
