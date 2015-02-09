@@ -336,10 +336,41 @@ jsPlumb.ready(function() {
 			param = conn.component;
 		
 		// For arc-network when clicked in the sibling connection
-		if(param.getType()[0] == 'arc-network-sibling')
+		var type = param.getType()[0];
+		if(type == 'arc-network-sibling')
 			param = param.getParameter('sibling');
+		
+		// Connection types without attributes
+		// to be edited or without legs. Only
+		// opens a confirmation dialog for
+		// deletion.
+		if (type == 'aggregation'
+			|| type == 'spatial-aggregation'
+				|| type == 'generalization-leg'
+					|| type == 'cartographic-leg') {
 
-		// Open modal
-		var modal = new app.omtg.ConnectionEditorView({connection : param});		
+			if (confirm("This connection will be detached. There is no undo. Are you sure?")){
+				app.plumb.detach(param);
+			}
+		}
+		
+		// Generalization connections. Need to
+		// detach all legs before detaching the
+		// main connection
+		else if(type == 'generalization-disjoint-partial'
+			|| type == 'generalization-overlapping-partial'
+				|| type == 'generalization-disjoint-total'
+					|| type == 'generalization-overlapping-total'){
+						
+			if (confirm("This connection will be detached. There is no undo. Are you sure?")){
+				app.plumb.detachAllConnections(param.getOverlays()[0].getElement());
+				app.plumb.detach(param);
+			}			
+		}		
+		
+		// Connections with attributes to be edited. Opens the editor modal
+		else {
+			var modal = new app.omtg.ConnectionEditorView({connection : param});
+		}		
 	});
 });

@@ -13,7 +13,7 @@
 		events : {
 			// Modal events
 			'click #btnUpdate' : 'update',
-			'click #btnDelete' : 'delete',
+			'click #btnDelete' : 'detach',
 			'hidden.bs.modal' : 'teardown',		
 		},
 
@@ -117,26 +117,20 @@
 			this.teardown();
 		},
 		
-		delete : function(event) {
+		detach : function(event) {
 			
-//			console.log($(event.target));
-			
-			var alert = '<div class="alert alert-danger" role="alert">This connection will be detached. There is no undo.</div>';
-			
-			$(event.target).popover({
-				container : "body",
-				html : true,
-				content : alert,
-				placement : "bottom",
-				title : "Delete Connection?",
-				trigger : "focus",
-			});
-			$(event.target).popover('show');
+			if (confirm("This connection will be detached. There is no undo. Are you sure?")){
+				
+				var type = this.connection.getType()[0];
 
-//			if (confirm("Delete this Relationship?")){
-//				app.plumb.detach(this.connection);
-//				this.teardown();
-//			}
+				// Detach leg connections of the cartographic
+				if(type == 'cartographic-generalization-disjoint' || type == 'cartographic-generalization-overlapping'){
+					app.plumb.detachAllConnections(this.connection.getOverlay("cartographic-square").getElement());		
+				}
+
+				app.plumb.detach(this.connection);
+				this.teardown();
+			}
 		},
 		
 		concatCardLabel : function(min, max){
