@@ -190,15 +190,33 @@
 	color: black;
 }
 
+/*
+ * OMT-G Connection Modal
+ */
+ 
+ .modal-dialog .inputcard {
+ 	width: 50%;
+ }
 
 
 /*
- * Diagrams
+ * Connections
  */
 
+.cardinality-label,
+.description-label,
 .arc-network-label,
 .cartographic-label {
 	font-weight: bold;
 	font-size: 14px;
 	padding-bottom: 22px;
+}
+
+.description-label {
+	padding-left: 30px;
+}
+
+.cardinality-label {
+	padding-left: 65px;
+	padding-right: 20px;
 }

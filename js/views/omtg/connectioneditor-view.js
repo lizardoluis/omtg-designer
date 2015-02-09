@@ -12,25 +12,65 @@
 
 		events : {
 			// Modal events
-			'click #btnUpdate' : 'updateDiagram',
+			'click #btnUpdate' : 'update',
+			'click #btnDelete' : 'delete',
 			'hidden.bs.modal' : 'teardown',		
 		},
 
 		initialize : function(options) {
+						
 			this.template = _.template($('#omtg-connection-editor-template').html());
+			
+			this.connection = options.connection;
 			
 			this.render();
 		},
 
 		render : function() {
-			this.$el.html(this.template(this.model.toJSON()));
+			
+			this.$el.html(this.template());
+			var fieldset = this.$('#connection-editor-form > fieldset');
+						
+			var type = this.connection.getType()[0];
+			
+			// Add Description component
+			if(type == 'association' || type == 'spatial-association' || type == 'arc-network'){
+				fieldset.append(_.template($('#omtg-connection-editor-description-template').html()));
+				
+				this.descriptionLabel = this.connection.getOverlay("description-label");			
+				this.$('#inputConnectionDescription').val(this.descriptionLabel.getLabel());
+			}
+			
+			// Add Cardinalities component
+			if(type == 'association' || type == 'spatial-association'){
+				fieldset.append(_.template($('#omtg-connection-editor-cardinalities-template').html()));
+				
+				this.cardLabelA = this.connection.getOverlay("cardinality-labelA");			
+				this.$('#inputMinA').val(this.connection.getParameter("minA"));
+				this.$('#inputMaxA').val(this.connection.getParameter("maxA"));
+				
+				this.cardLabelB = this.connection.getOverlay("cardinality-labelB");			
+				this.$('#inputMinB').val(this.connection.getParameter("minB"));
+				this.$('#inputMaxB').val(this.connection.getParameter("maxB"));
+			}
+			
+			// Add Cartographic component
+			if(type == 'cartographic-generalization-disjoint' || type == 'cartographic-generalization-overlapping'){
+				fieldset.append(_.template($('#omtg-connection-editor-cartographic-template').html()));
+				
+				this.cartographicLabel = this.connection.getOverlay("cartographic-label");
+				if(this.cartographicLabel.getLabel() == 'scale') 
+					this.$('#scaleRadio').prop("checked", true);
+				else
+					this.$('#shapeRadio').prop("checked", true);
+			}
 
 			// Modal parameters
 			this.$el.modal({
 				backdrop : 'static',
 				keyboard : false,
 				show : true,
-			});
+			});	
 
 			return this;
 		},
@@ -41,25 +81,74 @@
 			this.remove();
 		},
 
-		updateDiagram : function() {
+		update : function() {
 			
-//			// Diagram type
-//			var type = this.$('#inputDiagramType').data('type-name');
-//			if (type) {
-//				this.model.set('type', type);
-//			}
-//
-//			// Diagram name
-//			var name = this.$('#inputDiagramName').val().trim();
-//			if (name) {
-//				this.model.set('name', name);
-//			}
-//			
-//			// Diagram attributes
-//			this.model.set({'attributes': this.attrsClone});
-//			this.model.trigger('change', this.model);
+			var type = this.connection.getType()[0];
+			
+			// Connection description
+			if(type == 'association' || type == 'spatial-association' || type == 'arc-network'){
+				var description = this.$('#inputConnectionDescription').val().trim();
+				this.descriptionLabel.setLabel(description);
+			}
+			
+			if(type == 'association' || type == 'spatial-association'){
+				// Connection cardinality A
+				var minA = this.$('#inputMinA').val().trim();
+				var maxA = this.$('#inputMaxA').val().trim();			
+				this.cardLabelA.setLabel(this.concatCardLabel(minA, maxA));
 
+				// Connection cardinality B
+				var minB = this.$('#inputMinB').val().trim();
+				var maxB = this.$('#inputMaxB').val().trim();
+				this.cardLabelB.setLabel(this.concatCardLabel(minB, maxB));			
+			
+				// Save in the connection parameters
+				this.connection.setParameter("minA", minA);
+				this.connection.setParameter("maxA", maxA);
+				this.connection.setParameter("minB", minB);
+				this.connection.setParameter("maxB", maxB);
+			}
+			
+			if(type == 'cartographic-generalization-disjoint' || type == 'cartographic-generalization-overlapping'){
+				this.cartographicLabel.setLabel(this.$('input:radio[name=inlineRadioOptions]:checked').val());
+			}
+			
+			
 			this.teardown();
+		},
+		
+		delete : function(event) {
+			
+//			console.log($(event.target));
+			
+			var alert = '<div class="alert alert-danger" role="alert">This connection will be detached. There is no undo.</div>';
+			
+			$(event.target).popover({
+				container : "body",
+				html : true,
+				content : alert,
+				placement : "bottom",
+				title : "Delete Connection?",
+				trigger : "focus",
+			});
+			$(event.target).popover('show');
+
+//			if (confirm("Delete this Relationship?")){
+//				app.plumb.detach(this.connection);
+//				this.teardown();
+//			}
+		},
+		
+		concatCardLabel : function(min, max){
+			if(min == "" && max == ""){
+				return "";
+			}
+
+			if (min != "" && max != ""){
+				return min + ".." + max;
+			}
+
+			return min + "" + max;
 		},
 
 	});

@@ -90,6 +90,53 @@
 		
 		
 		<!-- Templates -->
+		<script type="text/template" id="omtg-connection-editor-description-template">
+			<!-- Connection Description -->
+			<div class="form-group">
+				<label for="inputConnectionDescription" class="col-sm-4 control-label">Description:</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" id="inputConnectionDescription" placeholder="" maxlength="20">
+				</div>
+			</div>
+		</script>
+		
+		<script type="text/template" id="omtg-connection-editor-cardinalities-template">
+			<!-- Cardinalities -->
+			<div class="form-group">
+				<label for="CardinalityA" class="col-sm-4 control-label">Cardinality A:</label>
+				<div class="col-sm-6">
+					<div class="input-group">
+						<input type="text" class="form-control inputcard" id="inputMinA" placeholder="min" maxlength="2">
+						<input type="text" class="form-control inputcard" id="inputMaxA" placeholder="max" maxlength="2">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="CardinalityB" class="col-sm-4 control-label">Cardinality B:</label>
+				<div class="col-sm-6">
+					<div class="input-group">
+						<input type="text" class="form-control inputcard" id="inputMinB" placeholder="min" maxlength="2">
+						<input type="text" class="form-control inputcard" id="inputMaxB" placeholder="max" maxlength="2">
+					</div>
+				</div>
+			</div>
+		</script>
+		
+		<script type="text/template" id="omtg-connection-editor-cartographic-template">
+			<!-- Connection Description -->
+			<div class="form-group">
+				<label for="inlineRadioOptions" class="col-sm-4 control-label">Description:</label>
+				<div class="col-sm-6">
+					<label class="radio-inline">
+  						<input type="radio" name="inlineRadioOptions" id="scaleRadio" value="scale"> scale
+					</label>
+					<label class="radio-inline">
+  						<input type="radio" name="inlineRadioOptions" id="shapeRadio" value="shape"> shape
+					</label>
+				</div>
+			</div>
+		</script>
+		
 		<script type="text/template" id="omtg-connection-editor-template">
 		<div class="modal-dialog">
     		<div class="modal-content">
@@ -100,17 +147,9 @@
       			</div>
 
       			<div class="modal-body modal-body-scroll">
-        			<form class="form-horizontal">
+        			<form id="connection-editor-form" class="form-horizontal">
 						<fieldset>
 
-							<!-- Connection Description -->
-							<div class="form-group">
-								<label for="inputConnectionDescription" class="col-sm-4 control-label">Description:</label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control" id="inputConnectionDescription" placeholder="" maxlength="50">
-								</div>
-							</div>
-					
 						</fieldset>
 					</form>
       			</div><!-- /.modal-body -->
