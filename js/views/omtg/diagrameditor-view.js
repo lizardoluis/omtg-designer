@@ -35,6 +35,8 @@
 		initialize : function(options) {
 			this.template = _.template($('#omtg-diagram-editor-template').html());
 			
+			this.hasConnections = options.hasConnections;
+			
 			// Copy of attributes
 			this.attrsClone = this.model.get('attributes').clone();
 
@@ -50,7 +52,13 @@
 				keyboard : false,
 				show : true,
 			});
-
+			
+			// Disable diagram type selector if diagram has connections
+			if(this.hasConnections){
+				this.$("#inputDiagramType").addClass("disabled");
+				this.$("#inputDiagramTypeToggle").addClass("disabled");
+			}
+			
 			// Render table rows
 			this.attrsClone.each(function(attr) {
 				this.addAttribute(attr);

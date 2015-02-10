@@ -89,7 +89,12 @@
 		},
 		
 		edit : function() {
-			var modal = new app.omtg.DiagramEditorView({model : this.model});
+			
+			var hasConnections = false;
+			if(app.plumb.getConnections({ source: this.el.id }).length || app.plumb.getConnections({ target: this.el.id }).length)
+				hasConnections = true;
+		
+			var modal = new app.omtg.DiagramEditorView({model : this.model, hasConnections : hasConnections});
 		},
 		
 		delete : function() {
