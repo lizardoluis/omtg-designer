@@ -1,0 +1,154 @@
+(function() {
+	'use strict';
+
+	// Tool Model
+	// ----------
+
+	app.Canvas = Backbone.Model.extend({
+		defaults : function() {
+			return {
+				diagrams : new app.omtg.Diagrams(),
+				activeTool : null,
+			};
+		},
+		
+		toXML : function() {
+						
+			var xml = '<?xml version="1.0" encoding="UTF-8"?>'
+				+ '<omtg-conceptual-schema xsi:noNamespaceSchemaLocation="omtg-schema-template.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'
+				+ this.get('diagrams').toXML()
+				+ this.connectionsToXML()
+				+ '</omtg-conceptual-schema>';
+
+			return xml;
+		},
+		
+		// Convert all connections to XML
+		connectionsToXML : function() {
+			var conns = app.plumb.getConnections();
+			var connsXML = "";
+			
+			for(var i=0; i<conns.length; i++){
+				var type = conns[i].getType()[0];
+				if (type != "arc-network-sibling"
+					&& type != "generalization-leg"
+						&& type != "cartographic-leg"){
+					connsXML += this.connectionToXML(conns[i]);
+				}
+	    	}
+			
+			return "<relationships>" + connsXML + "</relationships>";			
+		},		
+		
+		// Convert a connection to XML
+		connectionToXML : function(conn){
+			
+			var type = conn.getType()[0];
+			
+			switch(type){
+			case "aggregation":
+				var sourceName = this.get('diagrams').get(conn.sourceId, 'name');
+				var targetName = this.get('diagrams').get(conn.targetId, 'name');
+				return "<conventional-aggregation>" +
+				"<class1>" + sourceName + "</class1>" +
+				"<class2>" + targetName + "</class2>" +
+				"</conventional-aggregation>";
+				
+			case "spatial-aggregation":
+				console.log("source");
+				var sourceName = this.get('diagrams').get(conn.sourceId, 'name');
+				console.log("target");
+				var targetName = this.get('diagrams').get(conn.targetId, 'name');
+				console.log("here");
+				return "<spatial-aggregation>" +
+				"<class1>" + sourceName + "</class1>" +
+				"<class2>" + targetName + "</class2>" +
+				"</spatial-aggregation>";
+				
+			case "association":
+				var description = conn.getOverlay("description-label").getLabel();
+				var sourceName = this.get('diagrams').get(conn.sourceId, 'name');
+				var targetName = this.get('diagrams').get(conn.targetId, 'name');
+				var minA = conn.getParameter("minA");
+				var maxA = conn.getParameter("maxA");
+				var minB = conn.getParameter("minB");
+				var maxB = conn.getParameter("maxB");			
+				return "<conventional>" +
+				"<name>" + description + "</name>" +
+				"<class1>" + sourceName + "</class1><cardinality1><min>" + minA + "</min><max>" + maxA + "</max></cardinality1>" +
+				"<class2>" + targetName + "</class2><cardinality2><min>" + minB + "</min><max>" + maxB + "</max></cardinality2>" +
+				"</conventional>";
+				
+			case "spatial-association":
+				var description = conn.getOverlay("description-label").getLabel();
+				var sourceName = this.get('diagrams').get(conn.sourceId, 'name');
+				var targetName = this.get('diagrams').get(conn.targetId, 'name');
+				var minA = conn.getParameter("minA");
+				var maxA = conn.getParameter("maxA");
+				var minB = conn.getParameter("minB");
+				var maxB = conn.getParameter("maxB");			
+				return "<topological>" +
+				"<spatial-relations><spatial-relation>" + description + "</spatial-relation></spatial-relations>" +
+				"<class1>" + sourceName + "</class1><cardinality1><min>" + minA + "</min><max>" + maxA + "</max></cardinality1>" +
+				"<class2>" + targetName + "</class2><cardinality2><min>" + minB + "</min><max>" + maxB + "</max></cardinality2>" +
+				"</topological>";
+				
+			case "arc-network":
+				var description = conn.getOverlay("description-label").getLabel();
+				var sourceName = this.get('diagrams').get(conn.sourceId, 'name');
+				var targetName = this.get('diagrams').get(conn.targetId, 'name');
+				return "<network>" +
+				"<name>" + description + "</name>" +
+				"<class1>" + sourceName + "</class1>" +
+				"<class2>" + targetName + "</class2>" +
+				"</network>";
+				
+			case "generalization-disjoint-partial":
+			case "generalization-disjoint-total":
+			case "generalization-overlapping-partial":
+			case "generalization-overlapping-total":
+				var superName = this.get('diagrams').get(conn.sourceId, 'name');
+				var participation = conn.getParameter("participation");
+				var disjointness = conn.getParameter("disjointness");
+				var subClasses = "";
+				
+				var subConns = app.plumb.getConnections({source : conn.getOverlays()[0].getElement()});
+				for(var i=0; i<subConns; i++){
+					var subName = this.get('diagrams').get(subConns[i].targetId, 'name');
+		    		subClasses += "<subclass>" + subName + "</subclass>";
+		    	}
+				
+				return "<generalization>" +
+				"<superclass>" + superName + "</superclass>" +
+				"<participation>" + participation + "</participation>" +
+				"<disjointness>" + disjointness + "</disjointness>" +
+				"<subclasses>" + subClasses + "</subclasses>" +
+				"</generalization>";
+				
+			case "cartographic-generalization-disjoint":
+			case "cartographic-generalization-overlapping":
+				var superName = this.get('diagrams').get(conn.sourceId, 'name');
+				var disjointness = conn.getParameter("disjointness");
+				var description = conn.getOverlay("cartographic-label");
+				var subClasses = "";
+				
+				var subConns = app.plumb.getConnections({source : conn.getOverlay("cartographic-square").getElement()});
+				for(var i=0; i<subConns; i++){
+					var subName = this.get('diagrams').get(subConns[i].targetId, 'name');
+		    		subClasses += "<subclass>" + subName + "</subclass>";
+		    	}
+				
+				return "<conceptual-generalization>" +
+				"<superclass>" + superName + "</superclass>" +
+				"<scale-shape>" + description + "</scale-shape>" + 
+				"<disjointness>" + disjointness + "</disjointness>" +
+				"<subclasses>" + subClasses + "</subclasses>" +
+				"</conceptual-generalization>";
+				
+			default:
+				return "";
+			}
+		}
+	});
+
+})();

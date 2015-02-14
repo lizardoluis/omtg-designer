@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 (http://www.altova.com) by mazuki (darksiderg) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="omtg-conceptual-schema">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="classes">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="class" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="name" type="xs:string"/>																																						
+										<xs:element name="top" type="xs:float"/>
+										<xs:element name="left" type="xs:float"/>
+										<xs:element name="type">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="conventional"/>
+													<xs:enumeration value="TIN"/>
+													<xs:enumeration value="isolines"/>
+													<xs:enumeration value="planar-subdivision"/>
+													<xs:enumeration value="tesselation"/>
+													<xs:enumeration value="sample"/>
+													<xs:enumeration value="point"/>
+													<xs:enumeration value="line"/>
+													<xs:enumeration value="polygon"/>
+													<xs:enumeration value="un-line"/>
+													<xs:enumeration value="bi-line"/>
+													<xs:enumeration value="node"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>		
+										<xs:element name="attributes">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="attribute" type="attributeType" minOccurs="0" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="relationships">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:choice minOccurs="0" maxOccurs="unbounded">
+								<xs:element name="conventional">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="name" type="xs:string"/>
+											<xs:element name="class1" type="xs:string"/>
+											<xs:element name="cardinality1" type="cardinalityType"/>
+											<xs:element name="class2" type="xs:string"/>
+											<xs:element name="cardinality2" type="cardinalityType"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="topological">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="spatial-relations">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="spatial-relation" type="xs:string" maxOccurs="unbounded"/>
+														<xs:element name="distance" type="xs:string" minOccurs="0"/>
+														<xs:element name="unit" type="xs:string" minOccurs="0"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="class1" type="xs:string"/>
+											<xs:element name="cardinality1" type="cardinalityType"/>
+											<xs:element name="class2" type="xs:string"/>
+											<xs:element name="cardinality2" type="cardinalityType"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="conventional-aggregation">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="class1" type="xs:string"/>
+											<xs:element name="class2" type="xs:string"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="spatial-aggregation">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="class1" type="xs:string"/>
+											<xs:element name="class2" type="xs:string"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="network">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="name" type="xs:string"/>
+											<xs:element name="class1" type="xs:string"/>
+											<xs:element name="class2" type="xs:string"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="generalization">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="superclass" type="xs:string"/>
+											<xs:element name="participation">
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:enumeration value="total"/>
+														<xs:enumeration value="partial"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:element>
+											<xs:element name="disjointness">
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:enumeration value="disjoint"/>
+														<xs:enumeration value="overlapping"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:element>
+											<xs:element name="subclasses">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="subclass" type="xs:string" maxOccurs="unbounded"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="conceptual-generalization">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="superclass" type="xs:string"/>
+											<xs:element name="scale-shape">
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:enumeration value="shape"/>
+														<xs:enumeration value="scale"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:element>
+											<xs:element name="disjointness">
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:enumeration value="disjoint"/>
+														<xs:enumeration value="overlapping"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:element>
+											<xs:element name="subclasses">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="subclass" type="xs:string" maxOccurs="unbounded"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="user-restriction" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="class1" type="xs:string"/>
+											<xs:element name="spatial-relations">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="spatial-relation" type="xs:string" maxOccurs="unbounded"/>
+														<xs:element name="distance" type="xs:string" minOccurs="0"/>
+														<xs:element name="unit" type="xs:string" minOccurs="0"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="can-occur" type="xs:boolean"/>
+											<xs:element name="class2" type="xs:string"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:choice>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:key name="class-key">
+			<xs:selector xpath=".//class"/>
+			<xs:field xpath="name"/>
+		</xs:key>
+		<xs:keyref name="conventional-class1-keyref" refer="class-key">
+			<xs:selector xpath=".//conventional"/>
+			<xs:field xpath="class1"/>
+		</xs:keyref>
+		<xs:keyref name="conventional-class2-keyref" refer="class-key">
+			<xs:selector xpath=".//conventional"/>
+			<xs:field xpath="class2"/>
+		</xs:keyref>
+		<xs:keyref name="topological-class1-keyref" refer="class-key">
+			<xs:selector xpath=".//topological"/>
+			<xs:field xpath="class1"/>
+		</xs:keyref>
+		<xs:keyref name="topological-class2-keyref" refer="class-key">
+			<xs:selector xpath=".//topological"/>
+			<xs:field xpath="class2"/>
+		</xs:keyref>
+		<xs:keyref name="conventional-aggregation-class1-keyref" refer="class-key">
+			<xs:selector xpath=".//conventional-aggregation"/>
+			<xs:field xpath="class1"/>
+		</xs:keyref>
+		<xs:keyref name="conventional-aggregation-class2-keyref" refer="class-key">
+			<xs:selector xpath=".//conventional-aggregation"/>
+			<xs:field xpath="class2"/>
+		</xs:keyref>
+		<xs:keyref name="spatial-aggregation-class1-keyref" refer="class-key">
+			<xs:selector xpath=".//spatial-aggregation"/>
+			<xs:field xpath="class1"/>
+		</xs:keyref>
+		<xs:keyref name="spatial-aggregation-class2-keyref" refer="class-key">
+			<xs:selector xpath=".//spatial-aggregation"/>
+			<xs:field xpath="class2"/>
+		</xs:keyref>
+		<xs:keyref name="network-class1-keyref" refer="class-key">
+			<xs:selector xpath=".//network"/>
+			<xs:field xpath="class1"/>
+		</xs:keyref>
+		<xs:keyref name="network-class2-keyref" refer="class-key">
+			<xs:selector xpath=".//network"/>
+			<xs:field xpath="class2"/>
+		</xs:keyref>
+		<xs:keyref name="generalization-superclass-keyref" refer="class-key">
+			<xs:selector xpath=".//generalization"/>
+			<xs:field xpath="superclass"/>
+		</xs:keyref>
+		<xs:keyref name="conceptual-generalization-superclass-keyref" refer="class-key">
+			<xs:selector xpath=".//conceptual-generalization"/>
+			<xs:field xpath="superclass"/>
+		</xs:keyref>
+		<xs:keyref name="user-restriction-class1-keyref" refer="class-key">
+			<xs:selector xpath=".//user-restriction"/>
+			<xs:field xpath="class1"/>
+		</xs:keyref>
+		<xs:keyref name="user-restriction-class2-keyref" refer="class-key">
+			<xs:selector xpath=".//user-restriction"/>
+			<xs:field xpath="class2"/>
+		</xs:keyref>
+	</xs:element>
+	<xs:complexType name="cardinalityType">
+		<xs:sequence>
+			<xs:element name="min" type="xs:string"/>
+			<xs:element name="max" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="attributeType">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="type" type="xs:string"/>
+			<xs:element name="key" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="length" type="xs:string" minOccurs="0"/>
+			<xs:element name="scale" type="xs:string" minOccurs="0"/>
+			<xs:element name="not-null" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="default" type="xs:string" minOccurs="0"/>
+			<xs:element name="size" type="xs:string" minOccurs="0"/>
+			<xs:element name="domain" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="value" type="xs:string" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
