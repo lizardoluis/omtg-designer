@@ -12,7 +12,7 @@
 				tooltip: '',
 				icon: '',
 				active: false,
-			}
+			};
 		},
 		
 		// Toggle the `selected` state of this tool

@@ -19,4 +19,14 @@
     <servlet-name>omtg2sql</servlet-name>
     <url-pattern>/omtg2sql</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>XMLImporter</display-name>
+    <servlet-name>XMLImporter</servlet-name>
+    <servlet-class>com.omtgdesigner.servlets.XMLImporter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>XMLImporter</servlet-name>
+    <url-pattern>/XMLImporter</url-pattern>
+  </servlet-mapping>
 </web-app>
