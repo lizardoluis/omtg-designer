@@ -7,8 +7,9 @@
 	app.omtg.Diagrams = Backbone.Collection.extend({
 		model : app.omtg.Diagram,
 		
-		initialize: function() {
-	        this.on('change:selected', this.propagate_selected);
+		initialize: function() {	       
+	        this.listenTo(this, 'change:selected', this.propagate_selected);
+//	        this.listenTo(this, 'destroy', this.destroy);
 	    },
 	    
 	    propagate_selected: function(p) {
@@ -34,12 +35,17 @@
 		},
 		
 		toXML: function() {
+		
 			var xml = "";
 			this.each(function(model) {
 	    		xml += model.toXML();
 	    	});
 			return "<classes>" + xml + "</classes>";
 		},
+		
+//		destroy: function(diagram) {
+//			this.remove(diagram);
+//		},
 	});
 
 })();

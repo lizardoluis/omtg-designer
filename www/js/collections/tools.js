@@ -8,7 +8,7 @@
 		model : app.Tool,
 		
 		initialize : function() {
-			this.on('change:active', this.propagate_active);
+			this.listenTo(this, 'change:active', this.propagate_active);
 		},
 		
 		propagate_active: function(p) {

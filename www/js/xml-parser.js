@@ -125,7 +125,7 @@ app.XMLParser = {
 		
 		switch(element.nodeName){
 		case "conventional":
-			var description = element.childNodes[0].firstChild.nodeValue;
+			var description = this.getValue(element.childNodes[0].firstChild);
 			var sourceName = element.childNodes[1].firstChild.nodeValue;
 			var targetName = element.childNodes[3].firstChild.nodeValue;
 			var cardinalityA = element.childNodes[2];
@@ -144,9 +144,8 @@ app.XMLParser = {
 			
 			break;
 			
-		case "topological":
-			
-			var description = element.childNodes[0].firstChild.nodeValue;
+		case "topological":			
+			var description = this.getValue(element.childNodes[0].firstChild.firstChild);
 			var sourceName = element.childNodes[1].firstChild.nodeValue;
 			var targetName = element.childNodes[3].firstChild.nodeValue;
 			var cardinalityA = element.childNodes[2];
@@ -164,6 +163,60 @@ app.XMLParser = {
 			this.parseOMTGConnectionCardinality(cardinalityB, connection, 'B');
 			
 			break;
+			
+		case "conventional-aggregation":
+			var sourceName = element.childNodes[0].firstChild.nodeValue;
+			var targetName = element.childNodes[1].firstChild.nodeValue;
+			
+			app.plumb.connect({
+				source: this.diagramMap[sourceName],
+				target: this.diagramMap[targetName],
+				type: 'aggregation',
+			});			
+			
+			break;
+			
+		case "spatial-aggregation":
+			var sourceName = element.childNodes[0].firstChild.nodeValue;
+			var targetName = element.childNodes[1].firstChild.nodeValue;
+			
+			app.plumb.connect({
+				source: this.diagramMap[sourceName],
+				target: this.diagramMap[targetName],
+				type: 'spatial-aggregation',
+			});			
+			
+			break;
+			
+		case "network":
+			var description = this.getValue(element.childNodes[0].firstChild);
+			var sourceName = element.childNodes[1].firstChild.nodeValue;
+			var targetName = element.childNodes[2].firstChild.nodeValue;
+			
+			var connection = app.plumb.connect({
+				source: this.diagramMap[sourceName],
+				target: this.diagramMap[targetName],
+				type: 'arc-network',
+			});
+			
+			connection.getOverlay("description-label").setLabel(description);
+			
+			break;
+			
+		case "conceptual-generalization":
+			var sourceName = element.item(i).childNodes[0].firstChild.nodeValue;
+			var type = element.item(i).childNodes[1].firstChild.nodeValue;
+			var disjointness = element.item(i).childNodes[2].firstChild.nodeValue;
+			var targetName = element.item(i).childNodes[3].childNodes[0].firstChild.nodeValue;
+			var subDiagrams = element.item(i).childNodes[3].childNodes;
+			
+			var connection = app.plumb.connect({
+				source: this.diagramMap[sourceName],
+				target: this.diagramMap[targetName],
+				type: 'cartographic-generalization-' + disjointness,
+			});
+			
+			break;
 		}
 	},
 	
@@ -174,11 +227,8 @@ app.XMLParser = {
 		
 		var min = "", max = "", str = "";
 		
-		if(element.childNodes[0].firstChild != null)
-			min = element.childNodes[0].firstChild.nodeValue;		
-		
-		if(element.childNodes[1].firstChild != null)
-			max = element.childNodes[1].firstChild.nodeValue;	
+		min = this.getValue(element.childNodes[0].firstChild);		
+		max = this.getValue(element.childNodes[1].firstChild);
 		
 		if(min == "" && max == ""){
 			str = "";
@@ -194,5 +244,12 @@ app.XMLParser = {
 		
 		connection.setParameter("min" + side, min);
 		connection.setParameter("max" + side, max);
-	}
+	},
+	
+	getValue : function(p) {
+		if (p)
+			return p.nodeValue;
+		else
+			return "";
+	},
 };

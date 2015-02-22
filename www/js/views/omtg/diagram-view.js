@@ -41,7 +41,7 @@
 
 			// Listeners
 			this.listenTo(this.model, 'change', this.render);
-			this.listenTo(this.model, 'destroy', this.remove);
+//			this.listenTo(this.model, 'destroy', this.remove);
 		},
 
 		render : function() {
@@ -98,7 +98,11 @@
 		},
 		
 		delete : function() {
-			this.model.trigger('destroy', this.model);
+						
+//			this.model.trigger('destroy', this.model);
+			
+			app.canvas.get('diagrams').remove(this.model);
+			this.remove();
 		},
 		
 		updatePosition : function(event) {

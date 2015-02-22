@@ -55,11 +55,8 @@
 				"</conventional-aggregation>";
 				
 			case "spatial-aggregation":
-				console.log("source");
 				var sourceName = this.get('diagrams').get(conn.sourceId, 'name');
-				console.log("target");
 				var targetName = this.get('diagrams').get(conn.targetId, 'name');
-				console.log("here");
 				return "<spatial-aggregation>" +
 				"<class1>" + sourceName + "</class1>" +
 				"<class2>" + targetName + "</class2>" +
@@ -129,7 +126,7 @@
 			case "cartographic-generalization-overlapping":
 				var superName = this.get('diagrams').get(conn.sourceId, 'name');
 				var disjointness = conn.getParameter("disjointness");
-				var description = conn.getOverlay("cartographic-label");
+				var description = conn.getOverlay("cartographic-label").getLabel();
 				var subClasses = "";
 				
 				var subConns = app.plumb.getConnections({source : conn.getOverlay("cartographic-square").getElement()});
