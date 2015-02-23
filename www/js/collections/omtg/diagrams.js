@@ -9,7 +9,6 @@
 		
 		initialize: function() {	       
 	        this.listenTo(this, 'change:selected', this.propagate_selected);
-//	        this.listenTo(this, 'destroy', this.destroy);
 	    },
 	    
 	    propagate_selected: function(p) {
@@ -38,14 +37,11 @@
 		
 			var xml = "";
 			this.each(function(model) {
-	    		xml += model.toXML();
+	    		if(!model.get('deleted'))
+	    			xml += model.toXML();
 	    	});
 			return "<classes>" + xml + "</classes>";
 		},
-		
-//		destroy: function(diagram) {
-//			this.remove(diagram);
-//		},
 	});
 
 })();

@@ -14,6 +14,7 @@
 				selected : false,
 				top : 10,
 				left : 10,
+				deleted : false,
 			};
 		},
 		

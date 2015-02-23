@@ -99,9 +99,10 @@
 		
 		delete : function() {
 						
-//			this.model.trigger('destroy', this.model);
+			// I could not use collection remove because it was not working, so I set a flag as deleted to avoid exportation.
+			this.model.set('deleted', true); 						
 			
-			app.canvas.get('diagrams').remove(this.model);
+			// Remove view
 			this.remove();
 		},
 		
