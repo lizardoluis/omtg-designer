@@ -48,7 +48,7 @@ jsPlumb.ready(function() {
 		
 		return ["Custom", {
         	create:function(component) {
-        		return $('<svg id="generalization-triangle" class="generalization-triangle" height="26" width="26"><polygon points="1,25 13,1 25,25" stroke="black" stroke-width="1" fill="'+ color +'" /></svg>');                
+        		return $('<svg class="generalization-triangle" height="26" width="26"><polygon points="1,25 13,1 25,25" stroke="black" stroke-width="1" fill="'+ color +'" /></svg>');                
         	},
         	location:position,
         	id: "generalization-triangle",
@@ -69,7 +69,7 @@ jsPlumb.ready(function() {
 	var square = function(color, position){
 		return ["Custom", {
         	create: function(component) {
-        		return $('<svg id="cartographic-square" class="cartographic-square" width="16px" height="16px"><rect width="15px" height="15px"  stroke="black" stroke-width="2" fill="'+ color +'" /></svg>');                
+        		return $('<svg class="cartographic-square" width="16px" height="16px"><rect width="15px" height="15px"  stroke="black" stroke-width="2" fill="'+ color +'" /></svg>');                
         	},
         	location: position,    
         	id: "cartographic-square",
@@ -206,10 +206,10 @@ jsPlumb.ready(function() {
 		}		
 		
 		// if connection comes from a cartographic square, set type as cartographic-leg
-		if(connection.sourceId == "cartographic-square"){
+		if(connection.source.classList[0] == "cartographic-square"){
 			connection.setType("cartographic-leg");
 		}
-		else if(connection.sourceId == "generalization-triangle"){
+		else if(connection.source.classList[0] == "generalization-triangle"){
 			connection.setType("generalization-leg");
 		}
 	});

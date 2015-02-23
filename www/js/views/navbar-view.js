@@ -62,6 +62,7 @@
 		print : function() {
 			app.canvas.get('diagrams').unselectAll();
 		},	
+		
 	});
 
 })(jQuery);
