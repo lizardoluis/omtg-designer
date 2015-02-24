@@ -72,8 +72,8 @@ jsPlumb.ready(function() {
         	create: function(component) {
         		return $('<svg class="cartographic-square" width="16px" height="16px"><rect width="15px" height="15px"  stroke="black" stroke-width="2" fill="'+ color +'" /></svg>');                
         	},
-        	location: position,    
         	id: "cartographic-square",
+        	location: position,        	
         }];	
 	};	
 	
