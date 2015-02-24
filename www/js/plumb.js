@@ -52,6 +52,7 @@ jsPlumb.ready(function() {
         	},
         	location:position,
         	id: "generalization-triangle",
+        	
         }];	
 	};
 	
