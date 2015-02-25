@@ -34,7 +34,7 @@
 			var type = this.connection.getType()[0];
 			
 			// Add Description component
-			if(type == 'association' || type == 'spatial-association' || type == 'arc-network'){
+			if(type == 'association' || type == 'spatial-association' || type == 'arc-network' || type == 'arc-network-self'){
 				fieldset.append(_.template($('#omtg-connection-editor-description-template').html()));
 				
 				this.descriptionLabel = this.connection.getOverlay("description-label");			
@@ -86,7 +86,7 @@
 			var type = this.connection.getType()[0];
 			
 			// Connection description
-			if(type == 'association' || type == 'spatial-association' || type == 'arc-network'){
+			if(type == 'association' || type == 'spatial-association' || type == 'arc-network' || type == 'arc-network-self'){
 				var description = this.$('#inputConnectionDescription').val().trim();
 				this.descriptionLabel.setLabel(description);
 			}

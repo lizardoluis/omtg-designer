@@ -31,6 +31,17 @@ jsPlumb.ready(function() {
 			fillStyle : "white"
 		}
 	} ] ];
+	
+	var triangleEndpoint = function(type){ 
+		if(type == "generalization-disjoint-partial")
+			return ["Image", {src:"imgs/omtg/triangle-white.png", cssClass:"triangle-endpoint"}];
+		if(type == "generalization-overlapping-partial")
+			return ["Image", {src:"imgs/omtg/triangle-black.png", cssClass:"triangle-endpoint"}];
+		if(type == "generalization-disjoint-total")
+			return ["Image", {src:"imgs/omtg/triangle-circle-white.png", cssClass:"triangle-endpoint"}];
+		if(type == "generalization-overlapping-total")
+			return ["Image", {src:"imgs/omtg/triangle-circle-black.png", cssClass:"triangle-endpoint"}];
+	};
 
 	
 	var triangle = function(color, position){
@@ -77,6 +88,7 @@ jsPlumb.ready(function() {
         }];	
 	};	
 	
+	
 	// Plumbing default setup
 	app.plumb = jsPlumb.getInstance({
 		Anchor : "Continuous",
@@ -87,7 +99,7 @@ jsPlumb.ready(function() {
 		Endpoint : "Blank",
 		HoverPaintStyle: connectorHoverStyle,
 	});
-
+	
 	
 	// Define all the connection types
 	app.plumb.registerConnectionTypes({
@@ -124,7 +136,6 @@ jsPlumb.ready(function() {
 			overlays : diamondOverlay,
 		},
 		"generalization-disjoint-partial" : {
-			anchors : [ "Bottom", "Top" ],
 			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
 			overlays : [ triangle("white", 13) ],
@@ -161,7 +172,7 @@ jsPlumb.ready(function() {
 			},
 		},
 		"generalization-leg" : {
-			connector: ["Flowchart", {stub: [30, 30], alwaysRespectStubs: true}],
+			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
 		},
 		"arc-network" : {
@@ -171,6 +182,15 @@ jsPlumb.ready(function() {
 		},
 		"arc-network-sibling" : {
 			connector: "Straight",
+			paintStyle : dashedConnectorStyle,
+		},		
+		"arc-network-self" : {
+			connector: ["Flowchart", {stub: [50, 50], alwaysRespectStubs: true}],
+			paintStyle : dashedConnectorStyle,
+			overlays : [[ "Label", { label:"network", location:0.4, id:"description-label", cssClass: "arc-network-label" } ]],
+		},
+		"arc-network-sibling-self" : {
+			connector: ["Flowchart", {stub: [25, 25], alwaysRespectStubs: true}],
 			paintStyle : dashedConnectorStyle,
 		},
 		"cartographic-generalization-disjoint" : {
@@ -194,7 +214,6 @@ jsPlumb.ready(function() {
 			paintStyle : dashedConnectorStyle,
 		},
 	});
-
 	
 	// This events checks which type of connection the user chose in the
 	// toolbox, and set the type of the connection to the selected one.
@@ -210,9 +229,6 @@ jsPlumb.ready(function() {
 		if(connection.source.classList[0] == "cartographic-square"){
 			connection.setType("cartographic-leg");
 		}
-		else if(connection.source.classList[0] == "generalization-triangle"){
-			connection.setType("generalization-leg");
-		}
 	});
 		
 	
@@ -226,41 +242,75 @@ jsPlumb.ready(function() {
 		switch(type){
 		//Adds the second line in network relationships
 		case "arc-network":
-			var sibling = app.plumb.connect({
-				source:info.sourceId, 
-				target:info.targetId,
-				type:"arc-network-sibling",
-				parameters:{
-					"sibling": info.connection
-				}
-			});
 			
-			info.connection.setParameter("sibling", sibling);
+			if(info.connection.sourceId == info.connection.targetId){
+				app.plumb.detach(info.connection);
+
+				var newConn = app.plumb.connect({
+					source : info.connection.sourceId,
+					target : info.connection.targetId,
+					anchors : [ [ 0.35, 1, 0, 1 ], [ 1, 0.5, 1, 0 ] ],
+					type : "arc-network-self",
+					fireEvent: false  // avoids this event loop
+				});	
+
+				var sibling = app.plumb.connect({
+					source: info.connection.sourceId, 
+					target: info.connection.targetId,
+					anchors : [ [ 0.5, 1, 0, 1 ], [ 1, 0.75, 1, 0 ] ],
+					type: "arc-network-sibling-self",
+					parameters:{
+						"sibling": info.connection
+					}
+				});
+			}
+			else{
+
+				var sibling = app.plumb.connect({
+					source:info.connection.sourceId, 
+					target:info.connection.targetId,
+					type:"arc-network-sibling",
+					parameters:{
+						"sibling": info.connection
+					}
+				});
+
+			}
+			
+			newConn.setParameter("sibling", sibling);
 			break;
 			
 		case "generalization-disjoint-partial":
 		case "generalization-disjoint-total":
 		case "generalization-overlapping-partial":
 		case "generalization-overlapping-total":
-			// Set connection anchors, due to the drag
-			// change of anchors, default in jsplumb, the
-			// connection must be detached and re-atached
-			// with the Bottom and Top anchors
+						
+			// Detach the connection to add a new one with the correct
+			// endpoint
 			app.plumb.detach(info.connection);
-			var newConn = app.plumb.connect({
-				source : info.connection.sourceId,
-				target : info.connection.targetId,
-				anchors : [ "Bottom", "Top" ],
-				type : type,
-				fireEvent: false // avoids connect event loop
+			
+			// Adds the endpoint to the diagram
+			var endpoint = app.plumb.addEndpoint(info.connection.sourceId, {
+				anchor : [ 0.5, 1.2, 0, 1 ],
+				connectionType : "generalization-leg",
+				endpoint : triangleEndpoint(type),
+				isSource : true,
+				isTarget : false,
+				maxConnections : 100,
+				uniqueEndpoint : true,
 			});
 			
-			// Make generalization overlay a source of more connections
-			app.newconn = newConn;
-			app.plumb.makeSource(newConn.getOverlay("generalization-triangle").getElement(),{
-				anchor: [ 0, 0.5, 0, 1 ],
-//				parameters: {"sourceDiagramID" : info.connection.sourceId},
+			// Reatach the connection, but now to the endpoint
+			var newConn = app.plumb.connect({
+				anchors : [ "Bottom", "Top" ],
+				source : endpoint,
+				target : info.connection.targetId,
+				type : type,
+				fireEvent: false // avoids connect event loop
 			});	
+			// Remove the overlay of the connection, added by the type
+			newConn.removeAllOverlays();
+			
 			break;
 			
 		// Generalization leg type connection with top target anchor
@@ -300,13 +350,15 @@ jsPlumb.ready(function() {
 	// this relationship is valid accordingly to OMT-G restrictions.
 	app.plumb.bind("beforeDrop", function(info) {
 		
-		// Avoid self loop. 
-		// TODO: support network self loop
-		if(info.sourceId == info.targetId)
-			return false;
-
 		// Get type of the connection and type of the diagrams
 		var type = info.connection.getType()[0];
+		
+		// Avoid self loop. 
+		// TODO: support network self loop
+		if(type != "arc-network" && info.sourceId == info.targetId){
+			return false;
+		}
+
 		var sourceType = app.canvas.get('diagrams').get(info.sourceId, 'type');
 		var targetType = app.canvas.get('diagrams').get(info.targetId, 'type');
 				
@@ -339,7 +391,7 @@ jsPlumb.ready(function() {
 		// If source == target, they must bi bi-line or un-line.
 		// if source or target is a node, the other side must be bi-line or un-line.
 		case "arc-network":			
-			return (sourceType == targetType && (sourceType == "bi-line" || sourceType == "un-line")) ||
+			return (sourceType == targetType && (sourceType == "node" || sourceType == "bi-line" || sourceType == "un-line")) ||
 			(sourceType == "node" && (targetType == "bi-line" || targetType == "un-line")) ||
 			(targetType == "node" && (sourceType == "bi-line" || sourceType == "un-line"));
 		}
@@ -359,7 +411,7 @@ jsPlumb.ready(function() {
 		
 		// For arc-network when clicked in the sibling connection
 		var type = param.getType()[0];
-		if(type == 'arc-network-sibling')
+		if(type == 'arc-network-sibling' || type == 'arc-network-sibling-self')
 			param = param.getParameter('sibling');
 		
 		// Connection types without attributes

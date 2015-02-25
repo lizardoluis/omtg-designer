@@ -224,3 +224,7 @@
 .progress {
 	margin-top: 20px;
 }
+
+.triangle-endpoint {
+	z-index: 100;
+}

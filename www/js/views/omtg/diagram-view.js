@@ -83,7 +83,8 @@
 			else{
 				this.$el.removeClass('selected');
 			}
-						
+			
+			app.plumb.repaintEverything();
 			
 			return this;
 		},
