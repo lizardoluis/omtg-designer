@@ -199,6 +199,7 @@ app.XMLParser = {
 				type: 'arc-network',
 			});
 			
+			//TODO: 
 			connection.getOverlay("description-label").setLabel(description);
 			
 			break;
