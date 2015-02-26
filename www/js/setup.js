@@ -49,4 +49,7 @@ $(function () {
 	app.navbarView = new app.NavbarView({el: $('#navbar')});
 	app.toolboxesView = new app.ToolboxesView({el: $('#section-sidebar'), model: app.toolboxes});
 	app.canvasView = new app.CanvasView({el: '#canvas', model: app.canvas});
+	
+	// Global constants
+	app.deleteMsg = "This connection will be detached. There is no undo. Are you sure?";
 });

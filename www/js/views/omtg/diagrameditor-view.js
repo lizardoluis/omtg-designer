@@ -96,7 +96,14 @@
 				this.model.set('name', name);
 			}
 			
-			// Diagram attributes
+			// Diagram attributes, remove empty name ones
+			for(var i=0; i<this.attrsClone.length; i++){
+				var attr = this.attrsClone.at(i);
+				if(attr.get('name') == ''){				
+					this.attrsClone.remove(attr);
+					i--;
+				}
+			}
 			this.model.set({'attributes': this.attrsClone});
 			this.model.trigger('change', this.model);
 

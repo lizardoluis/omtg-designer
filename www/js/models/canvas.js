@@ -27,12 +27,12 @@
 		connectionsToXML : function() {
 			var conns = app.plumb.getConnections();
 			var connsXML = "";
-			
+						
 			for(var i=0; i<conns.length; i++){
 				var type = conns[i].getType()[0];
 				if (type != "arc-network-sibling"
-					&& type != "generalization-leg"
-						&& type != "cartographic-leg"){
+					&& type != "cartographic-leg" 
+						&& type != "generalization-leg"){
 					connsXML += this.connectionToXML(conns[i]);
 				}
 	    	}
@@ -91,6 +91,7 @@
 				"</topological>";
 				
 			case "arc-network":
+			case "arc-network-self":
 				var description = conn.getOverlay("description-label").getLabel();
 				var sourceName = this.get('diagrams').get(conn.sourceId, 'name');
 				var targetName = this.get('diagrams').get(conn.targetId, 'name');
@@ -103,14 +104,16 @@
 			case "generalization-disjoint-partial":
 			case "generalization-disjoint-total":
 			case "generalization-overlapping-partial":
-			case "generalization-overlapping-total":
+			case "generalization-overlapping-total":				
 				var superName = this.get('diagrams').get(conn.sourceId, 'name');
-				var participation = conn.getParameter("participation");
-				var disjointness = conn.getParameter("disjointness");
-				var subClasses = "";
 				
-				var subConns = app.plumb.getConnections({source : conn.getOverlays()[0].getElement()});
-				for(var i=0; i<subConns; i++){
+				var endpoint = conn.endpoints[0];				
+				var participation = endpoint.getParameter("participation");
+				var disjointness = endpoint.getParameter("disjointness");
+
+				var subClasses = "";
+				var subConns = endpoint.getAttachedElements();
+				for(var i=0; i<subConns.length; i++){
 					var subName = this.get('diagrams').get(subConns[i].targetId, 'name');
 		    		subClasses += "<subclass>" + subName + "</subclass>";
 		    	}
@@ -127,10 +130,11 @@
 				var superName = this.get('diagrams').get(conn.sourceId, 'name');
 				var disjointness = conn.getParameter("disjointness");
 				var description = conn.getOverlay("cartographic-label").getLabel();
-				var subClasses = "";
+				
+				var subClasses = "<subclass>" + this.get('diagrams').get(conn.targetId, 'name') + "</subclass>";
 				
 				var subConns = app.plumb.getConnections({source : conn.getOverlay("cartographic-square").getElement()});
-				for(var i=0; i<subConns; i++){
+				for(var i=0; i<subConns.length; i++) {
 					var subName = this.get('diagrams').get(subConns[i].targetId, 'name');
 		    		subClasses += "<subclass>" + subName + "</subclass>";
 		    	}

@@ -9,13 +9,16 @@
 		tagName : 'tr',
 
 		initialize : function() {
-			this.template = _.template("<td><%= attr %></td>");
+			this.template = _.template("<td><% if( isKey ){ %> <img class='attribute-key' src='imgs/omtg/key.png'> <% } %></td><td><%= attr %></td>");
+			
 		},
 
 		render : function() {
 			// TODO: include other attr fields
-			var attrText = this.model.escape('name');
-			this.$el.html(this.template({attr : attrText}));
+			this.$el.html(this.template({
+				isKey : this.model.get('isKey'), 
+				attr : this.model.escape('name') + ': ' + this.model.get('type'),
+			}));
 			return this;
 		},
 

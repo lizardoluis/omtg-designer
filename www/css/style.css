@@ -112,17 +112,15 @@
 	float: left;
 	display: inline-block;
 	
-	border-top: 1px solid black;
-	border-left: 1px solid black;
-	border-bottom: 1px solid black;
+	border: 1px solid black;
 	text-align: center;
 	padding: 5px 5px 5px 5px;
 }
 
 .diagram-container .d-header .d-title {
 	height: 100%;
-	min-width: 90px;
-	display: inline-block;
+	min-width: 127px;
+/* 	display: inline-block; */
 	
 	text-align: center;
 	padding: 8px 5px 5px 5px;
@@ -143,9 +141,10 @@
 	border: 2px solid black;
 }
 
-/* .diagram-container .diagram .diagram-attribute .diagram-key { */
-/* 	width: 13px; */
-/* } */
+.diagram-container .attribute-key {
+	width: 13px;
+	margin-right: 4px;
+}
 
 .diagram-container .badge-delete {
 	position: absolute;

@@ -78,7 +78,7 @@
 				scroll : true,
 				drag:function(e,ui) {
 					// TODO: remove this drag function and repaint for performance reasons
-					if($(".cartographic-square").length > 0 || $(".generalization-triangle").length > 0)
+					if($(".cartographic-square").length > 0)
 						app.plumb.repaintEverything();
 				}
 			});

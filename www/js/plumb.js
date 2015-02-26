@@ -45,18 +45,6 @@ jsPlumb.ready(function() {
 
 	
 	var triangle = function(color, position){
-//		return [ "PlainArrow", { 
-//			length:25, 
-//			width: 25, 
-//			location: position, 
-//			direction:-1, 
-//			paintStyle:{
-//				strokeStyle:"black",
-//				fillStyle:color	            
-//			},
-//			id: "generalization-triangle",
-//		}];	
-		
 		return ["Custom", {
         	create:function(component) {
         		return $('<svg class="generalization-triangle" height="26" width="26"><polygon points="1,25 13,1 25,25" stroke="black" stroke-width="1" fill="'+ color +'" /></svg>');                
@@ -159,7 +147,7 @@ jsPlumb.ready(function() {
 			overlays : [circle(9), triangle("white", 30) ],
 			parameters:{
 				"participation":"total",
-				"disjointness":"overlapping",
+				"disjointness":"disjoint",
 			},
 		},
 		"generalization-overlapping-total" : {
@@ -260,9 +248,11 @@ jsPlumb.ready(function() {
 					anchors : [ [ 0.5, 1, 0, 1 ], [ 1, 0.75, 1, 0 ] ],
 					type: "arc-network-sibling-self",
 					parameters:{
-						"sibling": info.connection
+						"sibling": newConn
 					}
 				});
+				
+				newConn.setParameter("sibling", sibling);
 			}
 			else{
 
@@ -274,10 +264,10 @@ jsPlumb.ready(function() {
 						"sibling": info.connection
 					}
 				});
-
+				
+				info.connection.setParameter("sibling", sibling);
 			}
-			
-			newConn.setParameter("sibling", sibling);
+		
 			break;
 			
 		case "generalization-disjoint-partial":
@@ -285,6 +275,9 @@ jsPlumb.ready(function() {
 		case "generalization-overlapping-partial":
 		case "generalization-overlapping-total":
 						
+			var participation = info.connection.getParameter("participation");
+			var disjointness = info.connection.getParameter("disjointness");
+			
 			// Detach the connection to add a new one with the correct
 			// endpoint
 			app.plumb.detach(info.connection);
@@ -298,6 +291,11 @@ jsPlumb.ready(function() {
 				isTarget : false,
 				maxConnections : 100,
 				uniqueEndpoint : true,
+				
+				parameters:{
+					"participation": participation,
+					"disjointness": disjointness,
+			    }
 			});
 			
 			// Reatach the connection, but now to the endpoint
@@ -308,6 +306,7 @@ jsPlumb.ready(function() {
 				type : type,
 				fireEvent: false // avoids connect event loop
 			});	
+			
 			// Remove the overlay of the connection, added by the type
 			newConn.removeAllOverlays();
 			
@@ -354,7 +353,6 @@ jsPlumb.ready(function() {
 		var type = info.connection.getType()[0];
 		
 		// Avoid self loop. 
-		// TODO: support network self loop
 		if(type != "arc-network" && info.sourceId == info.targetId){
 			return false;
 		}
@@ -375,7 +373,6 @@ jsPlumb.ready(function() {
 			return (sourceType == "conventional") && (targetType == "conventional");			
 
 		// Superclass must be conventional and subclasses georeferenced
-		// TODO: conceptual legs cannot connect conventional classes 
 		case "cartographic-generalization-disjoint":
 		case "cartographic-generalization-overlapping":
 			return (sourceType == "conventional") && (targetType != "conventional");
@@ -402,9 +399,9 @@ jsPlumb.ready(function() {
 	
 	// Event that opens modal for edit the connection or to delete it
 	app.plumb.bind("dblclick", function(conn, originalEvent) {
-
-		var param = conn;
 		
+		var param = conn;
+				
 		// Fix the bug of clicking an overlay
 		if(conn instanceof jsPlumb.Overlays.Label)
 			param = conn.component;
@@ -420,27 +417,48 @@ jsPlumb.ready(function() {
 		// deletion.
 		if (type == 'aggregation'
 			|| type == 'spatial-aggregation'
-				|| type == 'generalization-leg'
 					|| type == 'cartographic-leg') {
 
-			if (confirm("This connection will be detached. There is no undo. Are you sure?")){
+			if (confirm(app.deleteMsg)){
 				app.plumb.detach(param);
 			}
 		}
 		
-		// Generalization connections. Need to
-		// detach all legs before detaching the
-		// main connection
-		else if(type == 'generalization-disjoint-partial'
-			|| type == 'generalization-overlapping-partial'
-				|| type == 'generalization-disjoint-total'
-					|| type == 'generalization-overlapping-total'){
-						
-			if (confirm("This connection will be detached. There is no undo. Are you sure?")){
-				app.plumb.detachAllConnections(param.getOverlays()[0].getElement());
+		else if (type == "generalization-disjoint-partial"
+			|| type == "generalization-disjoint-total"
+				|| type == "generalization-overlapping-partial"
+					|| type == "generalization-overlapping-total") {
+			
+			if (confirm(app.deleteMsg)){
+				
+				var endpoint = param.endpoints[0];
 				app.plumb.detach(param);
+				
+				// Delete the endpoint triangle if there are no connections anymore.
+				if(endpoint.getAttachedElements().length == 0){
+					app.plumb.deleteEndpoint(endpoint);
+				}
+				else{
+					endpoint.getAttachedElements()[0].setType(type);
+					endpoint.getAttachedElements()[0].removeAllOverlays();
+				}
+			}	
+		}
+		
+		// Generalization connections. 
+		else if(type == 'generalization-leg'){
+			
+			if (confirm(app.deleteMsg)){
+				
+				var endpoint = param.endpoints[0];
+				app.plumb.detach(param);
+				
+				// Delete the endpoint triangle if there are no connections anymore.
+				if(endpoint.getAttachedElements().length == 0){
+					app.plumb.deleteEndpoint(endpoint);
+				}
 			}			
-		}		
+		}	
 		
 		// Connections with attributes to be edited. Opens the editor modal
 		else {

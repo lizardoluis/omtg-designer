@@ -119,7 +119,7 @@
 		
 		detach : function(event) {
 			
-			if (confirm("This connection will be detached. There is no undo. Are you sure?")){
+			if (confirm(app.deleteMsg)){
 				
 				var type = this.connection.getType()[0];
 
