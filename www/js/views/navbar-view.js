@@ -60,7 +60,7 @@
 		},	
 		
 		print : function() {
-			app.canvas.get('diagrams').unselectAll();
+			app.canvasView.print();
 		},	
 		
 	});

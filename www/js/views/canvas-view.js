@@ -5,7 +5,7 @@
 	// ----------
 
 	app.CanvasView = Backbone.View.extend({
-
+		
 		events : {
 			'click' : 'clicked',
 		},
@@ -86,6 +86,15 @@
 			app.plumb.setSuspendDrawing(false, true);
 		},
 		
+		print : function(){
+//			this.model.get('diagrams').unselectAll();
+//			
+//			this.$el.children().printThis({
+//				debug: true,
+//				importCSS: true,
+//				printContainer: true,
+			});
+		},
 		
 	});
 

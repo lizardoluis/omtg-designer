@@ -239,7 +239,7 @@ jsPlumb.ready(function() {
 					target : info.connection.targetId,
 					anchors : [ [ 0.35, 1, 0, 1 ], [ 1, 0.5, 1, 0 ] ],
 					type : "arc-network-self",
-					fireEvent: false  // avoids this event loop
+					fireEvent: false,  // avoids this event loop
 				});	
 
 				var sibling = app.plumb.connect({
@@ -249,7 +249,8 @@ jsPlumb.ready(function() {
 					type: "arc-network-sibling-self",
 					parameters:{
 						"sibling": newConn
-					}
+					},
+					fireEvent: false,
 				});
 				
 				newConn.setParameter("sibling", sibling);
@@ -262,7 +263,8 @@ jsPlumb.ready(function() {
 					type:"arc-network-sibling",
 					parameters:{
 						"sibling": info.connection
-					}
+					},
+					fireEvent: false,
 				});
 				
 				info.connection.setParameter("sibling", sibling);
@@ -290,8 +292,7 @@ jsPlumb.ready(function() {
 				isSource : true,
 				isTarget : false,
 				maxConnections : 100,
-				uniqueEndpoint : true,
-				
+				uniqueEndpoint : true,				
 				parameters:{
 					"participation": participation,
 					"disjointness": disjointness,
