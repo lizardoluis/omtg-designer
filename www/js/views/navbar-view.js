@@ -14,10 +14,23 @@
 		},
 
 		importXML : function() {
-			new app.XMLImporterView();
+			
+			if(app.canvas.get('diagrams').length > 0){
+				if(app.canvas.get('diagrams').length > 0){
+					alert("Project is not empty!");
+					return;
+				}
+				new app.XMLImporterView();				
+			}			
 		},		
 		
 		exportXML : function() {
+			
+			if(app.canvas.get('diagrams').length == 0){
+				alert("Project is empty, there is nothing to export!");
+				return;
+			}
+			
 			app.plumb.doWhileSuspended(function(){				
 				
 				var xml = app.canvas.toXML();
@@ -30,6 +43,11 @@
 		},	
 		
 		exportSQL : function() {
+			
+			if(app.canvas.get('diagrams').length == 0){
+				alert("Project is empty, there is nothing to export!");
+				return;
+			}
 			
 			app.plumb.doWhileSuspended(function(){				
 

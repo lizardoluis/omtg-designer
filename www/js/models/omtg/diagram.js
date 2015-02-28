@@ -9,7 +9,7 @@
 			return {
 				id : this.cid,
 				type : '',
-				name : '',
+				name : 'Class ' + this.cid,
 				attributes : new app.omtg.Attributes(),
 				selected : false,
 				top : 10,
