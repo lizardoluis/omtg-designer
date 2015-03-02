@@ -7,11 +7,10 @@
 	app.CanvasView = Backbone.View.extend({
 		
 		events : {
-			'click' : 'clicked',
+			'click' : 'clicked',			
 		},
 
 		initialize : function() {
-//			this.diagramCount = 1;	
 			this.listenTo(this.model.get('diagrams'), 'add', this.addOMTGDiagram);
 			this.listenTo(this.model, 'change:activeTool', this.setCursor);
 		},
@@ -23,7 +22,6 @@
 			if (tool) {
 				if (tool.get('model') == 'omtgDiagram') {
 					var diagram = new app.omtg.Diagram({
-//						'name' : 'Class ' + this.diagramCount++,
 						'type' : tool.get('name'),
 						'left' : event.offsetX,
 						'top' : event.offsetY,

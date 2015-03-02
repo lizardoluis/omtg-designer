@@ -100,13 +100,16 @@
 		
 		delete : function() {
 						
-			app.plumb.detachAllConnections(this.$el);
+			if (confirm(app.msgs.DELETE_DIAGRAM)){
 			
-			// I could not use collection remove because it was not working, so I set a flag as deleted to avoid exportation.
-			this.model.set('deleted', true); 						
-			
-			// Remove view
-			this.remove();
+				app.plumb.detachAllConnections(this.$el);
+				
+				// I could not use collection remove because it was not working, so I set a flag as deleted to avoid to be exported.
+				this.model.set('deleted', true); 						
+				
+				// Remove view
+				this.remove();
+			}
 		},
 		
 		updatePosition : function(event) {
@@ -114,7 +117,7 @@
 				'left': this.$el.position().left, 
 				'top' : this.$el.position().top,
 			});
-		}
+		},
 
 	});
 

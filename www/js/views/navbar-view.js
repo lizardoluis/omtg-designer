@@ -16,18 +16,16 @@
 		importXML : function() {
 			
 			if(app.canvas.get('diagrams').length > 0){
-				if(app.canvas.get('diagrams').length > 0){
-					alert("Project is not empty!");
-					return;
-				}
-				new app.XMLImporterView();				
-			}			
+				alert(app.msgs.NOT_EMPTY_PROJECT);
+				return;
+			}
+			new app.XMLImporterView();					
 		},		
 		
 		exportXML : function() {
 			
 			if(app.canvas.get('diagrams').length == 0){
-				alert("Project is empty, there is nothing to export!");
+				alert(app.msgs.EMPTY_PROJECT);
 				return;
 			}
 			
@@ -45,7 +43,7 @@
 		exportSQL : function() {
 			
 			if(app.canvas.get('diagrams').length == 0){
-				alert("Project is empty, there is nothing to export!");
+				alert(app.msgs.EMPTY_PROJECT);
 				return;
 			}
 			

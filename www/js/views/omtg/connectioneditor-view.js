@@ -119,7 +119,7 @@
 		
 		detach : function(event) {
 			
-			if (confirm(app.deleteMsg)){
+			if (confirm(app.msgs.deleteConnection)){
 				
 				var type = this.connection.getType()[0];
 

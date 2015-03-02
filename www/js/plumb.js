@@ -420,7 +420,7 @@ jsPlumb.ready(function() {
 			|| type == 'spatial-aggregation'
 					|| type == 'cartographic-leg') {
 
-			if (confirm(app.deleteMsg)){
+			if (confirm(app.msgs.DELETE_CONNECTION)){
 				app.plumb.detach(param);
 			}
 		}
@@ -430,7 +430,7 @@ jsPlumb.ready(function() {
 				|| type == "generalization-overlapping-partial"
 					|| type == "generalization-overlapping-total") {
 			
-			if (confirm(app.deleteMsg)){
+			if (confirm(app.msgs.DELETE_CONNECTION)){
 				
 				var endpoint = param.endpoints[0];
 				app.plumb.detach(param);
@@ -449,7 +449,7 @@ jsPlumb.ready(function() {
 		// Generalization connections. 
 		else if(type == 'generalization-leg'){
 			
-			if (confirm(app.deleteMsg)){
+			if (confirm(app.msgs.DELETE_CONNECTION)){
 				
 				var endpoint = param.endpoints[0];
 				app.plumb.detach(param);
