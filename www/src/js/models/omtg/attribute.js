@@ -4,7 +4,8 @@
 	// OMTGAttribute Model
 	// ----------
 
-	app.omtg.Attribute = Backbone.Model.extend({
+	app.omtg.Attribute = Backbone.Model.extend({ 
+		
 		defaults : function() {
 			return {
 				name : '',
