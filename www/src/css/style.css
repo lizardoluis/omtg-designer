@@ -227,3 +227,19 @@
 .triangle-endpoint {
 	z-index: 100;
 }
+
+.about-title {
+	font-size: 44px;
+	font-weight: bold;
+	line-height: 1;
+	margin: 40px;
+	text-align: center;
+}
+
+.about-text {
+	margin: 20px;
+	font-size: 21px;
+	font-weight: 200;
+	line-height: 30px;
+	text-align: center;
+}

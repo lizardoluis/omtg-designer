@@ -11,6 +11,7 @@
 			'click #btnExportXML' : 'exportXML',
 			'click #btnExportSQL' : 'exportSQL',
 			'click #btnPrint' : 'print',
+			'click #btnAbout' : 'showAbout',
 		},
 
 		importXML : function() {
@@ -77,7 +78,11 @@
 		
 		print : function() {
 			app.canvasView.print();
-		},	
+		},
+		
+		showAbout : function() {
+			new app.AboutView();
+		},
 		
 	});
 
