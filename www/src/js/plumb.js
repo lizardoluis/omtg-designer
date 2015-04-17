@@ -371,7 +371,7 @@ jsPlumb.ready(function() {
 			
 		// Aggregation must be between conventional classes	
 		case "aggregation":
-			return (sourceType == "conventional") && (targetType == "conventional");			
+			return (sourceType == "conventional") || (targetType == "conventional");			
 
 		// Superclass must be conventional and subclasses georeferenced
 		case "cartographic-generalization-disjoint":
