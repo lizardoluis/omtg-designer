@@ -1,4 +1,4 @@
-package com.omtg2sql.sql.oracle;
+package com.omtg2sql.sql;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

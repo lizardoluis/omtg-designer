@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="omtg-designer">
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/resources"/>
         <wb-resource deploy-path="/" source-path="/www/dist"/>
         <property name="java-output-path" value="/omtg-designer/build/classes"/>
         <property name="context-root" value="omtg-designer"/>

@@ -13,12 +13,13 @@
 		events : {
 
 			// Modal events
-			'click #btnImport' : 'import',
+			'click #btnImport' : 'importXML',
+			
 			'hidden.bs.modal' : 'teardown',
 			
 			'change #js-upload-files' : 'uploadFile',
 			
-			'load #js-upload-files' : 'import',
+			'load #js-upload-files' : 'importXML'
 		},
 
 		initialize : function(options) {
@@ -33,7 +34,7 @@
 			this.$el.modal({
 				backdrop : 'static',
 				keyboard : false,
-				show : true,
+				show : true
 			});
 
 			return this;
@@ -67,7 +68,7 @@
 			};			
 		},
 
-		import : function() {
+		importXML : function() {
 			var parser = app.XMLParser;
 			
 			parser.parseOMTGSchema(this.validXML);
@@ -82,7 +83,7 @@
 			else {
 				this.$("#btnImport").addClass("disabled");
 			}
-		},
+		}
 		
 	});
 

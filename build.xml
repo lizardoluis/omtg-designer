@@ -1,0 +1,145 @@
+<project>
+
+	<property name="dist.dir" value="www/dist" />
+	<property name="src.dir" value="www/src" />
+	<property name="yuicompressor" value="libs/yuicompressor-2.4.8.jar" />
+
+	<!-- Cleans the dist folder -->
+	<target name="cleanDist" description="Cleans the ${dist.dir} folder.">
+		<echo message="Cleaning the ${dist.dir} folder." />
+
+		<delete includeEmptyDirs="true">
+			<fileset dir="${dist.dir}">
+				<include name="**/*" />
+			</fileset>
+		</delete>
+	</target>
+
+	<!-- Copy html and Ico files to dist -->
+	<target name="copyHTML_ICO" description="Copy html file and ico to dist.">
+		<echo message="Copying html and ico to dist." />
+		<copy file="${src.dir}/favicon.ico" todir="${dist.dir}" />
+		<copy file="${src.dir}/index.html" todir="${dist.dir}" />
+	</target>
+
+	<!-- Copy Meta and Web folders to dist -->
+	<target name="copyINF" description="Copy Meta and Web folders to dist.">
+		<echo message="Copying Meta and Web folders to dist." />
+
+		<copy todir="${dist.dir}/META-INF">
+			<fileset dir="${src.dir}/META-INF" />
+		</copy>
+		<copy todir="${dist.dir}/WEB-INF">
+			<fileset dir="${src.dir}/WEB-INF" />
+		</copy>
+
+	</target>
+
+	<!-- Copy libs folder to dist -->
+	<target name="copyLibs" description="Copy libs folder to dist.">
+		<echo message="Copying libs to dist." />
+
+		<mkdir dir="${dist.dir}/libs" />
+		<copy todir="${dist.dir}/libs">
+			<fileset dir="${src.dir}/libs" />
+		</copy>
+	</target>
+
+	<!-- Copy imgs folder to dist -->
+	<target name="copyImgs" description="Copy imgs folder to dist.">
+		<echo message="Copying imgs to dist." />
+
+		<mkdir dir="${dist.dir}/imgs" />
+		<copy todir="${dist.dir}/imgs">
+			<fileset dir="${src.dir}/imgs" />
+		</copy>
+	</target>
+
+	<!-- Copy css folder to dist and compress-->
+	<target name="copyCss" description="Copies and compresses css to dist folder.">
+		<echo message="Copying and compressing css." />
+
+		<mkdir dir="${dist.dir}/css" />
+
+		<java jar="${yuicompressor}" fork="true">
+
+			<!-- input path for JS files -->
+			<arg value="${src.dir}/css/style.css" />
+
+			<!-- output path for JS files -->
+			<arg value="--type" />
+			<arg value="css" />
+
+			<!-- output path for JS files -->
+			<arg value="-o" />
+			<arg value="${dist.dir}/css/style-min.css" />
+
+			<classpath>
+				<pathelement location="${yuicompressor}" />
+			</classpath>
+		</java>
+	</target>
+
+	<!-- Copy css folder to dist and compress-->
+	<target name="copyJs" description="Copies and compresses js to dist folder.">
+		<echo message="Copying and compressing js." />
+
+		<mkdir dir="${dist.dir}/js" />
+
+		<concat destfile="${dist.dir}/js/script.js">
+			<filelist dir="${src.dir}/js">
+
+				<file name="app.js" />
+
+				<file name="models/omtg/attribute.js" />
+				<file name="models/omtg/diagram.js" />
+				<file name="models/tool.js" />
+				<file name="models/toolbox.js" />
+				<file name="models/canvas.js" />
+
+				<file name="collections/omtg/attributes.js" />
+				<file name="collections/omtg/diagrams.js" />
+				<file name="collections/tools.js" />
+				<file name="collections/toolboxes.js" />
+
+				<file name="views/omtg/attribute-view.js" />
+				<file name="views/omtg/diagram-view.js" />
+				<file name="views/omtg/diagrameditor-view.js" />
+				<file name="views/omtg/connectioneditor-view.js" />
+				<file name="views/tool-view.js" />
+				<file name="views/tools-view.js" />
+				<file name="views/toolbox-view.js" />
+				<file name="views/toolboxes-view.js" />
+				<file name="views/xmlimporter-view.js" />
+				<file name="views/navbar-view.js" />
+				<file name="views/canvas-view.js" />
+				<file name="views/about-view.js" />
+
+				<file name="plumb.js" />
+				<file name="xml-parser.js" />
+			</filelist>
+		</concat>
+
+		<java jar="${yuicompressor}" fork="true">
+
+			<!-- input path for JS files -->
+			<arg value="${dist.dir}/js/script.js" />
+
+			<!-- output path for JS files -->
+			<arg value="--type" />
+			<arg value="js" />
+
+			<!-- output path for JS files -->
+			<arg value="-o" />
+			<arg value="${dist.dir}/js/script-min.js" />
+
+			<classpath>
+				<pathelement location="${yuicompressor}" />
+			</classpath>
+		</java>
+
+		<!-- delete original file -->
+		<delete file="${dist.dir}/js/script.js" />
+	</target>
+
+</project>

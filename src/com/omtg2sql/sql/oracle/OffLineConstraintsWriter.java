@@ -4,6 +4,7 @@ import java.io.StringWriter;
 import java.util.List;
 import java.util.Scanner;
 
+import com.omtg2sql.sql.SQLWriter;
 import com.omtg2sql.util.FormatSQL;
 
 public class OffLineConstraintsWriter extends SQLWriter {

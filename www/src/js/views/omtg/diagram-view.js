@@ -13,7 +13,7 @@
 		events : {
 			
 			// Delete the diagram and remove its view from canvas
-			'click .badge-delete' : 'delete',
+			'click .badge-delete' : 'deleteDiagram',
 			
 			// Toggle the selection of the diagram
 			'click' : _.debounce(function(e) {
@@ -30,7 +30,7 @@
 		            this.edit.call(this, e);
 		        },
 		        
-		    'mouseup' : 'updatePosition',
+		    'mouseup' : 'updatePosition'
 		},
 
 		initialize : function() {
@@ -60,7 +60,7 @@
 			// Set position
 			this.$el.css({        
 				'top': this.model.get('top'),
-				'left': this.model.get('left'),
+				'left': this.model.get('left')
 			});			
 			
 			// Render name and type
@@ -98,7 +98,7 @@
 			var modal = new app.omtg.DiagramEditorView({model : this.model, hasConnections : hasConnections});
 		},
 		
-		delete : function() {
+		deleteDiagram : function() {
 						
 			if (confirm(app.msgs.DELETE_DIAGRAM)){
 			
@@ -115,9 +115,9 @@
 		updatePosition : function(event) {
 			this.model.set({
 				'left': this.$el.position().left, 
-				'top' : this.$el.position().top,
+				'top' : this.$el.position().top
 			});
-		},
+		}
 
 	});
 
