@@ -65,7 +65,6 @@ $(function () {
 	app.canvas = new app.Canvas();
 	
 	// Initialize Backbone views.
-	app.aboutView = new app.AboutView();
 	app.navbarView = new app.NavbarView({el: $('#navbar')});
 	app.toolboxesView = new app.ToolboxesView({el: $('#section-sidebar'), model: app.toolboxes});
 	app.canvasView = new app.CanvasView({el: '#canvas', model: app.canvas});
