@@ -95,6 +95,34 @@
 		</div><!-- /.modal-dialog -->
 		</script>
 		
+		<script type="text/template" id="omtg-connection-editor-spatial-relation-template">
+			<!-- Connection Description -->
+			<div class="form-group">
+				<label for="inputConnectionSpatialRelation" class="col-sm-4 control-label">Spatial Relation:</label>
+				<div class="col-sm-6">
+					<div class="btn-group">
+						<button id="inputConnectionSpatialRelation" type="button" class="btn btn-default"></button>
+						<button id="inputConnectionSpatialRelationToggle" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul id="ulConnectionSpatialRelation" class="dropdown-menu" role="menu">
+							<li><a href="#" data-spatialrelation="Contains">Contains</a></li>
+							<li><a href="#" data-spatialrelation="Containsproperly">Containsproperly</a></li>	
+							<li><a href="#" data-spatialrelation="Covers">Covers</a></li>	
+							<li><a href="#" data-spatialrelation="Coveredby">Coveredby</a></li>	
+							<li><a href="#" data-spatialrelation="Crosses">Crosses</a></li>	
+							<li><a href="#" data-spatialrelation="Disjoint">Disjoint</a></li>	
+							<li><a href="#" data-spatialrelation="Intersects">Intersects</a></li>	
+							<li><a href="#" data-spatialrelation="Overlaps">Overlaps</a></li>	
+							<li><a href="#" data-spatialrelation="Touches">Touches</a></li>
+							<li><a href="#" data-spatialrelation="Within">Within</a></li>																								
+						</ul>
+					</div>
+				</div>
+			</div>
+		</script>
+		
 		<script type="text/template" id="omtg-connection-editor-description-template">
 			<!-- Connection Description -->
 			<div class="form-group">

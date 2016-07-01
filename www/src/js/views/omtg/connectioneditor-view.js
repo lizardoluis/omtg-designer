@@ -14,13 +14,14 @@
 			// Modal events
 			'click #btnUpdate' : 'update',
 			'click #btnDelete' : 'detach',
-			'hidden.bs.modal' : 'teardown',		
+			'hidden.bs.modal' : 'teardown',	
+			
+			'click #ulConnectionSpatialRelation a' : 'selectSpatialRelation',
 		},
 
 		initialize : function(options) {
 						
-			this.template = _.template($('#omtg-connection-editor-template').html());
-			
+			this.template = _.template($('#omtg-connection-editor-template').html());			
 			this.connection = options.connection;
 			
 			this.render();
@@ -33,8 +34,24 @@
 						
 			var type = this.connection.getType()[0];
 			
+			// Add Spatial Relation component
+			if(type == 'spatial-association'){
+				
+				fieldset.append(_.template($('#omtg-connection-editor-spatial-relation-template').html()));				
+				this.descriptionLabel = this.connection.getOverlay("description-label");			
+				
+				if(this.descriptionLabel.getLabel()){
+					this.$('#inputConnectionSpatialRelation').data('spatialrelation', this.descriptionLabel.getLabel());
+					this.$('#inputConnectionSpatialRelation').html(this.descriptionLabel.getLabel());
+				}
+				else{
+					this.$('#inputConnectionSpatialRelation').data('spatialrelation', 'Contains');
+					this.$('#inputConnectionSpatialRelation').html('Contains');
+				}
+			}
+			
 			// Add Description component
-			if(type == 'association' || type == 'spatial-association' || type == 'arc-network' || type == 'arc-network-self'){
+			if(type == 'association' || type == 'arc-network' || type == 'arc-network-self'){
 				fieldset.append(_.template($('#omtg-connection-editor-description-template').html()));
 				
 				this.descriptionLabel = this.connection.getOverlay("description-label");			
@@ -84,9 +101,17 @@
 		update : function() {
 			
 			var type = this.connection.getType()[0];
+				
+			// Spatial connection description
+			if(type == 'spatial-association'){
+				var spatialRelation = this.$('#inputConnectionSpatialRelation').data('spatialrelation');
+				if(spatialRelation){
+					this.descriptionLabel.setLabel(spatialRelation);
+				}			
+			}
 			
 			// Connection description
-			if(type == 'association' || type == 'spatial-association' || type == 'arc-network' || type == 'arc-network-self'){
+			if(type == 'association' || type == 'arc-network' || type == 'arc-network-self'){
 				var description = this.$('#inputConnectionDescription').val().trim();
 				this.descriptionLabel.setLabel(description);
 			}
@@ -144,6 +169,15 @@
 
 			return min + "" + max;
 		},
+		
+		// Selected the option in the diagram type dropdown
+		selectSpatialRelation : function(event) {
+			var selected = this.$(event.currentTarget).html();
+			this.$('#inputConnectionSpatialRelation').html(selected);
+
+			var spatialrelation = this.$(event.currentTarget).data('spatialrelation');
+			this.$('#inputConnectionSpatialRelation').data('spatialrelation', spatialrelation);
+		}
 
 	});
 

@@ -196,6 +196,11 @@
  .modal-dialog .inputcard {
  	width: 50%;
  }
+ 
+ .modal-dialog #inputConnectionSpatialRelation {
+	width: 235px;
+	text-align: left;
+}
 
 
 /*

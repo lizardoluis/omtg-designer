@@ -181,7 +181,7 @@
 			this.$(event.currentTarget).parent().parent().siblings('button.btnAttributeType:first').html(selected + ' <span class="caret"></span>');
 			
 			this.attrsClone.at(index).set('type', selected );
-		},
+		}
 	});
 
 })(jQuery);
