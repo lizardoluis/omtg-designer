@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.omtg2sql.core.OMTG2PostGIS;
 import com.omtg2sql.core.OMTG2SQL;
 import com.omtg2sql.omtg.model.OMTGSchema;
 import com.omtgdesigner.xml.XMLParser;
@@ -54,20 +53,20 @@ public class omtg2sql extends HttpServlet {
 				StringWriter dynamicSW = new StringWriter();
 
 				// Maps the omtg to sql
-//				OMTG2SQL omtg2sql = new OMTG2SQL(omtgSchema, ddlSW, staticSW, dynamicSW);
-//				omtg2sql.mapOMTGSchemaToSQL();
+				OMTG2SQL omtg2sql = new OMTG2SQL(omtgSchema, ddlSW, staticSW, dynamicSW);
+				omtg2sql.mapOMTGSchemaToSQL();
 				
 				// *********************
 				//  Remove this
 				
-				OMTG2PostGIS omtg2sql = new OMTG2PostGIS(omtgSchema, ddlSW, staticSW, dynamicSW);
-				omtg2sql.mapOMTGSchemaToSQL();
-				
-				System.out.println(xmlString);
-				System.out.println();
-				System.out.println("DDL");
-				System.out.println();
-				System.out.println(ddlSW.toString());
+//				OMTG2PostGIS omtg2sql = new OMTG2PostGIS(omtgSchema, ddlSW, staticSW, dynamicSW);
+//				omtg2sql.mapOMTGSchemaToSQL();
+//				
+//				System.out.println(xmlString);
+//				System.out.println();
+//				System.out.println("DDL");
+//				System.out.println();
+//				System.out.println(ddlSW.toString());
 //				System.out.println();
 //				System.out.println();
 //				System.out.println("Static");
