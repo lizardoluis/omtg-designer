@@ -30,6 +30,7 @@
 			'click .toggleNotNull': 'toggleNotNull',
 			'click .ulAttributeType a' : 'selectAttributeType',
 			
+			"submit" : "preventSubmission"
 		},
 
 		initialize : function(options) {
@@ -181,6 +182,11 @@
 			this.$(event.currentTarget).parent().parent().siblings('button.btnAttributeType:first').html(selected + ' <span class="caret"></span>');
 			
 			this.attrsClone.at(index).set('type', selected );
+		},
+		
+		// Avoid form submission on enter
+		preventSubmission : function(event) {
+			event.preventDefault();
 		}
 	});
 
