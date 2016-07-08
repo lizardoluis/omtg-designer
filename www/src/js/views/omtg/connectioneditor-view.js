@@ -152,8 +152,13 @@
 				if(type == 'cartographic-generalization-disjoint' || type == 'cartographic-generalization-overlapping'){
 					app.plumb.detachAllConnections(this.connection.getOverlay("cartographic-square").getElement());		
 				}
-
+				else if(type == 'arc-network' || type == 'arc-network-sibling' || type == 'arc-network-self' || type == 'arc-network-sibling-self'){
+					var sibling = this.connection.getParameter("sibling");
+					app.plumb.detach(sibling);
+				}
+				
 				app.plumb.detach(this.connection);
+				
 				this.teardown();
 			}
 		},
