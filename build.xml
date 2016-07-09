@@ -80,7 +80,7 @@
 		</java>
 	</target>
 
-	<!-- Copy css folder to dist and compress-->
+	<!-- Copy js folder to dist and compress-->
 	<target name="copyJs" description="Copies and compresses js to dist folder.">
 		<echo message="Copying and compressing js." />
 
