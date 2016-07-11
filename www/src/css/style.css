@@ -229,6 +229,7 @@
 	margin-top: 20px;
 }
 
+.square-overlay,
 .triangle-endpoint {
 	z-index: 100;
 }

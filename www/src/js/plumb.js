@@ -43,37 +43,23 @@ jsPlumb.ready(function() {
 			return ["Image", {src:"imgs/omtg/triangle-circle-black.png", cssClass:"triangle-endpoint"}];
 	};
 
-	
-	var triangle = function(color, position){
-		return ["Custom", {
-        	create:function(component) {
-        		return $('<svg class="generalization-triangle" height="26" width="26"><polygon points="1,25 13,1 25,25" stroke="black" stroke-width="1" fill="'+ color +'" /></svg>');                
-        	},
-        	location:position,
-        	id: "generalization-triangle",
-        	
-        }];	
-	};
-	
-	
-	var circle = function(position){
-		return ["Custom", {
-        	create:function(component) {
-        		return $('<svg width="16px" height="16px"><circle cx="8" cy="8" r="8" stroke="black" stroke-width="0" fill="black" /></svg>');                
-        	},
-        	location:position,
-        }];	
+	var squareOverlay = function(type){ 
+		if(type == "cartographic-generalization-overlapping")
+			return ["Image", {src:"imgs/omtg/square-black.png", cssClass:"square-overlay"}];		
+		if(type == "cartographic-generalization-disjoint")
+			return ["Image", {src:"imgs/omtg/square-white.png", cssClass:"square-overlay"}];
 	};
 	
 	
 	var square = function(color, position){
 		return ["Custom", {
-        	create: function(component) {
-        		return $('<svg class="cartographic-square" width="16px" height="16px"><rect width="15px" height="15px"  stroke="black" stroke-width="2" fill="'+ color +'" /></svg>');                
-        	},
-        	id: "cartographic-square",
-        	location: position,        	
-        }];	
+	    	create: function(component) {
+	    		return $('<img class="cartographic-square" src="imgs/omtg/square-'+ color +'.png" alt="'+ color +' square" width="16px" height="16px" >');                
+	    	},
+	    	id: "cartographic-square",
+	    	cssClass: "cartographic-square",
+	    	location: position,        	
+	    }];	
 	};	
 	
 	
@@ -126,7 +112,6 @@ jsPlumb.ready(function() {
 		"generalization-disjoint-partial" : {
 			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
-			overlays : [ triangle("white", 13) ],
 			parameters:{
 				"participation":"partial",
 				"disjointness":"disjoint",
@@ -135,7 +120,6 @@ jsPlumb.ready(function() {
 		"generalization-overlapping-partial" : {
 			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
-			overlays : [ triangle("black", 13) ],
 			parameters:{
 				"participation":"partial",
 				"disjointness":"overlapping",
@@ -144,7 +128,6 @@ jsPlumb.ready(function() {
 		"generalization-disjoint-total" : {
 			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
-			overlays : [circle(9), triangle("white", 30) ],
 			parameters:{
 				"participation":"total",
 				"disjointness":"disjoint",
@@ -153,7 +136,6 @@ jsPlumb.ready(function() {
 		"generalization-overlapping-total" : {
 			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
-			overlays : [circle(9), triangle("black", 30) ],
 			parameters:{
 				"participation":"total",
 				"disjointness":"overlapping",
@@ -214,7 +196,8 @@ jsPlumb.ready(function() {
 		}		
 		
 		// if connection comes from a cartographic square, set type as cartographic-leg
-		if(connection.source.classList[0] == "cartographic-square"){
+
+		if(connection.source.classList.contains("cartographic-square")){
 			connection.setType("cartographic-leg");
 		}
 	});
@@ -341,7 +324,7 @@ jsPlumb.ready(function() {
 		case "cartographic-leg":
 			info.connection.endpoints[1].setAnchor("Top");
 			break;
-		}
+		} 
 	});
 	
 
@@ -411,6 +394,7 @@ jsPlumb.ready(function() {
 		var type = param.getType()[0];
 		if(type == 'arc-network-sibling' || type == 'arc-network-sibling-self')
 			param = param.getParameter('sibling');
+
 		
 		// Connection types without attributes
 		// to be edited or without legs. Only
