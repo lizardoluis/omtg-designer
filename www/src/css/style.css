@@ -90,6 +90,7 @@
 	
 	background-color: #fff;
 	box-shadow: 3px 3px 10px #888888;
+	width: auto !important;
 }
 
 .diagram-container:hover {
@@ -119,13 +120,17 @@
 
 .diagram-container .d-header .d-title {
 	height: 100%;
-	min-width: 127px;
-/* 	display: inline-block; */
+	min-width: 100px;
 	
 	text-align: center;
-	padding: 8px 5px 5px 5px;
+/* 	padding: 8px 5px 5px 5px; */
 	border: 1px solid black;
 	font-weight: bold;
+	
+	display: inline-block;
+	margin-left: -1px;
+	padding: 8px 10px 5px 10px;
+	white-space: nowrap;
 }
 
 .diagram-container .d-body {
