@@ -306,14 +306,19 @@
 			<td><input class="toggleKey" type="checkbox" <% if( isKey ){ %> checked <% } %> ></td>
 			<td class="name-editable" contenteditable="true"><%= name %></td>
 			<td>
-			<div class="dropdown">
-				<button class="btn btn-default btn-xs dropdown-toggle btnAttributeType" type="button" data-toggle="dropdown" aria-expanded="true"><%= type %> <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu ulAttributeType" role="menu" aria-labelledby="dropdownMenu1">
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Date </a></li>
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Number </a></li>
-				<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Varchar </a></li>
-				</ul>
+				<div class="dropdown">
+					<button class="btn btn-default btn-xs dropdown-toggle btnAttributeType" type="button" data-toggle="dropdown" aria-expanded="true"><%= type %> <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu ulAttributeType" role="menu" aria-labelledby="dropdownMenu1">
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">boolean </a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">date </a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">integer </a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">real </a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">serial </a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">text </a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">time </a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">varchar </a></li>
+					</ul>
 				</div>
 			</td>		
 			<td><input class="toggleNotNull" type="checkbox" <% if(isNotNull){ %> checked <% } %> ></td>		
