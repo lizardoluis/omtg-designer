@@ -91,6 +91,7 @@
 	background-color: #fff;
 	box-shadow: 3px 3px 10px #888888;
 	width: auto !important;
+	height: auto !important;
 }
 
 .diagram-container:hover {
@@ -118,19 +119,32 @@
 	padding: 5px 5px 5px 5px;
 }
 
-.diagram-container .d-header .d-title {
+/*.diagram-container .d-header .d-title {
 	height: 100%;
 	min-width: 100px;
 	
 	text-align: center;
-/* 	padding: 8px 5px 5px 5px; */
+ 	padding: 8px 5px 5px 5px; 
 	border: 1px solid black;
 	font-weight: bold;
 	
 	display: inline-block;
-	margin-left: -1px;
 	padding: 8px 10px 5px 10px;
 	white-space: nowrap;
+}*/
+
+.diagram-container .d-header .d-title {
+    height: 100%;
+    min-width: 100px;
+    border: 1px solid black;
+    font-weight: bold;
+    padding: 8px 5px 5px 5px; 
+    white-space: nowrap;
+    text-align: center;
+}
+
+.diagram-container .d-header .d-icon ~ .d-title {
+    padding-left: 45px;
 }
 
 .diagram-container .d-body {
