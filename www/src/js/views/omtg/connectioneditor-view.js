@@ -17,6 +17,8 @@
 			'hidden.bs.modal' : 'teardown',	
 			
 			'click #ulConnectionSpatialRelation a' : 'selectSpatialRelation',
+			
+			"submit" : "preventSubmission",
 		},
 
 		initialize : function(options) {
@@ -182,7 +184,12 @@
 
 			var spatialrelation = this.$(event.currentTarget).data('spatialrelation');
 			this.$('#inputConnectionSpatialRelation').data('spatialrelation', spatialrelation);
-		}
+		},
+		
+		// Avoid form submission on enter
+ 		preventSubmission : function(event) {
+ 			event.preventDefault();
+  		}
 
 	});
 
