@@ -135,7 +135,7 @@
 
 .diagram-container .d-header .d-title {
     height: 100%;
-    min-width: 100px;
+    min-width: 127px;
     border: 1px solid black;
     font-weight: bold;
     padding: 8px 5px 5px 5px; 
