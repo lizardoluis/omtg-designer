@@ -32,7 +32,7 @@
 			
 			if (this.model.get('active')) {
 				this.$el.addClass('active');
-				app.canvas.set('activeTool', this.model);				
+				app.canvas.set('activeTool', this.model);
 				
 			} else {
 				this.$el.removeClass('active');

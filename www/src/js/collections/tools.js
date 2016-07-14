@@ -12,12 +12,13 @@
 		},
 		
 		propagate_active: function(p) {
-	    	if(!p.get('active'))
+			if(!p.get('active'))
 	            return;
 	        this.each(function(m) {
 	            if(p.get('name') != m.get('name'))
 	            	m.set({ active: false }, { silent: false });
 	        });
+	        app.canvas.set('activeTool', p);
 	    },
 	    
 	    deactivateAll: function(){
