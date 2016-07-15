@@ -119,20 +119,6 @@
 	padding: 5px 5px 5px 5px;
 }
 
-/*.diagram-container .d-header .d-title {
-	height: 100%;
-	min-width: 100px;
-	
-	text-align: center;
- 	padding: 8px 5px 5px 5px; 
-	border: 1px solid black;
-	font-weight: bold;
-	
-	display: inline-block;
-	padding: 8px 10px 5px 10px;
-	white-space: nowrap;
-}*/
-
 .diagram-container .d-header .d-title {
     height: 100%;
     min-width: 127px;
@@ -179,6 +165,10 @@
 /*
  * OMT-G Diagram Modal
  */
+.modal-dialog {
+	width: 630px !important;
+}
+ 
 .modal-dialog .drop-icon {
 	width: 18px;
 }

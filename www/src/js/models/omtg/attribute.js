@@ -9,7 +9,7 @@
 		defaults : function() {
 			return {
 				name : '',
-				type : 'Varchar',
+				type : 'VARCHAR',
 				defaultValue : '',
 				isKey : false,
 				length : '',
