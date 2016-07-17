@@ -29,4 +29,14 @@
     <servlet-name>XMLImporter</servlet-name>
     <url-pattern>/XMLImporter</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>omtg2postgis</display-name>
+    <servlet-name>omtg2postgis</servlet-name>
+    <servlet-class>com.omtgdesigner.servlets.omtg2postgis</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>omtg2postgis</servlet-name>
+    <url-pattern>/omtg2postgis</url-pattern>
+  </servlet-mapping>
 </web-app>

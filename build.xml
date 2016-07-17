@@ -1,65 +1,11 @@
 <project>
 
-	<property name="dist.dir" value="www/dist" />
-	<property name="src.dir" value="www/src" />
+	<property name="src.dir" value="www" />
 	<property name="yuicompressor" value="libs/yuicompressor-2.4.8.jar" />
-
-	<!-- Cleans the dist folder -->
-	<target name="cleanDist" description="Cleans the ${dist.dir} folder.">
-		<echo message="Cleaning the ${dist.dir} folder." />
-
-		<delete includeEmptyDirs="true">
-			<fileset dir="${dist.dir}">
-				<include name="**/*" />
-			</fileset>
-		</delete>
-	</target>
-
-	<!-- Copy html and Ico files to dist -->
-	<target name="copyHTML_ICO" description="Copy html file and ico to dist.">
-		<echo message="Copying html and ico to dist." />
-		<copy file="${src.dir}/favicon.ico" todir="${dist.dir}" />
-		<copy file="${src.dir}/index.html" todir="${dist.dir}" />
-	</target>
-
-	<!-- Copy Meta and Web folders to dist -->
-	<target name="copyINF" description="Copy Meta and Web folders to dist.">
-		<echo message="Copying Meta and Web folders to dist." />
-
-		<copy todir="${dist.dir}/META-INF">
-			<fileset dir="${src.dir}/META-INF" />
-		</copy>
-		<copy todir="${dist.dir}/WEB-INF">
-			<fileset dir="${src.dir}/WEB-INF" />
-		</copy>
-
-	</target>
-
-	<!-- Copy libs folder to dist -->
-	<target name="copyLibs" description="Copy libs folder to dist.">
-		<echo message="Copying libs to dist." />
-
-		<mkdir dir="${dist.dir}/libs" />
-		<copy todir="${dist.dir}/libs">
-			<fileset dir="${src.dir}/libs" />
-		</copy>
-	</target>
-
-	<!-- Copy imgs folder to dist -->
-	<target name="copyImgs" description="Copy imgs folder to dist.">
-		<echo message="Copying imgs to dist." />
-
-		<mkdir dir="${dist.dir}/imgs" />
-		<copy todir="${dist.dir}/imgs">
-			<fileset dir="${src.dir}/imgs" />
-		</copy>
-	</target>
 
 	<!-- Copy css folder to dist and compress-->
 	<target name="copyCss" description="Copies and compresses css to dist folder.">
 		<echo message="Copying and compressing css." />
-
-		<mkdir dir="${dist.dir}/css" />
 
 		<java jar="${yuicompressor}" fork="true">
 
@@ -72,7 +18,7 @@
 
 			<!-- output path for JS files -->
 			<arg value="-o" />
-			<arg value="${dist.dir}/css/style-min.css" />
+			<arg value="${src.dir}/css/style-min.css" />
 
 			<classpath>
 				<pathelement location="${yuicompressor}" />
@@ -84,9 +30,7 @@
 	<target name="copyJs" description="Copies and compresses js to dist folder.">
 		<echo message="Copying and compressing js." />
 
-		<mkdir dir="${dist.dir}/js" />
-
-		<concat destfile="${dist.dir}/js/script.js">
+		<concat destfile="${src.dir}/js/script.js">
 			<filelist dir="${src.dir}/js">
 
 				<file name="app.js" />
@@ -123,7 +67,7 @@
 		<java jar="${yuicompressor}" fork="true">
 
 			<!-- input path for JS files -->
-			<arg value="${dist.dir}/js/script.js" />
+			<arg value="${src.dir}/js/script.js" />
 
 			<!-- output path for JS files -->
 			<arg value="--type" />
@@ -131,7 +75,7 @@
 
 			<!-- output path for JS files -->
 			<arg value="-o" />
-			<arg value="${dist.dir}/js/script-min.js" />
+			<arg value="${src.dir}/js/script-min.js" />
 
 			<classpath>
 				<pathelement location="${yuicompressor}" />
@@ -139,7 +83,7 @@
 		</java>
 
 		<!-- delete original file -->
-		<delete file="${dist.dir}/js/script.js" />
+		<delete file="${src.dir}/js/script.js" />
 	</target>
 
 </project>
