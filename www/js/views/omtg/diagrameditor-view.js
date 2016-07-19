@@ -18,6 +18,7 @@
 
 			// Diagram events
 			'click #ulDiagramType a' : 'selectType',
+			'input #inputDiagramName':  'inputNameChanged',
 
 			// Attributes table events
 			'click #btnAddRow' : 'newAttribute',
@@ -82,6 +83,23 @@
 			var type = this.$(event.currentTarget).data('type-name');
 			this.$('#inputDiagramType').data('type-name', type);
 		},
+		
+		
+		inputNameChanged : function(event) {
+			var name = this.$('#inputDiagramName').val().trim();
+			console.log(name);
+			
+			var reg = new RegExp("[a-zA-Z0-9][\w#@]{0,63}$");
+			if (reg.test(name) && /\s/.test(name) == false) {
+			    this.$('#formDiagramName').removeClass("has-error");
+			    this.$('#btnUpdate').removeClass("disabled");
+			} else {
+				this.$('#formDiagramName').addClass("has-error");
+				this.$('#btnUpdate').addClass("disabled");
+			}
+			
+		},
+		
 
 		updateDiagram : function() {
 			
