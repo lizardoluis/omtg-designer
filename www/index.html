@@ -278,7 +278,8 @@
 								<thead>
 									<th class="col-md-0">Key</th>
 									<th class="col-md-4">Name</th>
-									<th class="col-md-1">Type</th>
+									<th class="col-md-2">Type</th>
+									<th class="col-md-1">Length</th>
 									<th class="col-md-0">Null</th>
 									<th class="col-md-3">Default Value</th>									
 									<th class="col-md-2"></th>
@@ -320,11 +321,11 @@
 						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">VARCHAR </a></li>
 					</ul>
 				</div>
-			</td>		
+			</td>
+			<td class="length-editable" contenteditable="false"><%= length %></td>		
 			<td><input class="toggleNotNull" type="checkbox" <% if(isNotNull){ %> checked <% } %> ></td>		
 			<td class="value-editable" contenteditable="true"><%= defaultValue %></td>
 			<td>							
-
 				<div class="btn-group btn-group-xs" role="group" aria-label="...">
 					<button type="button" class="btn btn-link btnRowUp"><span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></button>
 					<button type="button" class="btn btn-link btnRowDown"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button>

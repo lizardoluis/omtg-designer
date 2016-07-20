@@ -27,6 +27,7 @@
 			'click .btnRowDown' : 'moveAttributeDown',
 			'blur .name-editable' : 'editName',
 			'blur .value-editable' : 'editValue',
+			'blur .length-editable' : 'editLength',
 			'click .toggleKey': 'toggleKey',
 			'click .toggleNotNull': 'toggleNotNull',
 			'click .ulAttributeType a' : 'selectAttributeType',
@@ -84,10 +85,8 @@
 			this.$('#inputDiagramType').data('type-name', type);
 		},
 		
-		
 		inputNameChanged : function(event) {
-			var name = this.$('#inputDiagramName').val().trim();
-			console.log(name);
+			var name = this.$(event.currentTarget).val().trim();
 			
 			var reg = new RegExp("[a-zA-Z0-9][\w#@]{0,63}$");
 			if (reg.test(name) && /\s/.test(name) == false) {
@@ -99,7 +98,6 @@
 			}
 			
 		},
-		
 
 		updateDiagram : function() {
 			
@@ -173,7 +171,7 @@
 			}
 		},
 		
-		editName : function(event, ha) {
+		editName : function(event) {
 			var index = this.$(event.currentTarget).closest('tr').index();
 			this.attrsClone.at(index).set('name', this.$(event.currentTarget).text());
 		},
@@ -181,6 +179,11 @@
 		editValue : function(event) {
 			var index = this.$(event.currentTarget).closest('tr').index();
 			this.attrsClone.at(index).set('defaultValue', this.$(event.currentTarget).text());
+		},
+		
+		editLength : function(event) {
+			var index = this.$(event.currentTarget).closest('tr').index();
+			this.attrsClone.at(index).set('length', this.$(event.currentTarget).text());
 		},
 		
 		toggleKey : function(event) {
@@ -196,10 +199,18 @@
 		selectAttributeType : function(event) {
 			var index = this.$(event.currentTarget).closest('tr').index();
 			
-			var selected = this.$(event.currentTarget).text();
+			var selected = this.$(event.currentTarget).text().trim();
 			this.$(event.currentTarget).parent().parent().siblings('button.btnAttributeType:first').html(selected + ' <span class="caret"></span>');
 			
 			this.attrsClone.at(index).set('type', selected );
+			
+			if(selected == 'VARCHAR'){
+				this.$(event.currentTarget).parent().parent().parent().parent().siblings('td.length-editable').attr('contenteditable','true');
+			}
+			else{
+				this.$(event.currentTarget).parent().parent().parent().parent().siblings('td.length-editable').text('');
+				this.$(event.currentTarget).parent().parent().parent().parent().siblings('td.length-editable').attr('contenteditable','false');
+			}
 		},
 		
 		// Avoid form submission on enter
