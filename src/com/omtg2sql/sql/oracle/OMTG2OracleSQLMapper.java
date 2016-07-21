@@ -4,16 +4,19 @@ public class OMTG2OracleSQLMapper {
 
 	public static String mapAttributeType(String attributeType, String length, String scale) {
 		
-		if (attributeType.equalsIgnoreCase("VARCHAR2")) {
-			return attributeType.toUpperCase() + "(" + (length==null?"100":length) + ")";
+		if (attributeType.equalsIgnoreCase("varchar")) {
+			return "VARCHAR2(" + (length==null?"50":length) + ")";
 		}
-		else if (attributeType.equalsIgnoreCase("NUMBER")) {
-			return attributeType.toUpperCase() + "(" + length + "," + (scale==null?"1":scale) + ")";
+		if (attributeType.equalsIgnoreCase("real")) {
+			return "NUMBER";
 		}
-		else if (attributeType.equalsIgnoreCase("date")) {
-			return attributeType.toUpperCase();
+		if (attributeType.equalsIgnoreCase("time")) {
+			return "TIMESTAMP";
 		}
-		return "VARCHAR2(100)";
+		if (attributeType.equalsIgnoreCase("text")) {
+			return "VARCHAR2(300)";
+		}
+		else return attributeType.toUpperCase();
 
 	}
 
