@@ -322,7 +322,7 @@
 					</ul>
 				</div>
 			</td>
-			<td class="length-editable" contenteditable="false"><%= length %></td>		
+			<td class="length-editable" <% if(type.toUpperCase()=='VARCHAR'){ %> contenteditable="true" <% } %> ><%= length %></td>		
 			<td><input class="toggleNotNull" type="checkbox" <% if(isNotNull){ %> checked <% } %> ></td>		
 			<td class="value-editable" contenteditable="true"><%= defaultValue %></td>
 			<td>							

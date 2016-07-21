@@ -206,6 +206,7 @@
 			
 			if(selected == 'VARCHAR'){
 				this.$(event.currentTarget).parent().parent().parent().parent().siblings('td.length-editable').attr('contenteditable','true');
+				this.$(event.currentTarget).parent().parent().parent().parent().siblings('td.length-editable').text('50');
 			}
 			else{
 				this.$(event.currentTarget).parent().parent().parent().parent().siblings('td.length-editable').text('');
