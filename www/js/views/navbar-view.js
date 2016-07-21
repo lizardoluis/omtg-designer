@@ -66,7 +66,7 @@
 						}
 						var blob = new Blob([byteArray]);
 
-						saveAs(blob, "OMTG.zip");
+						saveAs(blob, "OMTG-Oracle.zip");
 					},
 					error: function(ajaxrequest, ajaxOptions, thrownError)
 					{
@@ -101,7 +101,7 @@
 						}
 						var blob = new Blob([byteArray]);
 
-						saveAs(blob, "OMTG.zip");
+						saveAs(blob, "OMTG-Postgis.zip");
 					},
 					error: function(ajaxrequest, ajaxOptions, thrownError)
 					{

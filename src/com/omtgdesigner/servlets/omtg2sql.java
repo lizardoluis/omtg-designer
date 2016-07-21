@@ -59,7 +59,7 @@ public class omtg2sql extends HttpServlet {
 				// Sets HTTP header
 				response.setContentType("text/plain; charset=x-user-defined"); 
 				response.setContentLength(byteBuffer.length);
-				response.setHeader("Content-Disposition", "attachment; filename=\"OMTG.zip\"");
+				response.setHeader("Content-Disposition", "attachment; filename=\"OMTG-Oracle.zip\"");
 
 				// Writes the response data
 				ServletOutputStream servletOutputStream = response.getOutputStream(); 
