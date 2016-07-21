@@ -172,7 +172,11 @@
 		
 		editName : function(event) {
 			var index = this.$(event.currentTarget).closest('tr').index();
-			this.attrsClone.at(index).set('name', this.$(event.currentTarget).text());
+			
+			// Substitutes every space with a underscore.
+			var attrName = this.$(event.currentTarget).text();
+			attrName = attrName.replace(/\s+/g, '_');
+			this.attrsClone.at(index).set('name', attrName);
 		},
 		
 		editValue : function(event) {
@@ -206,6 +210,7 @@
 			
 			this.attrsClone.at(index).set('type', selected );
 			
+			// Make length field editable if varchar is selected
 			if(selected == 'VARCHAR'){
 				this.$(event.currentTarget).parent().parent().parent().parent().siblings('td.length-editable').attr('contenteditable','true');
 				this.$(event.currentTarget).parent().parent().parent().parent().siblings('td.length-editable').text('50');
