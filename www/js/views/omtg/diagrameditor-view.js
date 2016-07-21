@@ -95,8 +95,7 @@
 			} else {
 				this.$('#formDiagramName').addClass("has-error");
 				this.$('#btnUpdate').addClass("disabled");
-			}
-			
+			}			
 		},
 
 		updateDiagram : function() {
@@ -183,7 +182,10 @@
 		
 		editLength : function(event) {
 			var index = this.$(event.currentTarget).closest('tr').index();
-			this.attrsClone.at(index).set('length', this.$(event.currentTarget).text());
+			
+			// Check if length is number and bigger than or equal to 1.
+			var length = this.$(event.currentTarget).text();
+			this.attrsClone.at(index).set('length', length>=1 ? length : '50');
 		},
 		
 		toggleKey : function(event) {
