@@ -99,6 +99,7 @@ jsPlumb.ready(function() {
 				"maxA" : "",
 				"minB" : "",
 				"maxB" : "",
+				"distance" : "",
 			},
 		},
 		"aggregation" : {

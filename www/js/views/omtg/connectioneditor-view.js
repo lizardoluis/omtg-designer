@@ -42,13 +42,20 @@
 				fieldset.append(_.template($('#omtg-connection-editor-spatial-relation-template').html()));				
 				this.descriptionLabel = this.connection.getOverlay("description-label");			
 				
-				if(this.descriptionLabel.getLabel()){
-					this.$('#inputConnectionSpatialRelation').data('spatialrelation', this.descriptionLabel.getLabel());
-					this.$('#inputConnectionSpatialRelation').html(this.descriptionLabel.getLabel());
+				var spatialRelation = this.descriptionLabel.getLabel().split(" ")[0];
+				
+				if(spatialRelation){
+					this.$('#inputConnectionSpatialRelation').data('spatialrelation', spatialRelation);
+					this.$('#inputConnectionSpatialRelation').html(spatialRelation);
 				}
 				else{
 					this.$('#inputConnectionSpatialRelation').data('spatialrelation', 'Contains');
 					this.$('#inputConnectionSpatialRelation').html('Contains');
+				}
+				
+				if(spatialRelation.toLowerCase() == 'near'){
+					this.$('#inputConnectionDistance').prop("disabled", false);
+					this.$('#inputConnectionDistance').val(this.connection.getParameter("distance"));
 				}
 			}
 			
@@ -103,13 +110,25 @@
 		update : function() {
 			
 			var type = this.connection.getType()[0];
+			var spatialRelation;
 				
 			// Spatial connection description
 			if(type == 'spatial-association'){
-				var spatialRelation = this.$('#inputConnectionSpatialRelation').data('spatialrelation');
-				if(spatialRelation){
+				spatialRelation = this.$('#inputConnectionSpatialRelation').data('spatialrelation');
+				
+				if(spatialRelation.toLowerCase() == 'near'){
+					var dist = this.$('#inputConnectionDistance').val().trim();
+					
+					// Check if distance is number and available, if not set 10 as default.
+					if(!dist || !(dist>=0))
+						dist = 10;
+					
+					this.connection.setParameter("distance", dist);
+					this.descriptionLabel.setLabel(spatialRelation + ' (' + dist + ')');
+				}	
+				else{
 					this.descriptionLabel.setLabel(spatialRelation);
-				}			
+				}
 			}
 			
 			// Connection description
@@ -182,8 +201,18 @@
 			var selected = this.$(event.currentTarget).html();
 			this.$('#inputConnectionSpatialRelation').html(selected);
 
-			var spatialrelation = this.$(event.currentTarget).data('spatialrelation');
+			var spatialrelation = this.$(event.currentTarget).data('spatialrelation').trim();
 			this.$('#inputConnectionSpatialRelation').data('spatialrelation', spatialrelation);
+			
+			if(spatialrelation.toLowerCase() == 'near'){
+				this.$('#inputConnectionDistance').prop("disabled", false);
+				this.$('#inputConnectionDistance').val(this.connection.getParameter("distance"));
+			}
+			else{
+				this.$('#inputConnectionDistance').prop("disabled", true);
+				this.$('#inputConnectionDistance').val("");
+				this.connection.setParameter("distance", "");
+			}
 		},
 		
 		// Avoid form submission on enter

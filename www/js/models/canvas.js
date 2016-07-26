@@ -77,15 +77,16 @@
 				"</conventional>";
 				
 			case "spatial-association":
-				var description = conn.getOverlay("description-label").getLabel();
+				var description = conn.getOverlay("description-label").getLabel().split(" ")[0];
 				var sourceName = this.get('diagrams').get(conn.sourceId, 'name');
 				var targetName = this.get('diagrams').get(conn.targetId, 'name');
 				var minA = conn.getParameter("minA");
 				var maxA = conn.getParameter("maxA");
 				var minB = conn.getParameter("minB");
-				var maxB = conn.getParameter("maxB");			
+				var maxB = conn.getParameter("maxB");	
+				var distance = conn.getParameter("distance");	
 				return "<topological>" +
-				"<spatial-relations><spatial-relation>" + description + "</spatial-relation></spatial-relations>" +
+				"<spatial-relations><spatial-relation>" + description + "</spatial-relation><distance>" + distance + "</distance></spatial-relations>" +
 				"<class1>" + sourceName + "</class1><cardinality1><min>" + minA + "</min><max>" + maxA + "</max></cardinality1>" +
 				"<class2>" + targetName + "</class2><cardinality2><min>" + minB + "</min><max>" + maxB + "</max></cardinality2>" +
 				"</topological>";

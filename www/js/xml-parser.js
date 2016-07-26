@@ -153,7 +153,7 @@ app.XMLParser = {
 			break;
 			
 		case "topological":			
-			var description = this.getValue(element.childNodes[0].firstChild.firstChild);
+			var spatialRelation = this.getValue(element.childNodes[0].firstChild.firstChild);
 			var sourceName = element.childNodes[1].firstChild.nodeValue;
 			var targetName = element.childNodes[3].firstChild.nodeValue;
 			var cardinalityA = element.childNodes[2];
@@ -164,8 +164,15 @@ app.XMLParser = {
 				target: this.diagramMap[targetName],
 				type: 'spatial-association',
 			});
-						
-			connection.getOverlay("description-label").setLabel(description);
+			
+			if(spatialRelation.toLowerCase() == 'near'){
+				var distance = this.getValue(element.childNodes[0].childNodes[1].firstChild);
+				connection.setParameter("distance", distance);
+				connection.getOverlay("description-label").setLabel(spatialRelation + ' (' + distance + ')');
+			}
+			else{
+				connection.getOverlay("description-label").setLabel(spatialRelation);
+			}
 			
 			this.parseOMTGConnectionCardinality(cardinalityA, connection, 'A');
 			this.parseOMTGConnectionCardinality(cardinalityB, connection, 'B');
