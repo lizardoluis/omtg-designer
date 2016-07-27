@@ -8,9 +8,9 @@ DECLARE
 BEGIN
    SELECT rowid INTO w_rowid
       FROM <A_TABLE_NAME> w
-      WHERE SDO_WITHIN_DISTANCE(w.geom, :NEW.geom, 'distance=<DISTANCE> unit=<UNIT>') = 'TRUE' AND rownum <= 1;
+      WHERE SDO_WITHIN_DISTANCE(w.geom, :NEW.geom, 'distance=<DISTANCE>') = 'TRUE' AND rownum <= 1;
 EXCEPTION
    WHEN NO_DATA_FOUND THEN
-      RAISE_APPLICATION_ERROR(-20001, 'Topological relationship between <A_TABLE_NAME> and <B_TABLE_NAME> <B_TABLE_KEYS>is not near with distance=<DISTANCE> and unit=<UNIT>');
+      RAISE_APPLICATION_ERROR(-20001, 'Topological relationship between <A_TABLE_NAME> and <B_TABLE_NAME> <B_TABLE_KEYS>is not near with distance=<DISTANCE>');
 END;
 /

@@ -97,10 +97,10 @@ public class OnLineConstraintsWriter extends SQLWriter {
 			sql = FormatSQL.replace(sql, DISTANCE, distance);
 		}
 
-		if (sql.contains(UNIT)) {
-
-			sql = FormatSQL.replace(sql, UNIT, unit);
-		}
+//		if (sql.contains(UNIT)) {
+//
+//			sql = FormatSQL.replace(sql, UNIT, unit);
+//		}
 
 		return sql;
 	}
