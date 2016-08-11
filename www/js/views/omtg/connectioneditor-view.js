@@ -140,12 +140,16 @@
 			if(type == 'association' || type == 'spatial-association'){
 				// Connection cardinality A
 				var minA = this.$('#inputMinA').val().trim();
-				var maxA = this.$('#inputMaxA').val().trim();			
+				var maxA = this.$('#inputMaxA').val().trim();
+				minA = minA >= 0 && minA != ""  ? minA : '0';
+				maxA = maxA >= 1 && maxA != "" && minA <= maxA ? maxA : '*';
 				this.cardLabelA.setLabel(this.concatCardLabel(minA, maxA));
 
 				// Connection cardinality B
 				var minB = this.$('#inputMinB').val().trim();
 				var maxB = this.$('#inputMaxB').val().trim();
+				minB = minB >= 0 && minB != ""  ? minB : '0';
+				maxB = maxB >= 1 && maxB != "" && minB <= maxB ? maxB : '*';
 				this.cardLabelB.setLabel(this.concatCardLabel(minB, maxB));			
 			
 				// Save in the connection parameters
@@ -185,15 +189,11 @@
 		},
 		
 		concatCardLabel : function(min, max){
-			if(min == "" && max == ""){
-				return "";
-			}
 
-			if (min != "" && max != ""){
-				return min + ".." + max;
-			}
+			if(min == max)
+				return min;
 
-			return min + "" + max;
+			return min + ".." + max;
 		},
 		
 		// Selected the option in the diagram type dropdown
