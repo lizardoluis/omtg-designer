@@ -81,7 +81,7 @@ public class OMTG2Postgis {
 
 		List<OMTGClass> omtgSuperClasses = omtSchema.getSuperClassesOfTotalGeneralization();
 
-		//map the others relationship
+		//map other relationships
 		for (OMTGRelationship omtgRel : omtSchema.getRelationshipsWithoutGeneralization()) {
 
 			OMTGClass omtgClassA = omtSchema.getClass(omtgRel.getClass1());
@@ -100,20 +100,20 @@ public class OMTG2Postgis {
 			if (omtgRel.typeEquals("conventional-relationship")) {
 
 				if (((OMTGConventionalRelationship)omtgRel).cardinalityIsEqual(OMTGCardinality.ONE_TO_ONE)) {
-					//System.out.println("one_to_one");
+//					System.out.println("one_to_one");
 					postgisGenerator.mapConventionalRelationship11(omtgRel, omtgClassA, omtgClassB, omtgClassAList, omtgClassBList);
 				}
 				else if (((OMTGConventionalRelationship)omtgRel).cardinalityIsEqual(OMTGCardinality.ONE_TO_MANY)) {
-					//System.out.println("one_to_many");
+//					System.out.println("one_to_many");
 					postgisGenerator.mapConventionalRelationship1N(omtgRel, omtgClassA, omtgClassB, omtgClassAList, omtgClassBList);
 				}
 				else if (((OMTGConventionalRelationship)omtgRel).cardinalityIsEqual(OMTGCardinality.MANY_TO_ONE)) {
-					//System.out.println("many_to_one");
+//					System.out.println("many_to_one");
 					postgisGenerator.mapConventionalRelationshipN1(omtgRel, omtgClassA, omtgClassB, omtgClassAList, omtgClassBList);
 				}
 				// Relationship is Many to Many
 				else {
-					//System.out.println("many_to_many");
+//					System.out.println("many_to_many");
 					postgisGenerator.mapConventionalRelationshipMN(omtgRel, omtgClassA, omtgClassB, omtgClassAList, omtgClassBList);
 				}
 			}

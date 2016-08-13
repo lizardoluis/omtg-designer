@@ -4,9 +4,9 @@ import java.util.Scanner;
 public class OMTGCardinality {
 
 	public static final String ONE_TO_ONE = "(1,1)";
-	public static final String ONE_TO_MANY = "(1,n)";
-	public static final String MANY_TO_ONE = "(n,1)";
-	public static final String MANY_TO_MANY = "(n,n)";
+	public static final String ONE_TO_MANY = "(1,*)";
+	public static final String MANY_TO_ONE = "(*,1)";
+	public static final String MANY_TO_MANY = "(*,*)";
 	public static final int PARTIAL = 0;
 	public static final int TOTAL = 1;
 
