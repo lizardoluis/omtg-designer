@@ -7,12 +7,14 @@
 	app.CanvasView = Backbone.View.extend({
 		
 		events : {
-			'click' : 'clicked',			
+			'click' : 'clicked',
 		},
 
 		initialize : function() {
 			this.listenTo(this.model.get('diagrams'), 'add', this.addOMTGDiagram);
 			this.listenTo(this.model, 'change:activeTool', this.setCursor);
+			
+			$(document).on('keydown', this.keyAction);
 		},
 
 		clicked : function(event) {
@@ -94,6 +96,40 @@
 //			});
 		},
 		
+		keyAction : function(event){
+			
+			var code = event.keyCode || event.which;
+			
+			var moveDiagram = function(direction, diff){
+				event.preventDefault();
+				app.canvas.get('diagrams').each(function(d) {
+		    		if(d.get('selected'))		    		
+		    			d.set(direction, d.get(direction) + diff);
+		    	});
+			};
+						
+			switch(code){
+			case LEFT_ARROW_KEY:
+				if(event.shiftKey) moveDiagram('left', -1);
+				else moveDiagram('left', -4);
+				break;
+				
+			case TOP_ARROW_KEY:
+				if(event.shiftKey) moveDiagram('top', -1);
+				else moveDiagram('top', -4);
+				break;
+				
+			case RIGHT_ARROW_KEY:
+				if(event.shiftKey) moveDiagram('left', 1);
+				else moveDiagram('left', 4);
+				break;
+				
+			case DOWN_ARROW_KEY:
+				if(event.shiftKey) moveDiagram('top', 1);
+				else moveDiagram('top', 4);
+				break;
+			}
+		}
 	});
 
 })(jQuery);

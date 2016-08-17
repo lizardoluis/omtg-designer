@@ -59,8 +59,8 @@
 			
 			// Set position
 			this.$el.css({        
-				'top': this.model.get('top'),
-				'left': this.model.get('left')
+				'top': this.model.get('top') + 'px',
+				'left': this.model.get('left') + 'px'
 			});			
 			
 			// Render name and type
