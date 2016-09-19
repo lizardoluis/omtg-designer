@@ -9,11 +9,11 @@ import com.omtg2sql.util.FormatSQL;
 
 public class OffLineConstraintsWriter extends SQLWriter {
 
-//	private final String WHOLE_TABLE_NAME = "<WHOLE_TABLE_NAME>";
-//	private final String PART_TABLE_NAME = "<PART_TABLE_NAME>";
-//	private final String WHOLE_TABLE_KEYS = "<WHOLE_TABLE_KEYS>";
-//	private final String PART_TABLE_KEYS = "<PART_TABLE_KEYS>";
-//	private final String VAL_SPA_AGR_NAME = "<VAL_SPA_AGR_NAME>";
+	private final String WHOLE_TABLE_NAME = "<WHOLE_TABLE_NAME>";
+	private final String PART_TABLE_NAME = "<PART_TABLE_NAME>";
+	private final String WHOLE_TABLE_KEYS = "<WHOLE_TABLE_KEYS>";
+	private final String PART_TABLE_KEYS = "<PART_TABLE_KEYS>";
+	private final String VAL_SPA_AGR_NAME = "<VAL_SPA_AGR_NAME>";
 
 //	private final String PLANAR_SUB_TABLE_NAME = "<PLANAR_SUB_TABLE_NAME>";
 //	private final String PLANAR_SUB_TABLE_KEYS = "<PLANAR_SUB_TABLE_KEYS>";
@@ -35,7 +35,7 @@ public class OffLineConstraintsWriter extends SQLWriter {
 
 	private final String COMMENT = "<COMMENT>";
 
-//	private final String VALIDATE_SPATIAL_AGGREGATION_TEMPLATE = "validate_spatial_aggregation_template.sql";
+	private final String VALIDATE_SPATIAL_AGGREGATION_TEMPLATE = "validate_spatial_aggregation_template.sql";
 //	private final String VALIDATE_PLANAR_SUBDIVISION_TEMPLATE = "validate_planar_subdivision_template.sql";
 //	private final String VALIDATE_ISOLINE_TEMPLATE = "validate_isoline_template.sql";
 	private final String VALIDATE_NETWORK_TEMPLATE = "validate_arc_node_network_template.sql";
@@ -82,50 +82,50 @@ public class OffLineConstraintsWriter extends SQLWriter {
 	//		}
 	//	}
 
-//	private String processSpatialAggegationConstraint(String sql,
-//			String wholeTableName, List<String> wholeTableKeys,
-//			String partTableName, List<String> partTableKeys) {
-//
-//		if (sql.contains(COMMENT)) {
-//
-//			sql = FormatSQL
-//					.replaceAll(sql, COMMENT,
-//							"-- Validate the spatial aggregation between the whole "
-//									+ wholeTableName + " and the part "
-//									+ partTableName);
-//		}
-//
-//		if (sql.contains(VAL_SPA_AGR_NAME)) {
-//
-//			sql = FormatSQL.replaceAll(sql, VAL_SPA_AGR_NAME,
-//					FormatSQL.validateLengthName(wholeTableName) + "_"
-//							+ FormatSQL.validateLengthName(partTableName));
-//		}
-//
-//		if (sql.contains(WHOLE_TABLE_NAME)) {
-//
-//			sql = FormatSQL.replaceAll(sql, WHOLE_TABLE_NAME, wholeTableName);
-//		}
-//
-//		if (sql.contains(PART_TABLE_NAME)) {
-//
-//			sql = FormatSQL.replaceAll(sql, PART_TABLE_NAME, partTableName);
-//		}
-//
-//		if (sql.contains(WHOLE_TABLE_KEYS)) {
-//
-//			sql = FormatSQL.replaceAll(sql, WHOLE_TABLE_KEYS,
-//					FormatSQL.columnsToString(wholeTableKeys));
-//		}
-//
-//		if (sql.contains(PART_TABLE_KEYS)) {
-//
-//			sql = FormatSQL.replaceAll(sql, PART_TABLE_KEYS,
-//					FormatSQL.columnsToString(partTableKeys));
-//		}
-//
-//		return sql;
-//	}
+	private String processSpatialAggegationConstraint(String sql,
+			String wholeTableName, List<String> wholeTableKeys,
+			String partTableName, List<String> partTableKeys) {
+
+		if (sql.contains(COMMENT)) {
+
+			sql = FormatSQL
+					.replaceAll(sql, COMMENT,
+							"-- Validate the spatial aggregation between the whole "
+									+ wholeTableName + " and the part "
+									+ partTableName);
+		}
+
+		if (sql.contains(VAL_SPA_AGR_NAME)) {
+
+			sql = FormatSQL.replaceAll(sql, VAL_SPA_AGR_NAME,
+					FormatSQL.validateLengthName(wholeTableName) + "_"
+							+ FormatSQL.validateLengthName(partTableName));
+		}
+
+		if (sql.contains(WHOLE_TABLE_NAME)) {
+
+			sql = FormatSQL.replaceAll(sql, WHOLE_TABLE_NAME, wholeTableName);
+		}
+
+		if (sql.contains(PART_TABLE_NAME)) {
+
+			sql = FormatSQL.replaceAll(sql, PART_TABLE_NAME, partTableName);
+		}
+
+		if (sql.contains(WHOLE_TABLE_KEYS)) {
+
+			sql = FormatSQL.replaceAll(sql, WHOLE_TABLE_KEYS,
+					FormatSQL.columnsToString(wholeTableKeys));
+		}
+
+		if (sql.contains(PART_TABLE_KEYS)) {
+
+			sql = FormatSQL.replaceAll(sql, PART_TABLE_KEYS,
+					FormatSQL.columnsToString(partTableKeys));
+		}
+
+		return sql;
+	}
 
 //	private String processPlanarSubdivisionConstraint(String sql,
 //			String planarSubTableName, List<String> planarSubTableKeys) {
@@ -342,22 +342,22 @@ public class OffLineConstraintsWriter extends SQLWriter {
 //		in.close();
 //	}
 
-//	public void appendSpatialAggregationConstraint(String wholeTableName,
-//			List<String> wholeTableKeys, String partTableName,
-//			List<String> partTableKeys) {
-//
-//		readFile(VALIDATE_SPATIAL_AGGREGATION_TEMPLATE);
-//
-//		while (in.hasNextLine()) {
-//
-//			String sql = in.nextLine();
-//			sql = processSpatialAggegationConstraint(sql, wholeTableName,
-//					wholeTableKeys, partTableName, partTableKeys);
-//			appendSQL(sql);
-//		}
-//
-//		in.close();
-//	}
+	public void appendSpatialAggregationConstraint(String wholeTableName,
+			List<String> wholeTableKeys, String partTableName,
+			List<String> partTableKeys) {
+
+		readFile(VALIDATE_SPATIAL_AGGREGATION_TEMPLATE);
+
+		while (in.hasNextLine()) {
+
+			String sql = in.nextLine();
+			sql = processSpatialAggegationConstraint(sql, wholeTableName,
+					wholeTableKeys, partTableName, partTableKeys);
+			appendSQL(sql);
+		}
+
+		in.close();
+	}
 
 	public void appendNetworkConstraint(String arcTableName,
 			List<String> arcTableKeys, String nodeTableName,

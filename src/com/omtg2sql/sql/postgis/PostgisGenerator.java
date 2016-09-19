@@ -166,18 +166,18 @@ public class PostgisGenerator {
 //		}
 //	}
 
-//	private void createSpatialAggregationConstraint(OMTGRelationship omtgRel,
-//			OMTGClass omtgClassWhole, OMTGClass omtgClassPart) {
-//
+	private void createSpatialAggregationConstraint(OMTGRelationship omtgRel,
+			OMTGClass omtgClassWhole, OMTGClass omtgClassPart) {
+
 //		ddl.createSpatialErrorTable();
 //		ddl.createSaAuxTable();
 //		ddl.appendInsertIntoUserSdoGeomMetadata("Sa_aux", null, "p_geom");
 //		ddl.appendCreateSpatialIndex("Sa_aux");
 //		offLineConstraints.appendJoinGeometryFunction();
-//		offLineConstraints.appendSpatialAggregationConstraint(
-//				omtgClassWhole.getName(), omtgClassWhole.getKeysName(),
-//				omtgClassPart.getName(), omtgClassPart.getKeysName());
-//	}
+		offLineConstraints.appendSpatialAggregationConstraint(
+				omtgClassWhole.getName(), omtgClassWhole.getKeysName(),
+				omtgClassPart.getName(), omtgClassPart.getKeysName());
+	}
 
 //	private void createTINConstraint(OMTGRelationship omtgRel,
 //			OMTGClass omtgClass) {
@@ -379,41 +379,41 @@ public class PostgisGenerator {
 				omtgClassNList);
 	}
 
-//	public void mapSpatialAggregation(OMTGRelationship rel,
-//			OMTGClass omtgClassWhole, OMTGClass omtgClassPart,
-//			List<OMTGClass> omtgClassWholeList,
-//			List<OMTGClass> omtgClassPartList) {
-//
-//		if (omtgClassWholeList != null && omtgClassPartList != null) {
-//			for (OMTGClass omtgClassA : omtgClassWholeList) {
-//				for (OMTGClass omtgClassB : omtgClassPartList) {
-//
-//					createSpatialAggregationConstraint(rel, omtgClassA,
-//							omtgClassB);
-//				}
-//			}
-//		} else if (omtgClassWholeList != null) {
-//
-//			for (OMTGClass omtgClass : omtgClassWholeList) {
-//
-//				createSpatialAggregationConstraint(rel, omtgClass,
-//						omtgClassPart);
-//			}
-//		} else if (omtgClassPartList != null) {
-//
-//			for (OMTGClass omtgClass : omtgClassPartList) {
-//
-//				createSpatialAggregationConstraint(rel, omtgClassWhole,
-//						omtgClass);
-//			}
-//		}
-//
-//		if (omtgClassWholeList == null && omtgClassPartList == null) {
-//
-//			createSpatialAggregationConstraint(rel, omtgClassWhole,
-//					omtgClassPart);
-//		}
-//	}
+	public void mapSpatialAggregation(OMTGRelationship rel,
+			OMTGClass omtgClassWhole, OMTGClass omtgClassPart,
+			List<OMTGClass> omtgClassWholeList,
+			List<OMTGClass> omtgClassPartList) {
+
+		if (omtgClassWholeList != null && omtgClassPartList != null) {
+			for (OMTGClass omtgClassA : omtgClassWholeList) {
+				for (OMTGClass omtgClassB : omtgClassPartList) {
+
+					createSpatialAggregationConstraint(rel, omtgClassA,
+							omtgClassB);
+				}
+			}
+		} else if (omtgClassWholeList != null) {
+
+			for (OMTGClass omtgClass : omtgClassWholeList) {
+
+				createSpatialAggregationConstraint(rel, omtgClass,
+						omtgClassPart);
+			}
+		} else if (omtgClassPartList != null) {
+
+			for (OMTGClass omtgClass : omtgClassPartList) {
+
+				createSpatialAggregationConstraint(rel, omtgClassWhole,
+						omtgClass);
+			}
+		}
+
+		if (omtgClassWholeList == null && omtgClassPartList == null) {
+
+			createSpatialAggregationConstraint(rel, omtgClassWhole,
+					omtgClassPart);
+		}
+	}
 
 //	public void mapTIN(OMTGRelationship omtgRel, OMTGClass omtgClass) {
 //

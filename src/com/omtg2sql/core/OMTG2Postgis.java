@@ -126,10 +126,10 @@ public class OMTG2Postgis {
 				postgisGenerator.mapConventionalAggregation(omtgRel, omtgClassA, omtgClassB, omtgClassAList, omtgClassBList);
 
 			}
-//			else if (omtgRel.typeEquals("spatial-aggregation") && !omtgClassesIsTesselation) {
-//
-//				postgisGenerator.mapSpatialAggregation(omtgRel, omtgClassA, omtgClassB, omtgClassAList, omtgClassBList);
-//			}
+			else if (omtgRel.typeEquals("spatial-aggregation") && !omtgClassesIsTesselation) {
+
+				postgisGenerator.mapSpatialAggregation(omtgRel, omtgClassA, omtgClassB, omtgClassAList, omtgClassBList);
+			}
 			else if (omtgRel.typeEquals("network")) {
 				
 				if(omtgClassA.getType() == omtgClassB.getType()){
