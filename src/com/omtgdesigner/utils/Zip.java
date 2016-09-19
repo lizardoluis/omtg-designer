@@ -25,7 +25,7 @@ public class Zip {
 	public static byte[] createZipFile(StringWriter ddlSW, StringWriter constraints) {
 		
 		
-		return createZipFile(ddlSW, constraints, null);
+		return createZipFile(ddlSW, null, constraints);
 	}
 	
 	/**
@@ -47,14 +47,14 @@ public class Zip {
 			zipOutputStream.closeEntry();
 
 			if (staticSW != null && staticSW.toString().getBytes().length > 0) {
-				zipOutputStream.putNextEntry(new ZipEntry("omtg-static-control.sql"));
+				zipOutputStream.putNextEntry(new ZipEntry("omtg-static-constraints.sql"));
 				byte[] staticSWBuffer = staticSW.toString().getBytes();
 				zipOutputStream.write(staticSWBuffer);
 				zipOutputStream.closeEntry();
 			}
 
 			if (dynamicSW != null && dynamicSW.toString().getBytes().length > 0) {
-				zipOutputStream.putNextEntry(new ZipEntry("omtg-dynamic-control.sql"));
+				zipOutputStream.putNextEntry(new ZipEntry("omtg-dynamic-constraints.sql"));
 				byte[] dynamicSWBuffer = dynamicSW.toString().getBytes();
 				zipOutputStream.write(dynamicSWBuffer);
 				zipOutputStream.closeEntry();
