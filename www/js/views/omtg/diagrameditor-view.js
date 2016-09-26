@@ -99,7 +99,6 @@
 		},
 
 		updateDiagram : function() {
-			
 			// Diagram type
 			var type = this.$('#inputDiagramType').data('type-name');
 			if (type) {
@@ -123,7 +122,7 @@
 			this.model.set({'attributes': this.attrsClone});
 			this.model.trigger('change', this.model);
 
-			this.teardown();
+			//this.teardown();
 		},
 
 		newAttribute : function() {

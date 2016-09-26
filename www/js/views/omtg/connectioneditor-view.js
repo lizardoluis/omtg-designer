@@ -164,7 +164,7 @@
 			}
 			
 			
-			this.teardown();
+			//this.teardown();
 		},
 		
 		detach : function(event) {
@@ -184,7 +184,7 @@
 				
 				app.plumb.detach(this.connection);
 				
-				this.teardown();
+				//this.teardown();
 			}
 		},
 		
