@@ -4,9 +4,3 @@ CREATE TRIGGER <VAL_TOP_REL_NAME>_<SPATIAL_RELATION_MASK>_insert_update_trigger
   FOR EACH STATEMENT
   EXECUTE PROCEDURE omtg_topologicalrelationship('<A_TABLE_NAME>', 'geom', '<B_TABLE_NAME>', 'geom', '<SPATIAL_RELATION>');
 
-CREATE TRIGGER <VAL_TOP_REL_NAME>_<SPATIAL_RELATION_MASK>_delete_trigger
-  AFTER DELETE ON <B_TABLE_NAME>
-  FOR EACH STATEMENT
-  EXECUTE PROCEDURE omtg_topologicalrelationship('<A_TABLE_NAME>', 'geom', '<B_TABLE_NAME>', 'geom', '<SPATIAL_RELATION>');
-
-  
