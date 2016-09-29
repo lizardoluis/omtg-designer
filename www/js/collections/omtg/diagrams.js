@@ -33,6 +33,15 @@
 			return null;
 		},
 		
+		findByName : function(name) {
+			var ds = this.where({name : name});
+			for(var i=0; i<ds.length; i++){
+				if(!ds[i].get('deleted'))
+					return ds[i];
+			}
+			return null;
+		},
+		
 		toXML: function() {
 		
 			var xml = "";

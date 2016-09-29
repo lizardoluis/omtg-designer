@@ -89,16 +89,17 @@
 			var name = this.$(event.currentTarget).val().trim();
 			
 			var reg = new RegExp("[a-zA-Z0-9][\w#@]{0,63}$");
-			if (reg.test(name) && /\s/.test(name) == false) {
+			
+			if (reg.test(name) && /\s/.test(name) == false && app.canvas.get('diagrams').findByName(name) == null) {
 			    this.$('#formDiagramName').removeClass("has-error");
 			    this.$('#btnUpdate').removeClass("disabled");
 			} else {
 				this.$('#formDiagramName').addClass("has-error");
 				this.$('#btnUpdate').addClass("disabled");
 			}			
-		},
+		}, 
 
-		updateDiagram : function() {
+		updateDiagram : function() { 
 			// Diagram type
 			var type = this.$('#inputDiagramType').data('type-name');
 			if (type) {
