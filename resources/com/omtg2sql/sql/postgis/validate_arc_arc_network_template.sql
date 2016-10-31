@@ -2,6 +2,6 @@
 CREATE TRIGGER <VAL_NETWOK_NAME>_arc_arc_trigger
   AFTER INSERT OR UPDATE OR DELETE ON <ARC_TABLE_NAME>
   FOR EACH STATEMENT
-  EXECUTE PROCEDURE omtg_arcarcnetwork('<ARC_TABLE_NAME>', 'geom');
+  EXECUTE PROCEDURE ast_arcarcnetwork('<ARC_TABLE_NAME>', 'geom');
   
   

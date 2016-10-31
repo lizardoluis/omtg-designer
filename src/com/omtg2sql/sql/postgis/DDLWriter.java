@@ -206,22 +206,22 @@ public class DDLWriter extends SQLWriter {
 			case "line":
 			case "sample":
 			case "tesselation":
-				type = "omtg_" + spatialType;
+				type = "ast_" + spatialType;
 				break;
 			case "un-line":
-				type = "omtg_uniline";
+				type = "ast_uniline";
 				break;
 			case "bi-line":
-				type = "omtg_biline";
+				type = "ast_biline";
 				break;
 			case "isolines":
-				type = "omtg_isoline";
+				type = "ast_isoline";
 				break;
 			case "planar-subdivision":
-				type = "omtg_planarsubdivision";
+				type = "ast_planarsubdivision";
 				break;
 			case "TIN":
-				type = "omtg_tin";
+				type = "ast_tin";
 				break;
 		}
 		
