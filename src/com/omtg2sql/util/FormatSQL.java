@@ -6,7 +6,7 @@ import java.util.List;
 public class FormatSQL {
 
 	public static String validateLengthName(String name) {
-		return name.length() <= 3 ? name: name.substring(0,3);
+		return name.length() <= 20 ? name: name.substring(0,20);
 	}
 
 	public static String toStringWithTokenSeparator(List<String> list) {
