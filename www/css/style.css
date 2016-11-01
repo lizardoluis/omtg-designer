@@ -118,9 +118,12 @@
 	
 	
 	background-color: #fff;
-	box-shadow: 3px 3px 10px #888888;
 	width: auto !important;
 	height: auto !important;
+}
+
+.diagram-container-shadow {
+	box-shadow: 3px 3px 10px #888888;
 }
 
 .diagram-container:hover {

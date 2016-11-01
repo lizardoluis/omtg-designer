@@ -13,7 +13,9 @@
 			'click #btnExportPostgis' : 'exportPostgis',
 			'click #btnPrint' : 'print',
 			'click #btnAbout' : 'showAbout',
+			
 			'change #tgglGrid': 'changeGrid',
+			'change #tgglShadow': 'changeDiagramShadow',
 			'click #dropSettings' : 'dropSettingsClick',
 		},
 
@@ -124,11 +126,21 @@
 		
 		dropSettingsClick : function() {
 			event.stopPropagation();
-			$('#tgglGrid').bootstrapToggle('toggle');
+
+			if(event.target.nodeName == 'LABEL'){
+				$(event.target).parent().parent().find('input').bootstrapToggle('toggle');
+			}
+			else{
+				$(event.target).find('input').bootstrapToggle('toggle');
+			}
 		},
 		
 		changeGrid : function() {
 			app.canvas.set('grid', $('#tgglGrid').prop('checked'));
+		},
+		
+		changeDiagramShadow : function() {
+			app.canvas.set('diagramShadow', $('#tgglShadow').prop('checked'));
 		},
 		
 	});

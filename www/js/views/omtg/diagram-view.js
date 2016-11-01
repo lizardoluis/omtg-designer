@@ -84,6 +84,10 @@
 				this.$el.removeClass('selected');
 			}
 			
+			if(app.canvas.get('diagramShadow')){
+				this.$el.addClass('diagram-container-shadow');
+			}
+			
 			app.plumb.repaintEverything();
 			
 			return this;

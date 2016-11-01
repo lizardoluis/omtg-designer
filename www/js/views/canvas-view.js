@@ -14,6 +14,7 @@
 			this.listenTo(this.model.get('diagrams'), 'add', this.addOMTGDiagram);
 			this.listenTo(this.model, 'change:activeTool', this.setCursor);
 			this.listenTo(this.model, 'change:grid', this.toggleGrid);
+			this.listenTo(this.model, 'change:diagramShadow', this.toggleDiagramShadow);
 			
 			$(document).on('keydown', this.keyAction);
 		},
@@ -57,7 +58,17 @@
 			else{
 				this.$el.removeClass('canvas-background');
 			}
-		},		
+		},	
+		
+		toggleDiagramShadow : function() {	
+			
+			if(this.model.get('diagramShadow')){
+				this.$el.find('.diagram-container').addClass('diagram-container-shadow');
+			}
+			else{
+				this.$el.find('.diagram-container').removeClass('diagram-container-shadow');
+			}
+		},	
 		
 		addOMTGDiagram : function(diagram) {
 			
