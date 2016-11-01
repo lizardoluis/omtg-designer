@@ -13,6 +13,8 @@
 			'click #btnExportPostgis' : 'exportPostgis',
 			'click #btnPrint' : 'print',
 			'click #btnAbout' : 'showAbout',
+			'change #tgglGrid': 'changeGrid',
+			'click #dropSettings' : 'dropSettingsClick',
 		},
 
 		importXML : function() {
@@ -118,6 +120,15 @@
 		
 		showAbout : function() {
 			new app.AboutView();
+		},
+		
+		dropSettingsClick : function() {
+			event.stopPropagation();
+			$('#tgglGrid').bootstrapToggle('toggle');
+		},
+		
+		changeGrid : function() {
+			app.canvas.set('grid', $('#tgglGrid').prop('checked'));
 		},
 		
 	});

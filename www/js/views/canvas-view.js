@@ -13,6 +13,7 @@
 		initialize : function() {
 			this.listenTo(this.model.get('diagrams'), 'add', this.addOMTGDiagram);
 			this.listenTo(this.model, 'change:activeTool', this.setCursor);
+			this.listenTo(this.model, 'change:grid', this.toggleGrid);
 			
 			$(document).on('keydown', this.keyAction);
 		},
@@ -47,6 +48,15 @@
 			else{
 				this.$el.css("cursor", "default");
 			}			
+		},		
+		
+		toggleGrid : function() {			
+			if(this.model.get('grid')){
+				this.$el.addClass('canvas-background');
+			}
+			else{
+				this.$el.removeClass('canvas-background');
+			}
 		},		
 		
 		addOMTGDiagram : function(diagram) {

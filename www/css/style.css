@@ -76,6 +76,9 @@
 	width: 2000px;
 	position: relative;
 	padding: 5px 5px 5px 5px;
+}
+
+.canvas-background {
 	background-image: linear-gradient(rgba(200, 200, 200, .2) 1px,
 		transparent 1px), linear-gradient(90deg, rgba(200, 200, 200, .2) 1px,
 		transparent 1px);

@@ -8,6 +8,7 @@
 	    <title>OMT-G Designer</title>
 	
 	    <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	    <link href="libs/bootstrap-toggle/css/bootstrap-toggle.min.css" rel="stylesheet">
 	    <link href="css/style-min.css" rel="stylesheet">	    
 	    <link rel="icon" href="favicon.ico" />
 	
@@ -36,7 +37,15 @@
 <!-- 					<li><a id='btnPrint' href="#"><span class="glyphicon glyphicon-print" ></span> Print Project</a></li> -->
 						<li><a href="http://homepages.dcc.ufmg.br/~clodoveu/DocuWiki/doku.php?id=omtg" target='_blank'><span class="glyphicon glyphicon-education" aria-hidden="true"></span> Learn OMT-G</a></li>
 						<li><a id='btnAbout' href="#"><span class="glyphicon glyphicon-info-sign" ></span> About</a></li>
-						
+					</ul>
+					
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+					          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon glyphicon-cog" ></span> Settings <span class="caret"></span></a>
+					          <ul id="dropSettings" class="dropdown-menu">
+					          		<li><a href="#"><input id="tgglGrid"  type="checkbox" checked data-toggle="toggle" data-size="mini" data-on="" data-off="">&nbsp&nbspGrid lines</a></li>
+					          </ul>
+				        </li>				        
 					</ul>
 				</div>
 			</div>
@@ -48,7 +57,7 @@
 		
 		<!-- Canvas -->
 		<div class="section-canvas">
-			<div id="canvas" class="canvas"></div>
+			<div id="canvas" class="canvas canvas-background"></div>
 		</div>  			
 		
 		<nav class="navbar navbar-default navbar-fixed-bottom">
@@ -73,6 +82,7 @@
 		<script src="libs/bootstrap/js/bootstrap.min.js"></script>
 		<script src="libs/jsplumb/jquery.jsPlumb-1.7.2.js"></script>
 		<script src="libs/fileSaver/FileSaver.min.js"></script>
+		<script src="libs/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
 		
  		<!-- Js scripts --> 
  		<script src="js/script-min.js"></script>

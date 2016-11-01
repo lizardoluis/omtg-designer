@@ -9,6 +9,7 @@
 			return {
 				diagrams : new app.omtg.Diagrams(),
 				activeTool : null,
+				grid : true
 			};
 		},
 		
