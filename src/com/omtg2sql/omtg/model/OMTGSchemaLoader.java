@@ -1,6 +1,5 @@
 package com.omtg2sql.omtg.model;
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.Map;
 
 import com.omtg2sql.omtg.classes.OMTGClass;

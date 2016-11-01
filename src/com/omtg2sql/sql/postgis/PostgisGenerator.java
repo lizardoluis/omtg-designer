@@ -11,7 +11,7 @@ import com.omtg2sql.omtg.relationships.OMTGConventionalGeneralization;
 import com.omtg2sql.omtg.relationships.OMTGGeneralization;
 import com.omtg2sql.omtg.relationships.OMTGRelationship;
 import com.omtg2sql.omtg.relationships.OMTGTopologicalRelationship;
-import com.omtg2sql.omtg.relationships.OMTGUserRestriction;
+//import com.omtg2sql.omtg.relationships.OMTGUserRestriction;
 
 public class PostgisGenerator {
 
@@ -122,32 +122,48 @@ public class PostgisGenerator {
 			onLineConstraints.appendTopologicalRelationshipNearConstraint(
 					omtgClassA.getName(), omtgClassB.getName(),
 					omtgClassB.getKeysName(), rel.getDistance(), rel.getUnit());
-		} else {
-
+		
+		} else if (rel.getSpatialRelation().size() == 1
+				&& rel.getSpatialRelation().get(0).equalsIgnoreCase("distant")) {
+			
+			onLineConstraints.appendTopologicalRelationshipDistantConstraint(
+					omtgClassA.getName(), omtgClassB.getName(),
+					omtgClassB.getKeysName(), rel.getDistance(), rel.getUnit());
+		}
+		else {
 			onLineConstraints.appendTopologicalRelationshipConstraint(
 					omtgClassA.getName(), omtgClassB.getName(),
 					omtgClassB.getKeysName(), rel.getSpatialRelation());
 		}
 	}
 
-	private void createUserRestrictionConstraint(OMTGUserRestriction rel,
-			OMTGClass omtgClassA, OMTGClass omtgClassB) {
-
-		if (rel.getSpatialRelation().size() == 1
-				&& rel.getSpatialRelation().get(0).equalsIgnoreCase("near")) {
-
-			onLineConstraints.appendUserRestrictionNearConstraint(
-					omtgClassA.getName(), omtgClassB.getName(),
-					omtgClassB.getKeysName(), rel.getDistance(), rel.getUnit(),
-					rel.isSpatialRelationCanOccur());
-		} else {
-
-			onLineConstraints.appendUserRestrictionConstraint(
-					omtgClassA.getName(), omtgClassB.getName(),
-					omtgClassB.getKeysName(), rel.getSpatialRelation(),
-					rel.isSpatialRelationCanOccur());
-		}
-	}
+//	private void createUserRestrictionConstraint(OMTGUserRestriction rel,
+//			OMTGClass omtgClassA, OMTGClass omtgClassB) {
+//
+//		if (rel.getSpatialRelation().size() == 1
+//				&& rel.getSpatialRelation().get(0).equalsIgnoreCase("near")) {
+//
+//			onLineConstraints.appendUserRestrictionNearConstraint(
+//					omtgClassA.getName(), omtgClassB.getName(),
+//					omtgClassB.getKeysName(), rel.getDistance(), rel.getUnit(),
+//					rel.isSpatialRelationCanOccur());
+//		} 
+//		else if (rel.getSpatialRelation().size() == 1
+//				&& rel.getSpatialRelation().get(0).equalsIgnoreCase("distant")) {
+//
+//			onLineConstraints.appendUserRestrictionDistantConstraint(
+//					omtgClassA.getName(), omtgClassB.getName(),
+//					omtgClassB.getKeysName(), rel.getDistance(), rel.getUnit(),
+//					rel.isSpatialRelationCanOccur());
+//		}
+//		else {
+//
+//			onLineConstraints.appendUserRestrictionConstraint(
+//					omtgClassA.getName(), omtgClassB.getName(),
+//					omtgClassB.getKeysName(), rel.getSpatialRelation(),
+//					rel.isSpatialRelationCanOccur());
+//		}
+//	}
 
 //	private void createSpatialClassConstraint(OMTGClass omtgClass) {
 //
@@ -339,37 +355,37 @@ public class PostgisGenerator {
 		}
 	}
 
-	public void mapUserRestriction(OMTGUserRestriction rel,
-			OMTGClass omtgClassA, OMTGClass omtgClassB,
-			List<OMTGClass> omtgClassAList, List<OMTGClass> omtgClassBList) {
-
-		if (omtgClassAList != null && omtgClassBList != null) {
-			for (OMTGClass omtgClassAA : omtgClassAList) {
-				for (OMTGClass omtgClassBB : omtgClassBList) {
-
-					createUserRestrictionConstraint(rel, omtgClassAA,
-							omtgClassBB);
-				}
-			}
-		} else if (omtgClassAList != null) {
-
-			for (OMTGClass omtgClass : omtgClassAList) {
-
-				createUserRestrictionConstraint(rel, omtgClass, omtgClassB);
-			}
-		} else if (omtgClassBList != null) {
-
-			for (OMTGClass omtgClass : omtgClassBList) {
-
-				createUserRestrictionConstraint(rel, omtgClassA, omtgClass);
-			}
-		}
-
-		if (omtgClassAList == null && omtgClassBList == null) {
-
-			createUserRestrictionConstraint(rel, omtgClassA, omtgClassB);
-		}
-	}
+//	public void mapUserRestriction(OMTGUserRestriction rel,
+//			OMTGClass omtgClassA, OMTGClass omtgClassB,
+//			List<OMTGClass> omtgClassAList, List<OMTGClass> omtgClassBList) {
+//
+//		if (omtgClassAList != null && omtgClassBList != null) {
+//			for (OMTGClass omtgClassAA : omtgClassAList) {
+//				for (OMTGClass omtgClassBB : omtgClassBList) {
+//
+//					createUserRestrictionConstraint(rel, omtgClassAA,
+//							omtgClassBB);
+//				}
+//			}
+//		} else if (omtgClassAList != null) {
+//
+//			for (OMTGClass omtgClass : omtgClassAList) {
+//
+//				createUserRestrictionConstraint(rel, omtgClass, omtgClassB);
+//			}
+//		} else if (omtgClassBList != null) {
+//
+//			for (OMTGClass omtgClass : omtgClassBList) {
+//
+//				createUserRestrictionConstraint(rel, omtgClassA, omtgClass);
+//			}
+//		}
+//
+//		if (omtgClassAList == null && omtgClassBList == null) {
+//
+//			createUserRestrictionConstraint(rel, omtgClassA, omtgClassB);
+//		}
+//	}
 
 	public void mapConventionalAggregation(OMTGRelationship rel,
 			OMTGClass omtgClass1, OMTGClass omtgClassN,

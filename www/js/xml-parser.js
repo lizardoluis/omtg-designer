@@ -165,7 +165,7 @@ app.XMLParser = {
 				type: 'spatial-association',
 			});
 			
-			if(spatialRelation.toLowerCase() == 'near'){
+			if(spatialRelation.toLowerCase() == 'near' || spatialRelation.toLowerCase() == 'distant'){
 				var distance = this.getValue(element.childNodes[0].childNodes[1].firstChild);
 				connection.setParameter("distance", distance);
 				connection.getOverlay("description-label").setLabel(spatialRelation + ' (' + distance + ')');

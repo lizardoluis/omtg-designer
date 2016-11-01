@@ -53,7 +53,7 @@
 					this.$('#inputConnectionSpatialRelation').html('Contains');
 				}
 				
-				if(spatialRelation.toLowerCase() == 'near'){
+				if(spatialRelation.toLowerCase() == 'near' || spatialRelation.toLowerCase() == 'distant'){
 					this.$('#inputConnectionDistance').prop("disabled", false);
 					this.$('#inputConnectionDistance').val(this.connection.getParameter("distance"));
 				}
@@ -116,7 +116,7 @@
 			if(type == 'spatial-association'){
 				spatialRelation = this.$('#inputConnectionSpatialRelation').data('spatialrelation');
 				
-				if(spatialRelation.toLowerCase() == 'near'){
+				if(spatialRelation.toLowerCase() == 'near' || spatialRelation.toLowerCase() == 'distant'){
 					var dist = this.$('#inputConnectionDistance').val().trim();
 					
 					// Check if distance is number and available, if not set 10 as default.
@@ -204,7 +204,7 @@
 			var spatialrelation = this.$(event.currentTarget).data('spatialrelation').trim();
 			this.$('#inputConnectionSpatialRelation').data('spatialrelation', spatialrelation);
 			
-			if(spatialrelation.toLowerCase() == 'near'){
+			if(spatialrelation.toLowerCase() == 'near' || spatialrelation.toLowerCase() == 'distant'){
 				this.$('#inputConnectionDistance').prop("disabled", false);
 				this.$('#inputConnectionDistance').val(this.connection.getParameter("distance"));
 			}
