@@ -42,15 +42,27 @@
 				fieldset.append(_.template($('#omtg-connection-editor-spatial-relation-template').html()));				
 				this.descriptionLabel = this.connection.getOverlay("description-label");			
 				
-				var spatialRelation = this.descriptionLabel.getLabel().split(" ")[0];
+				var sourceType = app.canvas.get('diagrams').get(this.connection.sourceId, 'type');
+				var targetType = app.canvas.get('diagrams').get(this.connection.targetId, 'type');
+				
+				if(sourceType != "polygon" && sourceType != "planar-subdivision"){
+					this.$("#contains").addClass('disabled');
+					this.$("#containsproperly").addClass('disabled');
+				}
+				
+				if(targetType != "polygon" && targetType != "planar-subdivision"){
+					this.$("#within").addClass('disabled');
+				}
+				
+				var spatialRelation = this.descriptionLabel.getLabel().split(" ")[0];				
 				
 				if(spatialRelation){
 					this.$('#inputConnectionSpatialRelation').data('spatialrelation', spatialRelation);
 					this.$('#inputConnectionSpatialRelation').html(spatialRelation);
 				}
 				else{
-					this.$('#inputConnectionSpatialRelation').data('spatialrelation', 'Contains');
-					this.$('#inputConnectionSpatialRelation').html('Contains');
+					this.$('#inputConnectionSpatialRelation').data('spatialrelation', 'Intersects');
+					this.$('#inputConnectionSpatialRelation').html('Intersects');
 				}
 				
 				if(spatialRelation.toLowerCase() == 'near' || spatialRelation.toLowerCase() == 'distant'){

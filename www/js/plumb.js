@@ -91,7 +91,7 @@ jsPlumb.ready(function() {
 		},
 		"spatial-association" : {
 			paintStyle : dashedConnectorStyle,
-			overlays : [[ "Label", { label:"Contains", location:0.5, id:"description-label", cssClass: "description-label" } ],
+			overlays : [[ "Label", { label:"Intersects", location:0.5, id:"description-label", cssClass: "description-label" } ],
 			            [ "Label", { label:"0..*", location:45, id:"cardinality-labelA", cssClass: "cardinality-label" } ],
 			            [ "Label", { label:"0..*", location:-45, id:"cardinality-labelB", cssClass: "cardinality-label" } ]],
 			parameters: {
