@@ -327,14 +327,16 @@ app.XMLParser = {
 		min = this.getValue(element.childNodes[0].firstChild);		
 		max = this.getValue(element.childNodes[1].firstChild);
 		
-		if(min == "" && max == ""){
-			str = "";
+		// This code is equal to connection editor view. 
+		// It will be better to create a model for connection and the view to process the model.
+		min = min >= 0 && min != ""  ? min : '0';
+		max = max >= 1 && max != "" && min <= max ? max : '*';
+		
+		if(min == max){
+			str = min;
 		}
-		else if (min != "" && max != ""){
-			str =  min + ".." + max;
-		}
-		else {
-			str = min + "" + max;
+		else{
+			str = min + ".." + max;
 		}
 
 		connection.getOverlay("cardinality-label" + side).setLabel(str);	
