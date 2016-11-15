@@ -11,7 +11,7 @@
  * Licensed under the MIT licence:
  *              http://www.opensource.org/licenses/mit-license.php
  *
- * (c) Jason Day 2014
+ * (c) Jason Day 2015
  *
  * Usage:
  *
@@ -73,19 +73,35 @@
         // $iframe.ready() and $iframe.load were inconsistent between browsers    
         setTimeout(function() {
 
+            // Add doctype to fix the style difference between printing and render
+            function setDocType($iframe,doctype){
+                var win, doc;
+                win = $iframe.get(0);
+                win = win.contentWindow || win.contentDocument || win;
+                doc = win.document || win.contentDocument || win;
+                doc.open();
+                doc.write(doctype);
+                doc.close();
+            }
+            if(opt.doctypeString){
+                setDocType($iframe,opt.doctypeString);
+            }
+
             var $doc = $iframe.contents(),
                 $head = $doc.find("head"),
                 $body = $doc.find("body");
 
             // add base tag to ensure elements use the parent domain
-            $head.append('<base href="' + document.location.protocol + '//' + document.location.host + '">');
+            var loc = window.location.pathname;
+            var dir = loc.substring(0, loc.lastIndexOf('/'));
+            $head.append('<base href="' + document.location.protocol + '//' + document.location.host + dir + '">');
 
             // import page stylesheets
             if (opt.importCSS) $("link[rel=stylesheet]").each(function() {
                 var href = $(this).attr("href");
                 if (href) {
                     var media = $(this).attr("media") || "all";
-                    $head.append("<link type='text/css' rel='stylesheet' href='" + href + "' media='" + media + "'>")
+                    $head.append("<link type='text/css' rel='stylesheet' href='/omtg-designer/" + href + "' media='" + media + "'>")
                 }
             });
             
@@ -102,10 +118,10 @@
             if (opt.loadCSS) {
                if( $.isArray(opt.loadCSS)) {
                     jQuery.each(opt.loadCSS, function(index, value) {
-                       $head.append("<link type='text/css' rel='stylesheet' href='" + this + "'>");
+                       $head.append("<link type='text/css' rel='stylesheet' href='/omtg-designer/" + this + "'>");
                     });
                 } else {
-                    $head.append("<link type='text/css' rel='stylesheet' href='" + opt.loadCSS + "'>");
+                    $head.append("<link type='text/css' rel='stylesheet' href='/omtg-designer/" + opt.loadCSS + "'>");
                 }
             }
 
@@ -178,6 +194,16 @@
                     $doc.find("body *").attr("style", "");
                 }
             }
+            
+            
+            
+              var $img = $iframe.contents().find("img");
+            
+              $img.each(function() {
+            	  var imgsrc = $(this).attr("src");
+            	  $(this).attr("src", "/omtg-designer/" +  imgsrc);
+            	});
+            
 
             setTimeout(function() {
                 if ($iframe.hasClass("MSIE")) {
@@ -187,8 +213,12 @@
                     $head.append("<script>  window.print(); </script>");
                 } else {
                     // proper method
-                    $iframe[0].contentWindow.focus();
-                    $iframe[0].contentWindow.print();
+                    if (document.queryCommandSupported("print")) {
+                        $iframe[0].contentWindow.document.execCommand("print", false, null);
+                    } else {
+                        $iframe[0].contentWindow.focus();
+                        $iframe[0].contentWindow.print();
+                    }
                 }
 
                 //remove iframe after print
@@ -215,7 +245,8 @@
         removeInline: false,    // remove all inline styles
         printDelay: 333,        // variable print delay
         header: null,           // prefix to html
-        formValues: true        // preserve input/form values
+        formValues: true,        // preserve input/form values
+        doctypeString: '<!DOCTYPE html>' // html doctype
     };
 
     // $.selector container

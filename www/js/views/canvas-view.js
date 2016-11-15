@@ -108,13 +108,14 @@
 		},
 		
 		print : function(){
-//			this.model.get('diagrams').unselectAll();
-//			
-//			this.$el.children().printThis({
-//				debug: true,
-//				importCSS: true,
-//				printContainer: true,
-//			});
+			this.model.get('diagrams').unselectAll();
+			
+			this.$el.children().printThis({
+				debug: false,
+				importCSS: true, 
+		        importStyle: false,        
+				printContainer: true
+			});
 		},
 		
 		keyAction : function(event){
