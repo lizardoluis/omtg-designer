@@ -13,7 +13,7 @@ OMT-G Designer is currently running under the link: http://www.aqui.io/omtg/
 OMT-G Model
 -----------
 
-The OMT-G (Object Modeling Technique for Geographic Applications) is an object oriented data model for the design of geographic applications and geographic database systems. It provides primitives for modeling the geometric shape and location of geographic objects, supporting spatial and topological relationships, "whole-part" structures, networks, and multiple representations of objects and spatial relationships. The OMT-G data model reduces the distance between the conceptual project and the physical implementation of geographic applications, by allowing a more precise definition of the required objects, operations and visualization parameters. [1]
+The [OMT-G (Object Modeling Technique for Geographic Applications)](http://homepages.dcc.ufmg.br/~clodoveu/DocuWiki/doku.php?id=omtg) is an object oriented data model for the design of geographic applications and geographic database systems. It provides primitives for modeling the geometric shape and location of geographic objects, supporting spatial and topological relationships, "whole-part" structures, networks, and multiple representations of objects and spatial relationships. The OMT-G data model reduces the distance between the conceptual project and the physical implementation of geographic applications, by allowing a more precise definition of the required objects, operations and visualization parameters. [1]
 
 
 
