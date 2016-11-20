@@ -176,6 +176,7 @@
 
 .selected {
 	border: 2px solid black;
+	margin: 3px;
 }
 
 .diagram-container .attribute-key {
@@ -290,3 +291,11 @@
 	line-height: 30px;
 	text-align: center;
 }
+
+
+/* @page{
+	margin-left: 6cm;
+	margin-right: 6cm;
+	margin-top: 0cm;
+	margin-bottom: 0cm;
+} */
