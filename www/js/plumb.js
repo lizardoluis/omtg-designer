@@ -169,7 +169,6 @@ jsPlumb.ready(function() {
 			hoverPaintStyle: connectorHoverStyle,
 		},
 		"cartographic-generalization-disjoint" : {
-			connector: ["Flowchart", {stub: [70, 50], alwaysRespectStubs: true}],
 			paintStyle : dashedConnectorStyle,
 			hoverPaintStyle: connectorHoverStyle,
 			overlays : [square("white", 70), [ "Label", { label:"scale", location:0.5, id: "cartographic-label", cssClass: "cartographic-label" }]],
@@ -178,7 +177,6 @@ jsPlumb.ready(function() {
 			},
 		},
 		"cartographic-generalization-overlapping" : {
-			connector: ["Flowchart", {stub: [70, 50], alwaysRespectStubs: true}],
 			paintStyle : dashedConnectorStyle,
 			hoverPaintStyle: connectorHoverStyle,
 			overlays : [square("black", 70), [ "Label", { label:"scale", location:0.5, id: "cartographic-label", cssClass: "cartographic-label" }]],
@@ -187,7 +185,6 @@ jsPlumb.ready(function() {
 			},
 		},
 		"cartographic-leg" : {
-			connector: ["Flowchart", {stub: [0, 50], alwaysRespectStubs: true}],
 			paintStyle : dashedConnectorStyle,
 			hoverPaintStyle: connectorHoverStyle,
 		},
@@ -244,9 +241,11 @@ jsPlumb.ready(function() {
 				});				
 				sibling.setType("arc-network-sibling-self");
 				
+				// set parameters
 				sibling.setParameter("sibling", newConn);
 				newConn.setParameter("sibling", sibling);
 				
+				// set connectors
 				newConn.setConnector(["Flowchart", {stub: [50, 50], alwaysRespectStubs: true}]);
 				sibling.setConnector(["Flowchart", {stub: [25, 25], alwaysRespectStubs: true}]);
 			}
@@ -257,9 +256,11 @@ jsPlumb.ready(function() {
 				});						
 				sibling.setType("arc-network-sibling");
 				
+				// set parameters
 				sibling.setParameter("sibling", info.connection);
 				info.connection.setParameter("sibling", sibling);	
 				
+				// set connectors
 				info.connection.setConnector("Straight");
 				sibling.setConnector("Straight");
 			}
@@ -293,14 +294,13 @@ jsPlumb.ready(function() {
 			    }
 			});
 			
-			// Reatach the connection, but now to the endpoint
+			// Re-atach the connection, but now to the endpoint
 			var newConn = app.plumb.connect({
 				anchors : [ "Bottom", "Top" ],
 				source : endpoint,
-				target : info.connection.targetId,
-				type : type,
-				fireEvent: false // avoids connect event loop
+				target : info.connection.targetId
 			});	
+			newConn.setType(type);
 			
 			// Remove the overlay of the connection, added by the type
 			newConn.removeAllOverlays();
@@ -322,10 +322,10 @@ jsPlumb.ready(function() {
 			var newConn = app.plumb.connect({
 				source : info.connection.sourceId,
 				target : info.connection.targetId,
-				anchors : [ "Bottom", "Top" ],
-				type : type,
-				fireEvent: false  // avoids this event loop
+				anchors : [ "Bottom", "Top" ]
 			});
+			newConn.setConnector(["Flowchart", {stub: [70, 50], alwaysRespectStubs: true}]);
+			newConn.setType(type);
 			
 			// Make the middle square of the connection a source of connections
 			app.plumb.makeSource(newConn.getOverlay("cartographic-square").getElement());	
@@ -334,6 +334,7 @@ jsPlumb.ready(function() {
 		// Cartographic leg type connection with top target anchor
 		case "cartographic-leg":
 			info.connection.endpoints[1].setAnchor("Top");
+			info.connection.setConnector(["Flowchart", {stub: [0, 50], alwaysRespectStubs: true}]);
 			break;
 		} 
 	});
