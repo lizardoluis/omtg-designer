@@ -151,24 +151,20 @@ jsPlumb.ready(function() {
 			hoverPaintStyle: connectorHoverStyle,
 		},
 		"arc-network" : {
-			connector: "Straight",
 			paintStyle : dashedConnectorStyle,
 			hoverPaintStyle: connectorHoverStyle,
 			overlays : [[ "Label", { label:"network", location:0.5, id:"description-label", cssClass: "arc-network-label" } ]],
 		},
 		"arc-network-sibling" : {
-			connector: "Straight",
 			paintStyle : dashedConnectorStyle,
 			hoverPaintStyle: connectorHoverStyle,
 		},		
 		"arc-network-self" : {
-			connector: ["Flowchart", {stub: [50, 50], alwaysRespectStubs: true}],
 			paintStyle : dashedConnectorStyle,
 			hoverPaintStyle: connectorHoverStyle,
 			overlays : [[ "Label", { label:"network", location:0.4, id:"description-label", cssClass: "arc-network-label" } ]],
 		},
 		"arc-network-sibling-self" : {
-			connector: ["Flowchart", {stub: [25, 25], alwaysRespectStubs: true}],
 			paintStyle : dashedConnectorStyle,
 			hoverPaintStyle: connectorHoverStyle,
 		},
@@ -203,14 +199,20 @@ jsPlumb.ready(function() {
 		
 		var tool = app.canvas.get('activeTool');	
 		if (tool != null && tool.get('model') == 'omtgRelation') {
-			connection.setType(tool.get('name'));
+			var type = tool.get('name');			
+			connection.setType(type);
+			
+			// set connector to arc-network
+			if(type == "arc-network")
+				connection.setConnector("Straight");
+			
 			return;
 		}		
 		
 		// if connection comes from a cartographic square, set type as cartographic-leg
 		if(connection.source.classList.contains("cartographic-square")){
 			connection.setType("cartographic-leg");
-		}
+		}			
 	});
 		
 	
@@ -218,9 +220,6 @@ jsPlumb.ready(function() {
 	// anchors, to some connections. Here the second line of the
 	// arc-network connection is also connected.
 	app.plumb.bind("connection", function (info, originalEvent) {
-				
-		console.log(originalEvent);
-		console.log(info.connection.getType());
 		
 		var type = info.connection.getType()[0];
 		
@@ -234,38 +233,35 @@ jsPlumb.ready(function() {
 				var newConn = app.plumb.connect({
 					source : info.connection.sourceId,
 					target : info.connection.targetId,
-					anchors : [ [ 0.35, 1, 0, 1 ], [ 1, 0.5, 1, 0 ] ],
-					type : "arc-network-self",
-					fireEvent: false,  // avoids this event loop
+					anchors : [ [ 0.35, 1, 0, 1 ], [ 1, 0.5, 1, 0 ] ]
 				});	
+				newConn.setType("arc-network-self");
 
 				var sibling = app.plumb.connect({
 					source: info.connection.sourceId, 
 					target: info.connection.targetId,
-					anchors : [ [ 0.5, 1, 0, 1 ], [ 1, 0.75, 1, 0 ] ],
-					type: "arc-network-sibling-self",
-					parameters:{
-						"sibling": newConn
-					},
-					fireEvent: false,
-				});
+					anchors : [ [ 0.5, 1, 0, 1 ], [ 1, 0.75, 1, 0 ] ]
+				});				
+				sibling.setType("arc-network-sibling-self");
 				
+				sibling.setParameter("sibling", newConn);
 				newConn.setParameter("sibling", sibling);
+				
+				newConn.setConnector(["Flowchart", {stub: [50, 50], alwaysRespectStubs: true}]);
+				sibling.setConnector(["Flowchart", {stub: [25, 25], alwaysRespectStubs: true}]);
 			}
-			else{
-						
+			else{						
 				var sibling = app.plumb.connect({
 					source:info.connection.sourceId, 
-					target:info.connection.targetId,
-					type:"association",
-					parameters:{
-						"sibling": info.connection
-					},
-					fireEvent: false,
-				});
+					target:info.connection.targetId
+				});						
+				sibling.setType("arc-network-sibling");
 				
-				info.connection.setParameter("sibling", sibling);
+				sibling.setParameter("sibling", info.connection);
+				info.connection.setParameter("sibling", sibling);	
 				
+				info.connection.setConnector("Straight");
+				sibling.setConnector("Straight");
 			}
 		
 			break;
