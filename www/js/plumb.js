@@ -1,25 +1,21 @@
 jsPlumb.ready(function() {
 
 	var defaultConnectorStyle = { 
-			strokeStyle:"black", 
-			lineWidth:2, 
-			outlineColor:"transparent", 
-			outlineWidth:4
+			stroke:"black", 
+			strokeWidth:2
 	};
 
 	var dashedConnectorStyle = { 
-			strokeStyle:"black", 
-			lineWidth:2, 
-			outlineColor:"transparent", 
-			outlineWidth:4, 
-			dashstyle:"4" 
+			stroke:"black", 
+			strokeWidth:2,
+			"dashstyle": "4 3" 
 	};
 
 	var connectorHoverStyle = {
-			lineWidth:4,
-			strokeStyle:"#1e8151",
-			outlineWidth:2,
-			outlineColor:"white"
+			stroke:"#1e8151",
+			strokeWidth:4,
+			outlineStroke:"transparent", 
+			outlineWidth:2
 	};	
 	
 	var diamondOverlay = [ [ "Diamond", {
@@ -27,8 +23,8 @@ jsPlumb.ready(function() {
 		width : 18,
 		location : 35,
 		paintStyle : {
-			strokeStyle : "black",
-			fillStyle : "white"
+			stroke : "black",
+			fill : "white"
 		}
 	} ] ];
 	
@@ -70,15 +66,15 @@ jsPlumb.ready(function() {
 		Connector : "Flowchart",
 		Container : "canvas",
 		DragOptions : {cursor : "pointer", zIndex : 2000},
-		Endpoint : "Blank",
-		HoverPaintStyle: connectorHoverStyle,
+		Endpoint : "Blank"
 	});
 	
 	
 	// Define all the connection types
 	app.plumb.registerConnectionTypes({
 		"association" : {
-			paintStyle : defaultConnectorStyle,
+			paintStyle: defaultConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			overlays : [[ "Label", { label:"", location:0.5, id:"description-label", cssClass: "description-label" } ],
 			            [ "Label", { label:"0..*", location:45, id:"cardinality-labelA", cssClass: "cardinality-label" } ],
 			            [ "Label", { label:"0..*", location:-45, id:"cardinality-labelB", cssClass: "cardinality-label" } ]],
@@ -90,7 +86,8 @@ jsPlumb.ready(function() {
 			},
 		},
 		"spatial-association" : {
-			paintStyle : dashedConnectorStyle,
+			paintStyle: dashedConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			overlays : [[ "Label", { label:"Intersects", location:0.5, id:"description-label", cssClass: "description-label" } ],
 			            [ "Label", { label:"0..*", location:45, id:"cardinality-labelA", cssClass: "cardinality-label" } ],
 			            [ "Label", { label:"0..*", location:-45, id:"cardinality-labelB", cssClass: "cardinality-label" } ]],
@@ -104,15 +101,18 @@ jsPlumb.ready(function() {
 		},
 		"aggregation" : {
 			paintStyle : defaultConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			overlays : diamondOverlay,
 		},
 		"spatial-aggregation" : {
 			paintStyle : dashedConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			overlays : diamondOverlay,
 		},
 		"generalization-disjoint-partial" : {
 			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			parameters:{
 				"participation":"partial",
 				"disjointness":"disjoint",
@@ -121,6 +121,7 @@ jsPlumb.ready(function() {
 		"generalization-overlapping-partial" : {
 			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			parameters:{
 				"participation":"partial",
 				"disjointness":"overlapping",
@@ -129,6 +130,7 @@ jsPlumb.ready(function() {
 		"generalization-disjoint-total" : {
 			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			parameters:{
 				"participation":"total",
 				"disjointness":"disjoint",
@@ -137,6 +139,7 @@ jsPlumb.ready(function() {
 		"generalization-overlapping-total" : {
 			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			parameters:{
 				"participation":"total",
 				"disjointness":"overlapping",
@@ -145,28 +148,34 @@ jsPlumb.ready(function() {
 		"generalization-leg" : {
 			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 		},
 		"arc-network" : {
 			connector: "Straight",
 			paintStyle : dashedConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			overlays : [[ "Label", { label:"network", location:0.5, id:"description-label", cssClass: "arc-network-label" } ]],
 		},
 		"arc-network-sibling" : {
 			connector: "Straight",
 			paintStyle : dashedConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 		},		
 		"arc-network-self" : {
 			connector: ["Flowchart", {stub: [50, 50], alwaysRespectStubs: true}],
 			paintStyle : dashedConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			overlays : [[ "Label", { label:"network", location:0.4, id:"description-label", cssClass: "arc-network-label" } ]],
 		},
 		"arc-network-sibling-self" : {
 			connector: ["Flowchart", {stub: [25, 25], alwaysRespectStubs: true}],
 			paintStyle : dashedConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 		},
 		"cartographic-generalization-disjoint" : {
 			connector: ["Flowchart", {stub: [70, 50], alwaysRespectStubs: true}],
 			paintStyle : dashedConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			overlays : [square("white", 70), [ "Label", { label:"scale", location:0.5, id: "cartographic-label", cssClass: "cartographic-label" }]],
 			parameters:{
 				"disjointness":"disjoint"
@@ -175,6 +184,7 @@ jsPlumb.ready(function() {
 		"cartographic-generalization-overlapping" : {
 			connector: ["Flowchart", {stub: [70, 50], alwaysRespectStubs: true}],
 			paintStyle : dashedConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			overlays : [square("black", 70), [ "Label", { label:"scale", location:0.5, id: "cartographic-label", cssClass: "cartographic-label" }]],
 			parameters:{
 				"disjointness":"overlapping",
@@ -183,6 +193,7 @@ jsPlumb.ready(function() {
 		"cartographic-leg" : {
 			connector: ["Flowchart", {stub: [0, 50], alwaysRespectStubs: true}],
 			paintStyle : dashedConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 		},
 	});
 	
@@ -191,13 +202,12 @@ jsPlumb.ready(function() {
 	app.plumb.bind("connectionDrag", function(connection) {		
 		
 		var tool = app.canvas.get('activeTool');	
-		if (tool && tool.get('model') == 'omtgRelation') {
+		if (tool != null && tool.get('model') == 'omtgRelation') {
 			connection.setType(tool.get('name'));
 			return;
 		}		
 		
 		// if connection comes from a cartographic square, set type as cartographic-leg
-
 		if(connection.source.classList.contains("cartographic-square")){
 			connection.setType("cartographic-leg");
 		}
@@ -209,6 +219,9 @@ jsPlumb.ready(function() {
 	// arc-network connection is also connected.
 	app.plumb.bind("connection", function (info, originalEvent) {
 				
+		console.log(originalEvent);
+		console.log(info.connection.getType());
+		
 		var type = info.connection.getType()[0];
 		
 		switch(type){
@@ -240,11 +253,11 @@ jsPlumb.ready(function() {
 				newConn.setParameter("sibling", sibling);
 			}
 			else{
-
+						
 				var sibling = app.plumb.connect({
 					source:info.connection.sourceId, 
 					target:info.connection.targetId,
-					type:"arc-network-sibling",
+					type:"association",
 					parameters:{
 						"sibling": info.connection
 					},
@@ -252,6 +265,7 @@ jsPlumb.ready(function() {
 				});
 				
 				info.connection.setParameter("sibling", sibling);
+				
 			}
 		
 			break;
