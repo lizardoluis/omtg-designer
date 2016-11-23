@@ -341,6 +341,10 @@ jsPlumb.ready(function() {
 			info.connection.setConnector(["Flowchart", {stub: [0, 50], alwaysRespectStubs: true}]);
 			break;
 		} 
+		
+		// Deactivate all tools
+		app.relationsTools.deactivateAll();
+		app.diagramsTools.deactivateAll();
 	});
 	
 
