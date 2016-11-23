@@ -62,7 +62,7 @@ jsPlumb.ready(function() {
 	// Plumbing default setup
 	app.plumb = jsPlumb.getInstance({
 		Anchor : "Continuous",
-		ConnectionsDetachable : false,
+//		ConnectionsDetachable : false, // Was causing error on aggregation.
 		Connector : "Flowchart",
 		Container : "canvas",
 		DragOptions : {cursor : "pointer", zIndex : 2000},
@@ -110,7 +110,6 @@ jsPlumb.ready(function() {
 			overlays : diamondOverlay,
 		},
 		"generalization-disjoint-partial" : {
-			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
 			hoverPaintStyle: connectorHoverStyle,
 			parameters:{
@@ -119,7 +118,6 @@ jsPlumb.ready(function() {
 			},
 		},
 		"generalization-overlapping-partial" : {
-			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
 			hoverPaintStyle: connectorHoverStyle,
 			parameters:{
@@ -128,7 +126,6 @@ jsPlumb.ready(function() {
 			},
 		},
 		"generalization-disjoint-total" : {
-			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
 			hoverPaintStyle: connectorHoverStyle,
 			parameters:{
@@ -137,7 +134,6 @@ jsPlumb.ready(function() {
 			},
 		},
 		"generalization-overlapping-total" : {
-			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
 			hoverPaintStyle: connectorHoverStyle,
 			parameters:{
@@ -146,7 +142,6 @@ jsPlumb.ready(function() {
 			},
 		},
 		"generalization-leg" : {
-			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
 			hoverPaintStyle: connectorHoverStyle,
 		},
@@ -209,7 +204,14 @@ jsPlumb.ready(function() {
 		// if connection comes from a cartographic square, set type as cartographic-leg
 		if(connection.source.classList.contains("cartographic-square")){
 			connection.setType("cartographic-leg");
-		}			
+		}
+		
+		// This redundant piece of code fixes a jsPlumb bug that set more than one type for connections.
+		// This removes the other types and set only generalization-leg. 
+		// See: https://github.com/jsplumb/jsPlumb/issues/580
+		if( jQuery.inArray( "generalization-leg", connection.getType()) ){
+			connection.setType("generalization-leg");
+		}
 	});
 		
 	
@@ -286,7 +288,7 @@ jsPlumb.ready(function() {
 				endpoint : triangleEndpoint(type),
 				isSource : true,
 				isTarget : false,
-				maxConnections : 100,
+				maxConnections : -1,
 				uniqueEndpoint : true,				
 				parameters:{
 					"participation": participation,
@@ -301,15 +303,17 @@ jsPlumb.ready(function() {
 				target : info.connection.targetId
 			});	
 			newConn.setType(type);
+			newConn.setConnector(["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}]);
 			
 			// Remove the overlay of the connection, added by the type
-			newConn.removeAllOverlays();
+//			newConn.removeAllOverlays();
 			
 			break;
 			
 		// Generalization leg type connection with top target anchor
 		case "generalization-leg":
 			info.connection.endpoints[1].setAnchor("Top");
+			info.connection.setConnector(["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}]);
 			break;
 			
 		case "cartographic-generalization-disjoint":
