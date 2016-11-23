@@ -51,7 +51,7 @@ $(function () {
 	     { name : 'generalization-overlapping-partial', model : 'omtgRelation', tooltip: 'Generalization Overlapping-Partial', icon: 'imgs/relation/generalization-overlapping-partial.png' },
 	     { name : 'generalization-disjoint-total', model : 'omtgRelation', tooltip: 'Generalization Disjoint-Total', icon: 'imgs/relation/generalization-disjoint-total.png' },	     
 	     { name : 'generalization-overlapping-total', model : 'omtgRelation', tooltip: 'Generalization Overlapping-Total', icon: 'imgs/relation/generalization-overlapping-total.png' },
-	     { name : 'arc-network', model : 'omtgRelation', tooltip: 'Arc Network', icon: 'imgs/relation/arc-network.png' }
+	     { name : 'arc-network', model : 'omtgRelation', tooltip: 'Arc-Node Network', icon: 'imgs/relation/arc-network.png' }
 	]);
 
 	
