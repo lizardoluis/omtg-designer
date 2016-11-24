@@ -219,8 +219,16 @@ jsPlumb.ready(function() {
 	// anchors, to some connections. Here the second line of the
 	// arc-network connection is also connected.
 	app.plumb.bind("connection", function (info, originalEvent) {
-		
+				
+		// This was added to fix the bug of jsplumb. It adds more types than
+		// what is necessary. See: https://github.com/jsplumb/jsPlumb/issues/580
+		if(info.connection.getType().length > 1){
+			info.connection.removeType("default");
+			info.connection.removeType("");
+		}
+				
 		var type = info.connection.getType()[0];
+		console.log(type);
 		
 		switch(type){
 		//Adds the second line in network relationships
@@ -232,14 +240,16 @@ jsPlumb.ready(function() {
 				var newConn = app.plumb.connect({
 					source : info.connection.sourceId,
 					target : info.connection.targetId,
-					anchors : [ [ 0.35, 1, 0, 1 ], [ 1, 0.5, 1, 0 ] ]
+					anchors : [ [ 0.35, 1, 0, 1 ], [ 1, 0.5, 1, 0 ] ],
+					fireEvent : false
 				});	
 				newConn.setType("arc-network-self");
 
 				var sibling = app.plumb.connect({
 					source: info.connection.sourceId, 
 					target: info.connection.targetId,
-					anchors : [ [ 0.5, 1, 0, 1 ], [ 1, 0.75, 1, 0 ] ]
+					anchors : [ [ 0.5, 1, 0, 1 ], [ 1, 0.75, 1, 0 ] ],
+					fireEvent : false
 				});				
 				sibling.setType("arc-network-sibling-self");
 				
@@ -254,7 +264,8 @@ jsPlumb.ready(function() {
 			else{						
 				var sibling = app.plumb.connect({
 					source:info.connection.sourceId, 
-					target:info.connection.targetId
+					target:info.connection.targetId,
+					fireEvent : false
 				});						
 				sibling.setType("arc-network-sibling");
 				
@@ -304,9 +315,6 @@ jsPlumb.ready(function() {
 			});	
 			newConn.setType(type);
 			newConn.setConnector(["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}]);
-			
-			// Remove the overlay of the connection, added by the type
-//			newConn.removeAllOverlays();
 			
 			break;
 			
