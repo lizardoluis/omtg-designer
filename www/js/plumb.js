@@ -204,13 +204,15 @@ jsPlumb.ready(function() {
 		// if connection comes from a cartographic square, set type as cartographic-leg
 		if(connection.source.classList.contains("cartographic-square")){
 			connection.setType("cartographic-leg");
+			return;
 		}
 		
 		// This redundant piece of code fixes a jsPlumb bug that set more than one type for connections.
 		// This removes the other types and set only generalization-leg. 
 		// See: https://github.com/jsplumb/jsPlumb/issues/580
-		if( jQuery.inArray( "generalization-leg", connection.getType()) ){
+		if( jQuery.inArray( "generalization-leg", connection.getType()) != -1 ){
 			connection.setType("generalization-leg");
+			return;
 		}
 	});
 		
@@ -228,7 +230,6 @@ jsPlumb.ready(function() {
 		}
 				
 		var type = info.connection.getType()[0];
-		console.log(type);
 		
 		switch(type){
 		//Adds the second line in network relationships
@@ -314,8 +315,7 @@ jsPlumb.ready(function() {
 				target : info.connection.targetId
 			});	
 			newConn.setType(type);
-			newConn.setConnector(["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}]);
-			
+			newConn.setConnector(["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}]);			
 			break;
 			
 		// Generalization leg type connection with top target anchor
@@ -334,7 +334,8 @@ jsPlumb.ready(function() {
 			var newConn = app.plumb.connect({
 				source : info.connection.sourceId,
 				target : info.connection.targetId,
-				anchors : [ "Bottom", "Top" ]
+				anchors : [ "Bottom", "Top" ],
+				fireEvent : false
 			});
 			newConn.setConnector(["Flowchart", {stub: [70, 50], alwaysRespectStubs: true}]);
 			newConn.setType(type);
