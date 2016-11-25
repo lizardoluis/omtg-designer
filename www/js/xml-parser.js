@@ -233,9 +233,9 @@ app.XMLParser = {
 				anchors : anchors,
 				fireEvent : false
 			});
-			connection.setType(type);
 			connection.setConnector(connnectionConnector);
-			connection.getOverlay("description-label").setLabel(description);
+			connection.setType(type);
+			connection.getOverlay("description-label").setLabel(description);			
 			
 			var sibling = app.plumb.connect({
 				source : this.diagramMap[sourceName],
@@ -243,8 +243,8 @@ app.XMLParser = {
 				anchors : anchorsSibling,
 				fireEvent : false
 			});
+			sibling.setConnector(siblingConnector);	
 			sibling.setType(typeSibling);
-			sibling.setConnector(siblingConnector);			
 			
 			// set parameters			
 			connection.setParameter("sibling", sibling);
@@ -264,8 +264,8 @@ app.XMLParser = {
 				anchors : [ "Bottom", "Top" ],
 				fireEvent: false
 			});
-			connection.setType('cartographic-generalization-' + disjointness);
 			connection.setConnector(["Flowchart", {stub: [70, 50], alwaysRespectStubs: true}]);
+			connection.setType('cartographic-generalization-' + disjointness);
 			
 			// Make the middle square of the connection a source of connections
 			var square = connection.getOverlay("cartographic-square").getElement();
@@ -277,9 +277,9 @@ app.XMLParser = {
 					target: this.diagramMap[subDiagrams[i].firstChild.nodeValue],
 					fireEvent: false
 				});
-				c.setType("cartographic-leg");
 				c.endpoints[1].setAnchor("Top");
 				c.setConnector(["Flowchart", {stub: [0, 50], alwaysRespectStubs: true}]);
+				c.setType("cartographic-leg");
 			}
 			
 			break;
@@ -325,8 +325,8 @@ app.XMLParser = {
 					target: this.diagramMap[subDiagrams[i].firstChild.nodeValue],
 					fireEvent : false
 				});
-				c.setType("generalization-leg");
 				c.setConnector(["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}]);
+				c.setType("generalization-leg");
 			}
 			
 			break;

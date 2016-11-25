@@ -192,11 +192,13 @@ jsPlumb.ready(function() {
 		var tool = app.canvas.get('activeTool');	
 		if (tool != null && tool.get('model') == 'omtgRelation') {
 			var type = tool.get('name');			
-			connection.setType(type);
 			
 			// set connector to arc-network
 			if(type == "arc-network")
 				connection.setConnector("Straight");
+			
+			
+			connection.setType(type);
 			
 			return;
 		}		
@@ -243,40 +245,43 @@ jsPlumb.ready(function() {
 					target : info.connection.targetId,
 					anchors : [ [ 0.35, 1, 0, 1 ], [ 1, 0.5, 1, 0 ] ],
 					fireEvent : false
-				});	
-				newConn.setType("arc-network-self");
+				});					
 
 				var sibling = app.plumb.connect({
 					source: info.connection.sourceId, 
 					target: info.connection.targetId,
 					anchors : [ [ 0.5, 1, 0, 1 ], [ 1, 0.75, 1, 0 ] ],
 					fireEvent : false
-				});				
-				sibling.setType("arc-network-sibling-self");
-				
-				// set parameters
-				sibling.setParameter("sibling", newConn);
-				newConn.setParameter("sibling", sibling);
+				});	
 				
 				// set connectors
 				newConn.setConnector(["Flowchart", {stub: [50, 50], alwaysRespectStubs: true}]);
 				sibling.setConnector(["Flowchart", {stub: [25, 25], alwaysRespectStubs: true}]);
+				
+				// set types
+				newConn.setType("arc-network-self");
+				sibling.setType("arc-network-sibling-self");
+				
+				// set parameters
+				sibling.setParameter("sibling", newConn);
+				newConn.setParameter("sibling", sibling);			
 			}
-			else{						
+			else{									
 				var sibling = app.plumb.connect({
 					source:info.connection.sourceId, 
 					target:info.connection.targetId,
 					fireEvent : false
-				});						
-				sibling.setType("arc-network-sibling");
+				});		
+				
+				// set connectors
+				sibling.setConnector("Straight");
+				
+				// set types
+				sibling.setType("arc-network-sibling");				
 				
 				// set parameters
 				sibling.setParameter("sibling", info.connection);
-				info.connection.setParameter("sibling", sibling);	
-				
-				// set connectors
-				info.connection.setConnector("Straight");
-				sibling.setConnector("Straight");
+				info.connection.setParameter("sibling", sibling);					
 			}
 		
 			break;
@@ -411,13 +416,14 @@ jsPlumb.ready(function() {
 	
 	
 	// Event that opens modal for edit the connection or to delete it
-	app.plumb.bind("dblclick", function(conn, originalEvent) {
-		
-		var param = conn;
+	app.plumb.bind("dblclick", function(connection, originalEvent) {
+			
+		var param = connection;
 				
 		// Fix the bug of clicking an overlay
-		if(conn instanceof jsPlumb.Overlays.Label)
-			param = conn.component;
+		if(connection instanceof jsPlumb.Overlays.Label){
+			param = connection.component;
+		}
 		
 		// For arc-network when clicked in the sibling connection
 		var type = param.getType()[0];
