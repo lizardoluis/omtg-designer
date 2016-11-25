@@ -82,18 +82,7 @@
 			this.$el.append(dObject);
 			
 			
-			//Plumbing	
-			app.plumb.makeSource(dObject, {
-				filter : function() {
-					var tool = app.canvas.get('activeTool');
-					if(tool && tool.get('model') == 'omtgRelation')
-						return true;
-					return false;
-				},
-			});
-			
-			app.plumb.makeTarget(dObject);	
-			
+			//Plumbing			
 			app.plumb.draggable(dObject, {
 				containment : '#canvas',
 				scroll : true,
@@ -103,6 +92,15 @@
 						app.plumb.repaintEverything();
 				}
 			});
+			
+			app.plumb.makeSource(dObject, {
+				filter : function() {
+					var tool = app.canvas.get('activeTool');
+					return tool != null && tool.get('model') == 'omtgRelation';
+				}
+			});
+			
+			app.plumb.makeTarget(dObject);	
 
 			app.plumb.setSuspendDrawing(false, true);
 		},

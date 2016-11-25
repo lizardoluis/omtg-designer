@@ -1,25 +1,21 @@
 jsPlumb.ready(function() {
 
 	var defaultConnectorStyle = { 
-			strokeStyle:"black", 
-			lineWidth:2, 
-			outlineColor:"transparent", 
-			outlineWidth:4
+			stroke:"black", 
+			strokeWidth:2
 	};
 
 	var dashedConnectorStyle = { 
-			strokeStyle:"black", 
-			lineWidth:2, 
-			outlineColor:"transparent", 
-			outlineWidth:4, 
-			dashstyle:"4" 
+			stroke:"black", 
+			strokeWidth:2,
+			"dashstyle": "4 3" 
 	};
 
 	var connectorHoverStyle = {
-			lineWidth:4,
-			strokeStyle:"#1e8151",
-			outlineWidth:2,
-			outlineColor:"white"
+			stroke:"#1e8151",
+			strokeWidth:4,
+			outlineStroke:"transparent", 
+			outlineWidth:2
 	};	
 	
 	var diamondOverlay = [ [ "Diamond", {
@@ -27,8 +23,8 @@ jsPlumb.ready(function() {
 		width : 18,
 		location : 35,
 		paintStyle : {
-			strokeStyle : "black",
-			fillStyle : "white"
+			stroke : "black",
+			fill : "white"
 		}
 	} ] ];
 	
@@ -66,19 +62,19 @@ jsPlumb.ready(function() {
 	// Plumbing default setup
 	app.plumb = jsPlumb.getInstance({
 		Anchor : "Continuous",
-		ConnectionsDetachable : false,
+//		ConnectionsDetachable : false, // Was causing error on aggregation.
 		Connector : "Flowchart",
 		Container : "canvas",
 		DragOptions : {cursor : "pointer", zIndex : 2000},
-		Endpoint : "Blank",
-		HoverPaintStyle: connectorHoverStyle,
+		Endpoint : "Blank"
 	});
 	
 	
 	// Define all the connection types
 	app.plumb.registerConnectionTypes({
 		"association" : {
-			paintStyle : defaultConnectorStyle,
+			paintStyle: defaultConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			overlays : [[ "Label", { label:"", location:0.5, id:"description-label", cssClass: "description-label" } ],
 			            [ "Label", { label:"0..*", location:45, id:"cardinality-labelA", cssClass: "cardinality-label" } ],
 			            [ "Label", { label:"0..*", location:-45, id:"cardinality-labelB", cssClass: "cardinality-label" } ]],
@@ -90,7 +86,8 @@ jsPlumb.ready(function() {
 			},
 		},
 		"spatial-association" : {
-			paintStyle : dashedConnectorStyle,
+			paintStyle: dashedConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			overlays : [[ "Label", { label:"Intersects", location:0.5, id:"description-label", cssClass: "description-label" } ],
 			            [ "Label", { label:"0..*", location:45, id:"cardinality-labelA", cssClass: "cardinality-label" } ],
 			            [ "Label", { label:"0..*", location:-45, id:"cardinality-labelB", cssClass: "cardinality-label" } ]],
@@ -104,85 +101,87 @@ jsPlumb.ready(function() {
 		},
 		"aggregation" : {
 			paintStyle : defaultConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			overlays : diamondOverlay,
 		},
 		"spatial-aggregation" : {
 			paintStyle : dashedConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			overlays : diamondOverlay,
 		},
 		"generalization-disjoint-partial" : {
-			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			parameters:{
 				"participation":"partial",
 				"disjointness":"disjoint",
 			},
 		},
 		"generalization-overlapping-partial" : {
-			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			parameters:{
 				"participation":"partial",
 				"disjointness":"overlapping",
 			},
 		},
 		"generalization-disjoint-total" : {
-			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			parameters:{
 				"participation":"total",
 				"disjointness":"disjoint",
 			},
 		},
 		"generalization-overlapping-total" : {
-			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			parameters:{
 				"participation":"total",
 				"disjointness":"overlapping",
 			},
 		},
 		"generalization-leg" : {
-			connector: ["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}],
 			paintStyle : defaultConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 		},
 		"arc-network" : {
-			connector: "Straight",
 			paintStyle : dashedConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			overlays : [[ "Label", { label:"network", location:0.5, id:"description-label", cssClass: "arc-network-label" } ]],
 		},
 		"arc-network-sibling" : {
-			connector: "Straight",
 			paintStyle : dashedConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 		},		
 		"arc-network-self" : {
-			connector: ["Flowchart", {stub: [50, 50], alwaysRespectStubs: true}],
 			paintStyle : dashedConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			overlays : [[ "Label", { label:"network", location:0.4, id:"description-label", cssClass: "arc-network-label" } ]],
 		},
 		"arc-network-sibling-self" : {
-			connector: ["Flowchart", {stub: [25, 25], alwaysRespectStubs: true}],
 			paintStyle : dashedConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 		},
 		"cartographic-generalization-disjoint" : {
-			connector: ["Flowchart", {stub: [70, 50], alwaysRespectStubs: true}],
 			paintStyle : dashedConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			overlays : [square("white", 70), [ "Label", { label:"scale", location:0.5, id: "cartographic-label", cssClass: "cartographic-label" }]],
 			parameters:{
 				"disjointness":"disjoint"
 			},
 		},
 		"cartographic-generalization-overlapping" : {
-			connector: ["Flowchart", {stub: [70, 50], alwaysRespectStubs: true}],
 			paintStyle : dashedConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 			overlays : [square("black", 70), [ "Label", { label:"scale", location:0.5, id: "cartographic-label", cssClass: "cartographic-label" }]],
 			parameters:{
 				"disjointness":"overlapping",
 			},
 		},
 		"cartographic-leg" : {
-			connector: ["Flowchart", {stub: [0, 50], alwaysRespectStubs: true}],
 			paintStyle : dashedConnectorStyle,
+			hoverPaintStyle: connectorHoverStyle,
 		},
 	});
 	
@@ -191,15 +190,31 @@ jsPlumb.ready(function() {
 	app.plumb.bind("connectionDrag", function(connection) {		
 		
 		var tool = app.canvas.get('activeTool');	
-		if (tool && tool.get('model') == 'omtgRelation') {
-			connection.setType(tool.get('name'));
+		if (tool != null && tool.get('model') == 'omtgRelation') {
+			var type = tool.get('name');			
+			
+			// set connector to arc-network
+			if(type == "arc-network")
+				connection.setConnector("Straight");
+			
+			
+			connection.setType(type);
+			
 			return;
 		}		
 		
 		// if connection comes from a cartographic square, set type as cartographic-leg
-
 		if(connection.source.classList.contains("cartographic-square")){
 			connection.setType("cartographic-leg");
+			return;
+		}
+		
+		// This redundant piece of code fixes a jsPlumb bug that set more than one type for connections.
+		// This removes the other types and set only generalization-leg. 
+		// See: https://github.com/jsplumb/jsPlumb/issues/580
+		if( jQuery.inArray( "generalization-leg", connection.getType()) != -1 ){
+			connection.setType("generalization-leg");
+			return;
 		}
 	});
 		
@@ -208,6 +223,13 @@ jsPlumb.ready(function() {
 	// anchors, to some connections. Here the second line of the
 	// arc-network connection is also connected.
 	app.plumb.bind("connection", function (info, originalEvent) {
+				
+		// This was added to fix the bug of jsplumb. It adds more types than
+		// what is necessary. See: https://github.com/jsplumb/jsPlumb/issues/580
+		if(info.connection.getType().length > 1){
+			info.connection.removeType("default");
+			info.connection.removeType("");
+		}
 				
 		var type = info.connection.getType()[0];
 		
@@ -222,36 +244,44 @@ jsPlumb.ready(function() {
 					source : info.connection.sourceId,
 					target : info.connection.targetId,
 					anchors : [ [ 0.35, 1, 0, 1 ], [ 1, 0.5, 1, 0 ] ],
-					type : "arc-network-self",
-					fireEvent: false,  // avoids this event loop
-				});	
+					fireEvent : false
+				});					
 
 				var sibling = app.plumb.connect({
 					source: info.connection.sourceId, 
 					target: info.connection.targetId,
 					anchors : [ [ 0.5, 1, 0, 1 ], [ 1, 0.75, 1, 0 ] ],
-					type: "arc-network-sibling-self",
-					parameters:{
-						"sibling": newConn
-					},
-					fireEvent: false,
-				});
+					fireEvent : false
+				});	
 				
-				newConn.setParameter("sibling", sibling);
+				// set connectors
+				newConn.setConnector(["Flowchart", {stub: [50, 50], alwaysRespectStubs: true}]);
+				sibling.setConnector(["Flowchart", {stub: [25, 25], alwaysRespectStubs: true}]);
+				
+				// set types
+				newConn.setType("arc-network-self");
+				sibling.setType("arc-network-sibling-self");
+				
+				// set parameters
+				sibling.setParameter("sibling", newConn);
+				newConn.setParameter("sibling", sibling);			
 			}
-			else{
-
+			else{									
 				var sibling = app.plumb.connect({
 					source:info.connection.sourceId, 
 					target:info.connection.targetId,
-					type:"arc-network-sibling",
-					parameters:{
-						"sibling": info.connection
-					},
-					fireEvent: false,
-				});
+					fireEvent : false
+				});		
 				
-				info.connection.setParameter("sibling", sibling);
+				// set connectors
+				sibling.setConnector("Straight");
+				
+				// set types
+				sibling.setType("arc-network-sibling");				
+				
+				// set parameters
+				sibling.setParameter("sibling", info.connection);
+				info.connection.setParameter("sibling", sibling);					
 			}
 		
 			break;
@@ -275,7 +305,7 @@ jsPlumb.ready(function() {
 				endpoint : triangleEndpoint(type),
 				isSource : true,
 				isTarget : false,
-				maxConnections : 100,
+				maxConnections : -1,
 				uniqueEndpoint : true,				
 				parameters:{
 					"participation": participation,
@@ -283,23 +313,20 @@ jsPlumb.ready(function() {
 			    }
 			});
 			
-			// Reatach the connection, but now to the endpoint
+			// Re-atach the connection, but now to the endpoint
 			var newConn = app.plumb.connect({
 				anchors : [ "Bottom", "Top" ],
 				source : endpoint,
-				target : info.connection.targetId,
-				type : type,
-				fireEvent: false // avoids connect event loop
+				target : info.connection.targetId
 			});	
-			
-			// Remove the overlay of the connection, added by the type
-			newConn.removeAllOverlays();
-			
+			newConn.setType(type);
+			newConn.setConnector(["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}]);			
 			break;
 			
 		// Generalization leg type connection with top target anchor
 		case "generalization-leg":
 			info.connection.endpoints[1].setAnchor("Top");
+			info.connection.setConnector(["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}]);
 			break;
 			
 		case "cartographic-generalization-disjoint":
@@ -313,9 +340,10 @@ jsPlumb.ready(function() {
 				source : info.connection.sourceId,
 				target : info.connection.targetId,
 				anchors : [ "Bottom", "Top" ],
-				type : type,
-				fireEvent: false  // avoids this event loop
+				fireEvent : false
 			});
+			newConn.setConnector(["Flowchart", {stub: [70, 50], alwaysRespectStubs: true}]);
+			newConn.setType(type);
 			
 			// Make the middle square of the connection a source of connections
 			app.plumb.makeSource(newConn.getOverlay("cartographic-square").getElement());	
@@ -324,8 +352,13 @@ jsPlumb.ready(function() {
 		// Cartographic leg type connection with top target anchor
 		case "cartographic-leg":
 			info.connection.endpoints[1].setAnchor("Top");
+			info.connection.setConnector(["Flowchart", {stub: [0, 50], alwaysRespectStubs: true}]);
 			break;
 		} 
+		
+		// Deactivate all tools
+		app.relationsTools.deactivateAll();
+		app.diagramsTools.deactivateAll();
 	});
 	
 
@@ -383,13 +416,14 @@ jsPlumb.ready(function() {
 	
 	
 	// Event that opens modal for edit the connection or to delete it
-	app.plumb.bind("dblclick", function(conn, originalEvent) {
-		
-		var param = conn;
+	app.plumb.bind("dblclick", function(connection, originalEvent) {
+			
+		var param = connection;
 				
 		// Fix the bug of clicking an overlay
-		if(conn instanceof jsPlumb.Overlays.Label)
-			param = conn.component;
+		if(connection instanceof jsPlumb.Overlays.Label){
+			param = connection.component;
+		}
 		
 		// For arc-network when clicked in the sibling connection
 		var type = param.getType()[0];

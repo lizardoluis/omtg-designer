@@ -142,8 +142,9 @@ app.XMLParser = {
 			var connection = app.plumb.connect({
 				source: this.diagramMap[sourceName],
 				target: this.diagramMap[targetName],
-				type: 'association',
+				fireEvent: false
 			});
+			connection.setType('association');
 						
 			connection.getOverlay("description-label").setLabel(description);
 			
@@ -162,8 +163,9 @@ app.XMLParser = {
 			var connection = app.plumb.connect({
 				source: this.diagramMap[sourceName],
 				target: this.diagramMap[targetName],
-				type: 'spatial-association',
+				fireEvent: false
 			});
+			connection.setType('spatial-association');
 			
 			if(spatialRelation.toLowerCase() == 'near' || spatialRelation.toLowerCase() == 'distant'){
 				var distance = this.getValue(element.childNodes[0].childNodes[1].firstChild);
@@ -183,11 +185,12 @@ app.XMLParser = {
 			var sourceName = element.childNodes[0].firstChild.nodeValue;
 			var targetName = element.childNodes[1].firstChild.nodeValue;
 			
-			app.plumb.connect({
+			var connection = app.plumb.connect({
 				source: this.diagramMap[sourceName],
 				target: this.diagramMap[targetName],
-				type: 'aggregation',
+				fireEvent: false
 			});			
+			connection.setType('aggregation');
 			
 			break;
 			
@@ -195,11 +198,12 @@ app.XMLParser = {
 			var sourceName = element.childNodes[0].firstChild.nodeValue;
 			var targetName = element.childNodes[1].firstChild.nodeValue;
 			
-			app.plumb.connect({
+			var connection = app.plumb.connect({
 				source: this.diagramMap[sourceName],
 				target: this.diagramMap[targetName],
-				type: 'spatial-aggregation',
-			});			
+				fireEvent: false
+			});		
+			connection.setType('spatial-aggregation');
 			
 			break;
 			
@@ -211,35 +215,40 @@ app.XMLParser = {
 			var typeSibling = "arc-network-sibling";	
 			var anchors = ["Continuous", "Continuous"];
 			var anchorsSibling = ["Continuous", "Continuous"];
+			var connnectionConnector = "Straight";
+			var siblingConnector = "Straight";
 			
 			if(sourceName == targetName){
 				type = "arc-network-self";
 				typeSibling = "arc-network-sibling-self";
 				anchors = [ [ 0.35, 1, 0, 1 ], [ 1, 0.5, 1, 0 ] ];
 				anchorsSibling = [ [ 0.5, 1, 0, 1 ], [ 1, 0.75, 1, 0 ] ];
+				connnectionConnector = ["Flowchart", {stub: [50, 50], alwaysRespectStubs: true}];
+				siblingConnector = ["Flowchart", {stub: [25, 25], alwaysRespectStubs: true}];
 			}
 			
 			var connection = app.plumb.connect({
 				source : this.diagramMap[sourceName],
 				target : this.diagramMap[targetName],
 				anchors : anchors,
-				type : type,
-				fireEvent: false  // avoids this event loop
-			});	
-
+				fireEvent : false
+			});
+			connection.setConnector(connnectionConnector);
+			connection.setType(type);
+			connection.getOverlay("description-label").setLabel(description);			
+			
 			var sibling = app.plumb.connect({
 				source : this.diagramMap[sourceName],
 				target : this.diagramMap[targetName],
 				anchors : anchorsSibling,
-				type: typeSibling,
-				parameters:{
-					"sibling": connection
-				},
-				fireEvent: false,
+				fireEvent : false
 			});
+			sibling.setConnector(siblingConnector);	
+			sibling.setType(typeSibling);
 			
+			// set parameters			
 			connection.setParameter("sibling", sibling);
-			connection.getOverlay("description-label").setLabel(description);
+			sibling.setParameter("sibling", connection);
 			
 			break;
 			
@@ -253,20 +262,24 @@ app.XMLParser = {
 				source: this.diagramMap[sourceName],
 				target: this.diagramMap[targetName],
 				anchors : [ "Bottom", "Top" ],
-				type: 'cartographic-generalization-' + disjointness,
-				fireEvent: false,
+				fireEvent: false
 			});
+			connection.setConnector(["Flowchart", {stub: [70, 50], alwaysRespectStubs: true}]);
+			connection.setType('cartographic-generalization-' + disjointness);
 			
 			// Make the middle square of the connection a source of connections
 			var square = connection.getOverlay("cartographic-square").getElement();
 			app.plumb.makeSource(square);
 			
 			for(var i=1; i<subDiagrams.length; i++){
-				app.plumb.connect({
+				var c = app.plumb.connect({
 					source: square,
 					target: this.diagramMap[subDiagrams[i].firstChild.nodeValue],
-					type: "cartographic-leg",
+					fireEvent: false
 				});
+				c.endpoints[1].setAnchor("Top");
+				c.setConnector(["Flowchart", {stub: [0, 50], alwaysRespectStubs: true}]);
+				c.setType("cartographic-leg");
 			}
 			
 			break;
@@ -297,20 +310,23 @@ app.XMLParser = {
 				endpoint : triangleEndpoint(type),
 				isSource : true,
 				isTarget : false,
-				maxConnections : 100,
+				maxConnections : -1,
 				uniqueEndpoint : true,				
 				parameters:{
 					"participation": participation,
 					"disjointness": disjointness,
-			    },
+			    }
 			});
 			
 			for(var i=0; i<subDiagrams.length; i++){
-				app.plumb.connect({
+				var c = app.plumb.connect({
 					source: endpoint,
+					anchors : [ "Bottom", "Top" ],
 					target: this.diagramMap[subDiagrams[i].firstChild.nodeValue],
-					type: "generalization-leg",
+					fireEvent : false
 				});
+				c.setConnector(["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}]);
+				c.setType("generalization-leg");
 			}
 			
 			break;
