@@ -249,6 +249,10 @@
  * Connections
  */
 
+path {
+    cursor:pointer;
+}
+
 .cardinality-label,
 .description-label,
 .arc-network-label,
@@ -256,6 +260,7 @@
 	font-weight: bold;
 	font-size: 14px;
 	padding-bottom: 22px;
+	cursor:pointer;
 }
 
 .description-label {
@@ -274,6 +279,11 @@
 .square-overlay,
 .triangle-endpoint {
 	z-index: 100;
+	cursor:pointer;
+}
+
+.cartographic-square {
+	cursor:pointer;
 }
 
 .about-title {
