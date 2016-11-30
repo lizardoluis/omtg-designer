@@ -253,9 +253,7 @@ path {
     cursor:pointer;
 }
 
-.cardinality-label,
 .description-label,
-.arc-network-label,
 .cartographic-label {
 	font-weight: bold;
 	font-size: 14px;
@@ -267,9 +265,26 @@ path {
 	padding-left: 30px;
 }
 
+.arc-network-label{
+	font-weight: bold;
+	font-size: 14px;
+	cursor:pointer;
+}
+
 .cardinality-label {
-	padding-left: 65px;
-	padding-right: 20px;
+	font-weight: bold;
+	font-size: 14px;
+	cursor:pointer;
+}
+
+.cardinality-right,
+.cardinality-left {
+	padding-bottom: 22px;
+}
+
+.cardinality-top,
+.cardinality-bottom {
+	padding-left: 35px;
 }
 
 .progress {

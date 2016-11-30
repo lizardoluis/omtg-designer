@@ -60,6 +60,7 @@
 				<file name="views/about-view.js" />
 
 				<file name="plumb.js" />
+				<file name="plumbUtils.js" />
 				<file name="xml-parser.js" />
 			</filelist>
 		</concat>

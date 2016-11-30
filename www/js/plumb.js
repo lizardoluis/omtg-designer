@@ -58,7 +58,6 @@ jsPlumb.ready(function() {
 	    }];	
 	};	
 	
-	
 	// Plumbing default setup
 	app.plumb = jsPlumb.getInstance({
 		Anchor : "Continuous",
@@ -76,8 +75,8 @@ jsPlumb.ready(function() {
 			paintStyle: defaultConnectorStyle,
 			hoverPaintStyle: connectorHoverStyle,
 			overlays : [[ "Label", { label:"", location:0.5, id:"description-label", cssClass: "description-label" } ],
-			            [ "Label", { label:"0..*", location:45, id:"cardinality-labelA", cssClass: "cardinality-label" } ],
-			            [ "Label", { label:"0..*", location:-45, id:"cardinality-labelB", cssClass: "cardinality-label" } ]],
+			            [ "Label", { label:"0..*", location:35, id:"cardinality-labelA", cssClass: "cardinality-label" } ],
+			            [ "Label", { label:"0..*", location:-35, id:"cardinality-labelB", cssClass: "cardinality-label" } ]],
 			parameters: {
 				"minA" : "0",
 				"maxA" : "*",
@@ -89,8 +88,8 @@ jsPlumb.ready(function() {
 			paintStyle: dashedConnectorStyle,
 			hoverPaintStyle: connectorHoverStyle,
 			overlays : [[ "Label", { label:"Intersects", location:0.5, id:"description-label", cssClass: "description-label" } ],
-			            [ "Label", { label:"0..*", location:45, id:"cardinality-labelA", cssClass: "cardinality-label" } ],
-			            [ "Label", { label:"0..*", location:-45, id:"cardinality-labelB", cssClass: "cardinality-label" } ]],
+			            [ "Label", { label:"0..*", location:35, id:"cardinality-labelA", cssClass: "cardinality-label" } ],
+			            [ "Label", { label:"0..*", location:-35, id:"cardinality-labelB", cssClass: "cardinality-label" } ]],
 			parameters: {
 				"minA" : "0",
 				"maxA" : "*",
@@ -234,6 +233,13 @@ jsPlumb.ready(function() {
 		var type = info.connection.getType()[0];
 		
 		switch(type){
+		
+		case "association":
+		case "spatial-association":
+			// adjust position of the label
+			app.plumbUtils.updateLabelsPosition(info.connection);
+			break;
+		
 		//Adds the second line in network relationships
 		case "arc-network":
 			
@@ -264,7 +270,7 @@ jsPlumb.ready(function() {
 				
 				// set parameters
 				sibling.setParameter("sibling", newConn);
-				newConn.setParameter("sibling", sibling);			
+				newConn.setParameter("sibling", sibling);	
 			}
 			else{									
 				var sibling = app.plumb.connect({
@@ -281,7 +287,10 @@ jsPlumb.ready(function() {
 				
 				// set parameters
 				sibling.setParameter("sibling", info.connection);
-				info.connection.setParameter("sibling", sibling);					
+				info.connection.setParameter("sibling", sibling);	
+				
+				// set position of the label
+				app.plumbUtils.updateLabelsPosition(info.connection);
 			}
 		
 			break;

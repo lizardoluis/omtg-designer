@@ -121,6 +121,12 @@
 				'left': this.$el.position().left, 
 				'top' : this.$el.position().top
 			});
+						
+			var plumbConnections = app.plumb.getConnections(this.$el);
+			
+			for (var i = 0; i < plumbConnections.length; i++) {
+				app.plumbUtils.updateLabelsPosition(plumbConnections[i]);
+			}
 		}
 
 	});
