@@ -74,6 +74,9 @@ app.plumbUtils = {
 			var targetEdge = connection.endpoints[1]._continuousAnchorEdge;		
 			this.setAssociationLabelClass(connection, "cardinality-labelA", sourceEdge);
 			this.setAssociationLabelClass(connection, "cardinality-labelB", targetEdge);
+			
+			var label = connection.getOverlay("description-label").getElement();
+			this.setLabelTransformation(label, (-1)*label.offsetWidth/2, (-1)*label.offsetHeight/2-12, 0);
 		}
 		else if(type == "arc-network"){
 			

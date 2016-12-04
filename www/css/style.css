@@ -254,7 +254,6 @@ path {
 }
 
 .arc-network-self-label,
-.description-label,
 .cartographic-label {
 	font-weight: bold;
 	font-size: 14px;
@@ -262,14 +261,15 @@ path {
 	cursor:pointer;
 }
 
-.description-label {
-	padding-left: 30px;
-}
-
+.description-label,
 .arc-network-label{
 	font-weight: bold;
 	font-size: 14px;
 	cursor:pointer;
+}
+
+.description-label{
+	background-color: white;
 }
 
 .cardinality-label {
