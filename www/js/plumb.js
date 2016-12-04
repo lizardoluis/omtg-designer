@@ -156,7 +156,7 @@ jsPlumb.ready(function() {
 		"arc-network-self" : {
 			paintStyle : dashedConnectorStyle,
 			hoverPaintStyle: connectorHoverStyle,
-			overlays : [[ "Label", { label:"network", location:0.4, id:"description-label", cssClass: "arc-network-label" } ]],
+			overlays : [[ "Label", { label:"network", location:0.4, id:"description-label", cssClass: "arc-network-self-label" } ]],
 		},
 		"arc-network-sibling-self" : {
 			paintStyle : dashedConnectorStyle,

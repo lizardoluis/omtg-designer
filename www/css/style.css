@@ -253,6 +253,7 @@ path {
     cursor:pointer;
 }
 
+.arc-network-self-label,
 .description-label,
 .cartographic-label {
 	font-weight: bold;
