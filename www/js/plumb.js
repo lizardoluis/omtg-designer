@@ -412,10 +412,10 @@ jsPlumb.ready(function() {
 		case "spatial-aggregation":
 			return (sourceType != "conventional") && (targetType != "conventional");
 			
-		// If source == target, they must bi bi-line or un-line.
+		// If source == target, they must be bi-line or un-line.
 		// if source or target is a node, the other side must be bi-line or un-line.
 		case "arc-network":			
-			return (sourceType == targetType && (sourceType == "node" || sourceType == "bi-line" || sourceType == "un-line")) ||
+			return (info.connection.sourceId == info.connection.targetId && (sourceType == "bi-line" || sourceType == "un-line")) ||
 			(sourceType == "node" && (targetType == "bi-line" || targetType == "un-line")) ||
 			(targetType == "node" && (sourceType == "bi-line" || sourceType == "un-line"));
 		}
