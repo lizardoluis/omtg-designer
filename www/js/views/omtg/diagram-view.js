@@ -88,6 +88,7 @@
 				this.$el.addClass('diagram-container-shadow');
 			}
 			
+			app.plumbUtils.repaintAllAnchors();
 			app.plumb.repaintEverything();
 			
 			return this;

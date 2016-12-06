@@ -80,6 +80,9 @@ app.plumbUtils = {
 		}
 		else if(type == "arc-network"){
 			
+			// Set anchors position
+			this.repaintNetworkAnchors(connection);
+			
 			// Bounding box of the connection used to calculate the angle.
 			var bBox = connection.getConnector().path.getBoundingClientRect();
 			
@@ -135,5 +138,44 @@ app.plumbUtils = {
 				
 			} 			
 		}
+	},
+	
+	repaintNetworkAnchors : function(connection){
+		
+		var type = connection.getType();
+		
+		if( type == "arc-network"){
+			
+			// get diagram size
+			var sourceWidth = connection.source.getBoundingClientRect().width;
+			var sourceHeight = connection.source.getBoundingClientRect().height;
+			var targetWidth = connection.target.getBoundingClientRect().width;
+			var targetHeight = connection.target.getBoundingClientRect().height;
+			
+			var sx = 15/sourceWidth;
+			var sy = 15/sourceHeight;
+			var tx = 15/targetWidth;
+			var ty = 15/targetHeight;				
+
+			var sibling = connection.getParameter("sibling");
+			
+			connection.endpoints[0].setAnchor([ [ 0.5 + sx, 0, 0, -1 ], [ 1, 0.5 + sy, 1, 0 ], [ 0.5 - sx, 1, 0, 1 ], [ 0, 0.5 - sy, -1, 0 ] ]);			
+			connection.endpoints[1].setAnchor([ [ 0.5 - tx, 0, 0, -1 ], [ 1, 0.5 - ty, 1, 0 ], [ 0.5 + tx, 1, 0, 1 ], [ 0, 0.5 + ty, -1, 0 ] ]);			
+			sibling.endpoints[0].setAnchor([ [ 0.5 - sx, 0, 0, -1 ], [ 1, 0.5 - sy, 1, 0 ], [ 0.5 + sx, 1, 0, 1 ], [ 0, 0.5 + sy, -1, 0 ] ]);
+			sibling.endpoints[1].setAnchor([ [ 0.5 + tx, 0, 0, -1 ], [ 1, 0.5 + ty, 1, 0 ], [ 0.5 - tx, 1, 0, 1 ], [ 0, 0.5 - ty, -1, 0 ] ]);			
+		}
+	},
+	
+	repaintAllAnchors : function(){
+
+		var connections = app.plumb.getConnections();
+		
+		for(var i=0; i<connections.length; i++){
+			if(connections[i].getType() == "arc-network"){
+				this.repaintNetworkAnchors(connections[i]);
+			}
+		}
 	}
+	
+	
 };

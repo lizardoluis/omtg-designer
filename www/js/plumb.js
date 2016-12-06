@@ -194,8 +194,7 @@ jsPlumb.ready(function() {
 			
 			// set connector to arc-network
 			if(type == "arc-network")
-				connection.setConnector("Straight");
-			
+				connection.setConnector("Straight");			
 			
 			connection.setType(type);
 			
@@ -273,6 +272,24 @@ jsPlumb.ready(function() {
 				newConn.setParameter("sibling", sibling);	
 			}
 			else{									
+				var sourceWidth = info.connection.source.getBoundingClientRect().width;
+				var sourceHeight = info.connection.source.getBoundingClientRect().height;
+				var targetWidth = info.connection.target.getBoundingClientRect().width;
+				var targetHeight = info.connection.target.getBoundingClientRect().height;
+				
+				var sx = 15/sourceWidth;
+				var sy = 15/sourceHeight;
+				var tx = 15/targetWidth;
+				var ty = 15/targetHeight;
+				
+				app.plumb.detach(info.connection);
+
+				var newConn = app.plumb.connect({
+					source : info.connection.sourceId,
+					target : info.connection.targetId,
+					fireEvent : false
+				});		
+				
 				var sibling = app.plumb.connect({
 					source:info.connection.sourceId, 
 					target:info.connection.targetId,
@@ -280,17 +297,25 @@ jsPlumb.ready(function() {
 				});		
 				
 				// set connectors
+				newConn.setConnector("Straight");
 				sibling.setConnector("Straight");
 				
 				// set types
+				newConn.setType("arc-network");	
 				sibling.setType("arc-network-sibling");				
 				
+				// set anchors
+				newConn.endpoints[0].setAnchor([ [ 0.5 + sx, 0, 0, -1 ], [ 1, 0.5 + sy, 1, 0 ], [ 0.5 - sx, 1, 0, 1 ], [ 0, 0.5 - sy, -1, 0 ] ]);			
+				newConn.endpoints[1].setAnchor([ [ 0.5 - tx, 0, 0, -1 ], [ 1, 0.5 - ty, 1, 0 ], [ 0.5 + tx, 1, 0, 1 ], [ 0, 0.5 + ty, -1, 0 ] ]);			
+				sibling.endpoints[0].setAnchor([ [ 0.5 - sx, 0, 0, -1 ], [ 1, 0.5 - sy, 1, 0 ], [ 0.5 + sx, 1, 0, 1 ], [ 0, 0.5 + sy, -1, 0 ] ]);
+				sibling.endpoints[1].setAnchor([ [ 0.5 + tx, 0, 0, -1 ], [ 1, 0.5 + ty, 1, 0 ], [ 0.5 - tx, 1, 0, 1 ], [ 0, 0.5 - ty, -1, 0 ] ]);
+				
 				// set parameters
-				sibling.setParameter("sibling", info.connection);
-				info.connection.setParameter("sibling", sibling);	
+				sibling.setParameter("sibling", newConn);
+				newConn.setParameter("sibling", sibling);	
 				
 				// set position of the label
-				app.plumbUtils.updateLabelsPosition(info.connection);
+				app.plumbUtils.updateLabelsPosition(newConn);
 			}
 		
 			break;
