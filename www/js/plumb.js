@@ -277,10 +277,10 @@ jsPlumb.ready(function() {
 				var targetWidth = info.connection.target.getBoundingClientRect().width;
 				var targetHeight = info.connection.target.getBoundingClientRect().height;
 				
-				var sx = 15/sourceWidth;
-				var sy = 15/sourceHeight;
-				var tx = 15/targetWidth;
-				var ty = 15/targetHeight;
+				var sx = app.plumbUtils.NETWORK_DIST/sourceWidth;
+				var sy = app.plumbUtils.NETWORK_DIST/sourceHeight;
+				var tx = app.plumbUtils.NETWORK_DIST/targetWidth;
+				var ty = app.plumbUtils.NETWORK_DIST/targetHeight;
 				
 				app.plumb.detach(info.connection);
 

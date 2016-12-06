@@ -2,6 +2,8 @@
 
 app.plumbUtils = {
 
+	NETWORK_DIST: 15, 	
+		
 	setAssociationLabelClass : function(connection, overlay, edge){
 		
 		var cardLabel = connection.getOverlay(overlay);
@@ -152,10 +154,10 @@ app.plumbUtils = {
 			var targetWidth = connection.target.getBoundingClientRect().width;
 			var targetHeight = connection.target.getBoundingClientRect().height;
 			
-			var sx = 15/sourceWidth;
-			var sy = 15/sourceHeight;
-			var tx = 15/targetWidth;
-			var ty = 15/targetHeight;				
+			var sx = this.NETWORK_DIST/sourceWidth;
+			var sy = this.NETWORK_DIST/sourceHeight;
+			var tx = this.NETWORK_DIST/targetWidth;
+			var ty = this.NETWORK_DIST/targetHeight;				
 
 			var sibling = connection.getParameter("sibling");
 			
