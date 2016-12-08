@@ -236,6 +236,7 @@ jsPlumb.ready(function() {
 		case "association":
 		case "spatial-association":
 			// adjust position of the label
+			info.connection.setConnector(["Flowchart", {stub: [45, 45], alwaysRespectStubs: true}]);
 			app.plumbUtils.updateLabelsPosition(info.connection);
 			break;
 		

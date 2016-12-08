@@ -266,6 +266,7 @@ path {
 	font-weight: bold;
 	font-size: 14px;
 	cursor:pointer;
+	z-index: 100;
 }
 
 .description-label{
