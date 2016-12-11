@@ -76,7 +76,15 @@ jsPlumb.ready(function() {
 			hoverPaintStyle: connectorHoverStyle,
 			overlays : [[ "Label", { label:"", location:0.5, id:"description-label", cssClass: "description-label" } ],
 			            [ "Label", { label:"0..*", location:30, id:"cardinality-labelA", cssClass: "cardinality-label" } ],
-			            [ "Label", { label:"0..*", location:-30, id:"cardinality-labelB", cssClass: "cardinality-label" } ]],
+			            [ "Label", { label:"0..*", location:-30, id:"cardinality-labelB", cssClass: "cardinality-label" } ],
+					    [ "Custom", { 
+					        create:function(component) {
+					            return $("<img src='imgs/relation/description-arrow.png' alt='Arrow of the relation'>");                
+					        },    
+					        location: 0.5, 
+					        id:"description-arrow",
+					        cssClass:"description-arrow" }]
+					   ],
 			parameters: {
 				"minA" : "0",
 				"maxA" : "*",
@@ -89,7 +97,15 @@ jsPlumb.ready(function() {
 			hoverPaintStyle: connectorHoverStyle,
 			overlays : [[ "Label", { label:"Intersects", location:0.5, id:"description-label", cssClass: "description-label" } ],
 			            [ "Label", { label:"0..*", location:30, id:"cardinality-labelA", cssClass: "cardinality-label" } ],
-			            [ "Label", { label:"0..*", location:-30, id:"cardinality-labelB", cssClass: "cardinality-label" } ]],
+			            [ "Label", { label:"0..*", location:-30, id:"cardinality-labelB", cssClass: "cardinality-label" } ],
+					    [ "Custom", { 
+					        create:function(component) {
+					            return $("<img src='imgs/relation/description-arrow.png' alt='Arrow of the relation'>");                
+					        },    
+					        location: 0.5, 
+					        id:"description-arrow",
+					        cssClass:"description-arrow" }]
+					   ],
 			parameters: {
 				"minA" : "0",
 				"maxA" : "*",

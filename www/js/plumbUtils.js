@@ -59,12 +59,12 @@ app.plumbUtils = {
         );
     },
     
-    setLabelTransformation : function(label, a, b, angle) {
-    	label.style.webkitTransform = 'translate('+a+'px, '+b+'px) rotate('+angle+'rad)'; 
-		label.style.mozTransform    = 'translate('+a+'px, '+b+'px) rotate('+angle+'rad)'; 
-		label.style.msTransform     = 'translate('+a+'px, '+b+'px) rotate('+angle+'rad)'; 
-		label.style.oTransform      = 'translate('+a+'px, '+b+'px) rotate('+angle+'rad)'; 
-		label.style.transform       = 'translate('+a+'px, '+b+'px) rotate('+angle+'rad)';
+    setOverlayTransformation : function(overlay, a, b, angle) {
+    	overlay.style.webkitTransform = 'translate('+a+'px, '+b+'px) rotate('+angle+'rad)'; 
+    	overlay.style.mozTransform    = 'translate('+a+'px, '+b+'px) rotate('+angle+'rad)'; 
+    	overlay.style.msTransform     = 'translate('+a+'px, '+b+'px) rotate('+angle+'rad)'; 
+    	overlay.style.oTransform      = 'translate('+a+'px, '+b+'px) rotate('+angle+'rad)'; 
+    	overlay.style.transform       = 'translate('+a+'px, '+b+'px) rotate('+angle+'rad)';
     },
 		
 	updateLabelsPosition : function(connection){
@@ -77,8 +77,53 @@ app.plumbUtils = {
 			this.setAssociationLabelClass(connection, "cardinality-labelA", sourceEdge);
 			this.setAssociationLabelClass(connection, "cardinality-labelB", targetEdge);
 			
-			var label = connection.getOverlay("description-label").getElement();
-			this.setLabelTransformation(label, (-1)*label.offsetWidth/2, (-1)*label.offsetHeight/2-12, 0);
+			// Get elements
+			var label = connection.getOverlay("description-label");
+			var labelElement = label.getElement();
+			var arrow = connection.getOverlay("description-arrow");
+					
+			// Get center position of diagrams
+			var pSource = this.getPositionAtCenter(connection.source);
+	        var pTarget = this.getPositionAtCenter(connection.target);
+			
+	        // Get orientation of the label segment
+			var p = connection.connector.pointOnPath( label.loc );
+			var segment = connection.connector.findSegmentForPoint(p.x, p.y);
+	        
+	        // When segment is horizontal
+			if( (segment.y1 == segment.y2 && Math.abs(segment.x1 - segment.x2) > labelElement.offsetWidth) 
+					|| (segment.y1 != segment.y2 && Math.abs(segment.y1 - segment.y2) <= arrow.getElement().width) ){				
+				
+				var angle = Math.PI;
+				if(pSource.x <= pTarget.x){
+					angle = 0;
+				}
+				
+				this.setOverlayTransformation(labelElement, (-1)*labelElement.offsetWidth/2, (-1)*labelElement.offsetHeight/2-11 - Math.abs(segment.y1 - segment.y2)/2, 0);
+				this.setOverlayTransformation(arrow.getElement(), (-1/2)*arrow.getElement().width, (-1)*labelElement.offsetHeight-9 - Math.abs(segment.y1 - segment.y2)/2, angle);
+			}
+			// When segment is vertical
+			else{
+				
+				var angle = (-1)*Math.PI/2;				
+				if(pSource.y <= pTarget.y){
+					angle *= -1;
+				}
+				 
+				this.setOverlayTransformation(labelElement, 22 + Math.abs(segment.x1 - segment.x2)/2, (-1)*labelElement.offsetHeight/2, 0);
+				this.setOverlayTransformation(arrow.getElement(), -6 + Math.abs(segment.x1 - segment.x2)/2, (-1/2)*arrow.getElement().height, angle);			 
+			}
+			
+			// Hide arrow if the description is empty. 
+			// Occurs only on conventional association.
+			if(label.getLabel() == ""){
+				label.hide();
+				arrow.hide();
+			}
+			else {
+				label.show();
+				arrow.show();
+			}
 		}
 		else if(type == "arc-network"){
 			
@@ -109,7 +154,7 @@ app.plumbUtils = {
 				var a = 0 - label.offsetWidth/2 - Math.cos(beta)*dist/2;
 				var b = 0 - label.offsetHeight/2 - Math.sin(beta)*dist/2;
 				
-				this.setLabelTransformation(label, a, b, -1*rad);				
+				this.setOverlayTransformation(label, a, b, -1*rad);				
 				
 			} else if (x1 < x2 && y1 < y2) {
 				
@@ -118,7 +163,7 @@ app.plumbUtils = {
 				var a = 0 - label.offsetWidth/2 - Math.cos(beta)*dist/2;
 				var b = 0 - label.offsetHeight/2 - Math.sin(beta)*dist/2;
 				
-				this.setLabelTransformation(label, a, b, rad);	
+				this.setOverlayTransformation(label, a, b, rad);	
 				
 			} else if (x1 > x2 && y1 < y2) {
 
@@ -127,7 +172,7 @@ app.plumbUtils = {
 				var a = 0 - label.offsetWidth/2 + Math.cos(beta)*dist/2;
 				var b = 0 - label.offsetHeight/2 + Math.sin(beta)*dist/2;
 				
-				this.setLabelTransformation(label, a, b, -1*rad);
+				this.setOverlayTransformation(label, a, b, -1*rad);
 				
 			} else {
 
@@ -136,7 +181,7 @@ app.plumbUtils = {
 				var a = 0 - label.offsetWidth/2 - Math.cos(beta)*dist/2;
 				var b = 0 - label.offsetHeight/2 + Math.sin(beta)*dist/2;
 				
-				this.setLabelTransformation(label, a, b, rad);	
+				this.setOverlayTransformation(label, a, b, rad);	
 				
 			} 			
 		}
@@ -178,6 +223,4 @@ app.plumbUtils = {
 			}
 		}
 	}
-	
-	
 };

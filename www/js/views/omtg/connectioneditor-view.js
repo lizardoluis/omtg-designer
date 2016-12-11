@@ -169,6 +169,8 @@
 				this.connection.setParameter("maxA", maxA);
 				this.connection.setParameter("minB", minB);
 				this.connection.setParameter("maxB", maxB);
+				
+				app.plumbUtils.updateLabelsPosition(this.connection);
 			}
 			
 			if(type == 'cartographic-generalization-disjoint' || type == 'cartographic-generalization-overlapping'){
