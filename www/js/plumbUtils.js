@@ -227,7 +227,6 @@ app.plumbUtils = {
 	repaintAllLabels : function(){
 		
 		var connections = app.plumb.getConnections();
-		console.log("here");
 		for(var i=0; i<connections.length; i++){
 			this.updateLabelsPosition(connections[i]);
 		}
