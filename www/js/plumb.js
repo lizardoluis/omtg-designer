@@ -407,7 +407,9 @@ jsPlumb.ready(function() {
 			newConn.setType(type);
 			
 			// Make the middle square of the connection a source of connections
-			app.plumb.makeSource(newConn.getOverlay("cartographic-square").getElement());	
+			app.plumb.makeSource(newConn.getOverlay("cartographic-square").getElement(), {
+				anchor:[ "Right", "Left" ]
+			});	
 			break;
 			
 		// Cartographic leg type connection with top target anchor

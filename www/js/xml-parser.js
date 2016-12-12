@@ -273,7 +273,9 @@ app.XMLParser = {
 			
 			// Make the middle square of the connection a source of connections
 			var square = connection.getOverlay("cartographic-square").getElement();
-			app.plumb.makeSource(square);
+			app.plumb.makeSource(square, {
+				anchor:[ "Right", "Left" ]
+			});
 			
 			for(var i=1; i<subDiagrams.length; i++){
 				var c = app.plumb.connect({
