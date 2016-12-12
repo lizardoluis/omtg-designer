@@ -209,10 +209,17 @@ jsPlumb.ready(function() {
 			var type = tool.get('name');			
 			
 			// set connector to arc-network
-			if(type == "arc-network")
-				connection.setConnector("Straight");			
+			if(type == "arc-network"){
+				connection.setConnector("Straight");
+			}
 			
 			connection.setType(type);
+			
+			// hide overlays when start dragging
+			if(type == "association" || type == "spatial-association"
+				|| type == "arc-network" ){
+				connection.hideOverlays();
+			}
 			
 			return;
 		}		
@@ -246,6 +253,9 @@ jsPlumb.ready(function() {
 		}
 				
 		var type = info.connection.getType()[0];
+		
+		// Show all overlays after connection is established
+		info.connection.showOverlays();
 		
 		switch(type){
 		
