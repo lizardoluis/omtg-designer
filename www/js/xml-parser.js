@@ -22,7 +22,11 @@ app.XMLParser = {
 		this.parseOMTGConnections(connections);
 
 		// Enable jsPlumb Drawing
-		app.plumb.setSuspendDrawing(false, true);		
+		app.plumb.setSuspendDrawing(false, true);	
+		
+		// Adjust labels
+		app.plumbUtils.repaintAllAnchors();
+		app.plumbUtils.repaintAllLabels();
 	},
 	
 	parseOMTGDiagrams : function(elements) {
