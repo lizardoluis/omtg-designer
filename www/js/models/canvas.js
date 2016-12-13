@@ -10,7 +10,8 @@
 				diagrams : new app.omtg.Diagrams(),
 				activeTool : null,
 				grid : true,
-				diagramShadow : true
+				diagramShadow : true,
+				snapToGrid : 10
 			};
 		},
 		

@@ -23,12 +23,13 @@
 
 			var tool = this.model.get('activeTool');
 
-			if (tool) {
+			if (tool) {				
+				var grid = app.canvas.get("snapToGrid");				
 				if (tool.get('model') == 'omtgDiagram') {
 					var diagram = new app.omtg.Diagram({
 						'type' : tool.get('name'),
-						'left' : event.offsetX,
-						'top' : event.offsetY,
+						'left' : Math.round(event.offsetX / grid) * grid,
+						'top' : Math.round(event.offsetY / grid) * grid
 					});
 					this.model.get('diagrams').add(diagram);
 				}

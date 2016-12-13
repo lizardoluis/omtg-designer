@@ -16,6 +16,7 @@
 			
 			'change #tgglGrid': 'changeGrid',
 			'change #tgglShadow': 'changeDiagramShadow',
+			'change #tgglSnapToGrid': 'changeSnapToGrid',
 			'click #dropSettings' : 'dropSettingsClick',
 		},
 
@@ -141,6 +142,15 @@
 		
 		changeDiagramShadow : function() {
 			app.canvas.set('diagramShadow', $('#tgglShadow').prop('checked'));
+		},
+		
+		changeSnapToGrid : function() {
+			if($('#tgglSnapToGrid').prop('checked')){
+				app.canvas.set('snapToGrid', 10);
+			}
+			else{
+				app.canvas.set('snapToGrid', 1);
+			}
 		},
 		
 	});

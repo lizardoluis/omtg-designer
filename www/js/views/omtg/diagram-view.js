@@ -118,9 +118,10 @@
 		},
 		
 		updatePosition : function(event) {
+			var grid = app.canvas.get("snapToGrid");
 			this.model.set({
-				'left': this.$el.position().left, 
-				'top' : this.$el.position().top
+				'left': Math.round(this.$el.position().left / grid) * grid,
+				'top' : Math.round(this.$el.position().top / grid) * grid
 			});
 						
 			var plumbConnections = app.plumb.getConnections(this.$el);
@@ -129,7 +130,6 @@
 				app.plumbUtils.updateLabelsPosition(plumbConnections[i]);
 			}
 		}
-
 	});
 
 })(jQuery);
