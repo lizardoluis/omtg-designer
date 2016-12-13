@@ -9,6 +9,10 @@
     margin-top: -12px;
 }
 
+.dropdown-header-bold{
+	font-weight: bold !important;
+}
+
 
 /*
  * Sidebar
