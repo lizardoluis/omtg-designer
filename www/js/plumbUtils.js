@@ -135,7 +135,9 @@ app.plumbUtils = {
 			
 			// Calculates the angle formed by the connection to rotate the label.			
 			var rad = Math.asin((bBox.bottom - bBox.top) / Math.sqrt( (bBox.bottom - bBox.top) * (bBox.bottom - bBox.top) + (bBox.left - bBox.right) * (bBox.left - bBox.right) ));
-					
+			
+			console.log("rad: ", rad);
+			
 			// Get distance between the connection and its sibling.
 			var dist = this.getDistanceBetweenElements(connection.getConnector().path, connection.getParameter('sibling').getConnector().path);			
 			
@@ -147,21 +149,32 @@ app.plumbUtils = {
 				
 			var label = connection.getOverlay("description-label").getElement();
 			
-			if (x1 < x2 && y1 > y2) {	
+			console.log("x1 - y1: ", x1, y1);
+			console.log("x2 - y2: ", x2, y2);
+			
+			if (x1 <= x2 && y1 >= y2) {	
 				
 				var beta = Math.PI/2 - rad;
 				
 				var a = 0 - label.offsetWidth/2 - Math.cos(beta)*dist/2;
 				var b = 0 - label.offsetHeight/2 - Math.sin(beta)*dist/2;
 				
+				console.log("1");
+				console.log("a: ", a);
+				console.log("b: ", b);
+				
 				this.setOverlayTransformation(label, a, b, -1*rad);				
 				
-			} else if (x1 < x2 && y1 < y2) {
+			} else if (x1 <= x2 && y1 < y2) {
 				
 				var beta = Math.PI/2 - (-1)*rad;
 				
 				var a = 0 - label.offsetWidth/2 - Math.cos(beta)*dist/2;
 				var b = 0 - label.offsetHeight/2 - Math.sin(beta)*dist/2;
+				
+				console.log("2");
+				console.log("a: ", a);
+				console.log("b: ", b);
 				
 				this.setOverlayTransformation(label, a, b, rad);	
 				
@@ -172,6 +185,10 @@ app.plumbUtils = {
 				var a = 0 - label.offsetWidth/2 + Math.cos(beta)*dist/2;
 				var b = 0 - label.offsetHeight/2 + Math.sin(beta)*dist/2;
 				
+				console.log("3");
+				console.log("a: ", a);
+				console.log("b: ", b);
+				
 				this.setOverlayTransformation(label, a, b, -1*rad);
 				
 			} else {
@@ -180,6 +197,10 @@ app.plumbUtils = {
 				
 				var a = 0 - label.offsetWidth/2 - Math.cos(beta)*dist/2;
 				var b = 0 - label.offsetHeight/2 + Math.sin(beta)*dist/2;
+				
+				console.log("4");
+				console.log("a: ", a);
+				console.log("b: ", b);
 				
 				this.setOverlayTransformation(label, a, b, rad);	
 				
