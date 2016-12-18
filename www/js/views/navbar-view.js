@@ -127,12 +127,8 @@
 		
 		dropSettingsClick : function() {
 			event.stopPropagation();
-
 			if(event.target.nodeName == 'LABEL'){
 				$(event.target).parent().parent().find('input').bootstrapToggle('toggle');
-			}
-			else{
-				$(event.target).find('input').bootstrapToggle('toggle');
 			}
 		},
 		
