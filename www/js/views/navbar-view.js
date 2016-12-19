@@ -133,7 +133,6 @@
 			else if(event.target.nodeName == 'A'){
 				$(event.target).find('input').bootstrapToggle('toggle');
 			}
-			console.log(event.target.nodeName);
 		},
 		
 		changeGrid : function() {
