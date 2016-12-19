@@ -127,9 +127,13 @@
 		
 		dropSettingsClick : function() {
 			event.stopPropagation();
-			if(event.target.nodeName == 'LABEL'){
+			if(event.target.nodeName == 'LABEL' || event.target.nodeName == 'SPAN'){
 				$(event.target).parent().parent().find('input').bootstrapToggle('toggle');
 			}
+			else if(event.target.nodeName == 'A'){
+				$(event.target).find('input').bootstrapToggle('toggle');
+			}
+			console.log(event.target.nodeName);
 		},
 		
 		changeGrid : function() {
