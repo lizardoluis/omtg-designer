@@ -331,8 +331,13 @@ app.XMLParser = {
 					target: this.diagramMap[subDiagrams[i].firstChild.nodeValue],
 					fireEvent : false
 				});
+				if(i==0){
+					c.setType(type);
+				}
+				else{
+					c.setType("generalization-leg");
+				}
 				c.setConnector(["Flowchart", {stub: [50, 30], alwaysRespectStubs: true}]);
-				c.setType("generalization-leg");
 			}
 			
 			break;
