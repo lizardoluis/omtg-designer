@@ -76,8 +76,8 @@
 }
 
 .section-canvas #canvas {
-	height: 4000px;
-	width: 2000px;
+	height: 8000px;
+	width: 4000px;
 	position: relative;
 	padding: 5px 5px 5px 5px;
 }
