@@ -420,8 +420,8 @@ jsPlumb.ready(function() {
 		} 
 		
 		// Deactivate all tools
-		app.relationsTools.deactivateAll();
-		app.diagramsTools.deactivateAll();
+		app.relationshipTools.deactivateAll();
+		app.classTools.deactivateAll();
 	});
 	
 

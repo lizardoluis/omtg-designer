@@ -23,7 +23,7 @@ $(function () {
 	'use strict';
 	
 	// Diagrams
-	app.diagramsTools = new app.Tools([
+	app.classTools = new app.Tools([
 	     { name : 'polygon', model : 'omtgDiagram', tooltip: 'Polygon', icon: 'imgs/omtg/polygon.png' },
 	     { name : 'line', model : 'omtgDiagram', tooltip: 'Line', icon: 'imgs/omtg/line.png' },	
 	     { name : 'point', model : 'omtgDiagram', tooltip: 'Point', icon: 'imgs/omtg/point.png' },
@@ -40,7 +40,7 @@ $(function () {
 
 	
 	// Relations
-	app.relationsTools = new app.Tools([
+	app.relationshipTools = new app.Tools([
 	     { name : 'association', model : 'omtgRelation', tooltip: 'Association', icon: 'imgs/relation/association.png' },
 	     { name : 'spatial-association', model : 'omtgRelation', tooltip: 'Spatial Association', icon: 'imgs/relation/spatial-association.png' },
 	     { name : 'aggregation', model : 'omtgRelation', tooltip: 'Aggregation', icon: 'imgs/relation/aggregation.png' },
@@ -57,8 +57,8 @@ $(function () {
 	
 	// List of toolboxes
 	app.toolboxes = new app.Toolboxes([
-	     {name: "Diagrams", tools : app.diagramsTools},
-	     {name: "Relations", tools : app.relationsTools}
+	     {name: "Classes", tools : app.classTools},
+	     {name: "Relationships", tools : app.relationshipTools}
 	]);	
 
 	// Canvas Model
