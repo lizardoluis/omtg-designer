@@ -15,6 +15,8 @@
 			// Delete the diagram and remove its view from canvas
 			'click .badge-delete' : 'deleteDiagram',
 			
+			'click .badge-edit' : 'edit',
+			
 			// Toggle the selection of the diagram
 			'click' : _.debounce(function(e) {
 		            if (this.doucleclicked) {
@@ -29,6 +31,10 @@
 		            this.doucleclicked = true;
 		            this.edit.call(this, e);
 		        },
+		        
+		    'mouseenter' : 'handleMouseEnter',
+		    
+		    'mouseleave' : 'handleMouseLeave',
 		        
 		    'mouseup' : 'updatePosition'
 		},
@@ -45,6 +51,8 @@
 		},
 
 		render : function() {
+			
+			console.log("render");
 			
 			// Check the type of the diagram to use a proper template
 			if (this.model.get("type") == 'conventional') {
@@ -79,11 +87,13 @@
 			if(this.model.get('selected')){
 				this.$el.addClass('selected');
 				this.$('.badge-delete').removeClass('hidden');
+				this.$('.badge-edit').removeClass('hidden');
 			}
 			else{
 				this.$el.removeClass('selected');
 			}
 			
+			// Render shadow
 			if(app.canvas.get('diagramShadow')){
 				this.$el.addClass('diagram-container-shadow');
 			}
@@ -128,6 +138,22 @@
 			
 			for (var i = 0; i < plumbConnections.length; i++) {
 				app.plumbUtils.updateLabelsPosition(plumbConnections[i]);
+			}
+		},
+		
+		handleMouseEnter : function() {
+			console.log("over");
+//			this.$el.addClass('selected');
+			this.$('.badge-delete').removeClass('hidden');
+			this.$('.badge-edit').removeClass('hidden');
+		},
+		
+		handleMouseLeave : function() {
+			console.log("out");
+			if(this.model.get('selected') === false){
+//				this.$el.removeClass('selected');
+				this.$('.badge-delete').addClass('hidden');
+				this.$('.badge-edit').addClass('hidden');	
 			}
 		}
 	});

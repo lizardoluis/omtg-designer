@@ -231,14 +231,30 @@
 	margin-right: 4px;
 }
 
+.diagram-container .badge {
+    padding: 3px 4px !important;
+    font-size: 9px !important;
+}
+
 .diagram-container .badge-delete {
 	position: absolute;
-	top: -8px;
-	right: -8px;
+	top: -9px;
+	right: -10px;
 	background: #333;
 }
 
 .diagram-container .badge-delete:hover {
+	background: #465163;
+}
+
+.diagram-container .badge-edit {
+	position: absolute;
+	top: 16px;
+	right: -10px;
+	background: #333;
+}
+
+.diagram-container .badge-edit:hover {
 	background: #465163;
 }
 

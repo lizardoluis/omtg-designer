@@ -7,7 +7,7 @@
 	app.CanvasView = Backbone.View.extend({
 		
 		events : {
-			'click' : 'clicked',
+			'click' : 'clicked'
 		},
 
 		initialize : function() {
