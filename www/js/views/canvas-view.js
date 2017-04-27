@@ -20,6 +20,10 @@
 		},
 
 		clicked : function(event) {
+		
+			if (event && event.target && !$(event.target).is('.canvas')) return;
+			
+//			console.log("canvas clicked");
 
 			var tool = this.model.get('activeTool');
 

@@ -16,19 +16,10 @@
 			'click .badge-delete' : 'deleteDiagram',
 			
 			// Toggle the selection of the diagram
-			'click' : _.debounce(function(e) {
-		            if (this.doucleclicked) {
-		                this.doucleclicked = false;
-		            } else {
-		            	this.model.toggleSelected();
-		            }
-		        }, 200),
+			'click' : 'handleClick',
 		      
 		    // Open diagram editor popover
-		    'dblclick' : function(e) {
-		            this.doucleclicked = true;
-		            this.edit.call(this, e);
-		        },
+		    'dblclick' : 'handleDblClick',
 		        
 		    'mouseup' : 'updatePosition'
 		},
@@ -46,13 +37,14 @@
 
 		render : function() {
 			
+//			console.log("render");
+			
 			// Check the type of the diagram to use a proper template
 			if (this.model.get("type") == 'conventional') {
 				this.template = _.template(this.$conventional.html());
 			} else {
 				this.template = _.template(this.$georeferenced.html());
 			}
-			
 			
 			// Render class id
 			this.el.id = this.model.get('id');
@@ -93,6 +85,19 @@
 			
 			return this;
 		},
+		
+		handleClick : _.debounce(function(e) {
+            if (this.doubleclicked) {
+                this.doubleclicked = false;
+            } else {
+            	this.model.toggleSelected();
+            }
+        }, 200),
+        
+        handleDblClick : function(e) {
+            this.doubleclicked = true;
+            this.edit.call(this, e);
+        },
 		
 		edit : function() {
 			
