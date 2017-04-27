@@ -310,8 +310,17 @@ app.XMLParser = {
 					return ["Image", {src:"imgs/omtg/triangle-circle-black.png", cssClass:"triangle-endpoint"}];
 			};
 			
+			// Duplicated function of the plumb.js.
+			// TODO: crate a global function
+			var generalizationEndpointAnchor = function(type){
+				if(type == "total")
+					return [ 0.5, 1, 0, 1, 0, 20 ];
+				else
+					return [ 0.5, 1, 0, 1, 0, 11 ];
+			}
+			
 			var endpoint = app.plumb.addEndpoint(this.diagramMap[sourceName], {
-				anchor : [ 0.5, 1.2, 0, 1 ],
+				anchor : generalizationEndpointAnchor(participation), 
 				connectionType : "generalization-leg",
 				endpoint : triangleEndpoint(type),
 				isSource : true,

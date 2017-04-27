@@ -38,6 +38,13 @@ jsPlumb.ready(function() {
 		if(type == "generalization-overlapping-total")
 			return ["Image", {src:"imgs/omtg/triangle-circle-black.png", cssClass:"triangle-endpoint"}];
 	};
+	
+	var generalizationEndpointAnchor = function(type){
+		if(type == "total")
+			return [ 0.5, 1, 0, 1, 0, 20 ];
+		else
+			return [ 0.5, 1, 0, 1, 0, 11 ];
+	}
 
 	var squareOverlay = function(type){ 
 		if(type == "cartographic-generalization-overlapping")
@@ -361,10 +368,10 @@ jsPlumb.ready(function() {
 			
 			// Adds the endpoint to the diagram
 			var endpoint = app.plumb.addEndpoint(info.connection.sourceId, {
-				anchor : [ 0.5, 1.2, 0, 1 ],
+				anchor : generalizationEndpointAnchor(participation),
 				connectionType : "generalization-leg",
 				endpoint : triangleEndpoint(type),
-				isSource : true,
+				isSource : true, 
 				isTarget : false,
 				maxConnections : -1,
 				uniqueEndpoint : true,				
