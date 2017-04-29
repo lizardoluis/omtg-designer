@@ -58,6 +58,7 @@
 				<file name="views/navbar-view.js" />
 				<file name="views/canvas-view.js" />
 				<file name="views/about-view.js" />
+				<file name="views/contextmenu-view.js" />
 
 				<file name="plumb.js" />
 				<file name="plumbUtils.js" />

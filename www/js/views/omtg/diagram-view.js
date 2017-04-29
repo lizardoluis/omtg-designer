@@ -21,7 +21,9 @@
 		    // Open diagram editor popover
 		    'dblclick' : 'handleDblClick',
 		        
-		    'mouseup' : 'updatePosition'
+		    'mouseup' : 'updatePosition',
+		    
+		    'contextmenu' : 'openContextMenu'
 		},
 
 		initialize : function() {
@@ -134,6 +136,13 @@
 			for (var i = 0; i < plumbConnections.length; i++) {
 				app.plumbUtils.updateLabelsPosition(plumbConnections[i]);
 			}
+		},
+		
+		openContextMenu : function(event) { 
+			event.preventDefault();
+			console.log("right click"); 
+			
+			app.contextMenuView = new app.ContextMenuView({left : event.pageX, top : event.pageY});
 		}
 	});
 

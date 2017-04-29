@@ -372,6 +372,16 @@ path {
 }
 
 
+/*
+ * Context Menu
+ */
+ 
+#contextMenu {
+	position: absolute;
+	display: inline-block;
+}
+ 
+
 /* @page{
 	margin-left: 6cm;
 	margin-right: 6cm;
