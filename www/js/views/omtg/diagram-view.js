@@ -148,6 +148,17 @@
 			$(this.render().el).prependTo(this.parentSelector);
 		},
 		
+		duplicate : function() {			
+			var clone = new app.omtg.Diagram({
+				'type' : this.model.get('type'),
+				'left' : this.model.get('left') + 50,
+				'top' : this.model.get('top') + 50,
+				'attributes' : this.model.get('attributes').clone()
+			});
+			clone.set('name', this.model.get('name') + '_' + clone.get('id') );
+			app.canvas.get('diagrams').add(clone);  
+		},
+		
 		openContextMenu : function(event) { 
 			event.preventDefault();			
 			app.contextMenuView = new app.ContextMenuView({diagramView : this, left : event.pageX, top : event.pageY});

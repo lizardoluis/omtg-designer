@@ -15,6 +15,7 @@
 			'click  #cmDelete' : 'deleteDiagram',
 			'click  #cmToFront' : 'bringToFront',
 			'click  #cmToBack' : 'sendToBack',
+			'click  #cmDuplicate' : 'duplicateDiagram',
 			'click' : 'destroy',
 			'contextmenu' : 'rightClick'
 		},
@@ -68,10 +69,15 @@
 			this.diagramView.sendToBack(); 
 		},
 		
+		duplicateDiagram : function() {
+			this.diagramView.duplicate();
+		}, 
+		
 		rightClick : function(event) {
 			event.preventDefault();
 			this.destroy();
 		}
+		
 	});
 
 })(jQuery);
