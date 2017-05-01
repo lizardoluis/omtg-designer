@@ -15,7 +15,8 @@
 			'click  #cmDelete' : 'deleteDiagram',
 			'click  #cmToFront' : 'bringToFront',
 			'click  #cmToBack' : 'bringToBack',
-			'click' : 'destroy'
+			'click' : 'destroy',
+			'contextmenu' : 'rightClick'
 		},
 
 		initialize : function(options) {			
@@ -66,6 +67,11 @@
 		bringToBack : function() {
 			console.log("to back");
 		},
+		
+		rightClick : function(event) {
+			event.preventDefault();
+			this.destroy();
+		}
 	});
 
 })(jQuery);
