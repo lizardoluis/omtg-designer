@@ -27,13 +27,10 @@
 		render : function() {
 			console.log("render context menu2"); 
 			
-//			var offset = $('#canvas').offset();
-			
-			console.log(this.$('.context-menu-content'));
-			
 			this.$el.html(this.template());   			
 			this.$el.appendTo(this.parentSelector);
 			
+			//TODO: chose position to better fit the canvas
 			this.$('.context-menu-content').css({ 
 				top: this.top + 'px', 
 				left: this.left + 'px' 
