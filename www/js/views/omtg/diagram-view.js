@@ -142,7 +142,7 @@
 			event.preventDefault();
 			console.log("right click"); 
 			
-			app.contextMenuView = new app.ContextMenuView({left : event.pageX, top : event.pageY});
+			app.contextMenuView = new app.ContextMenuView({diagramView : this, left : event.pageX, top : event.pageY});
 		}
 	});
 

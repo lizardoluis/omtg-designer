@@ -11,22 +11,23 @@
 		parentSelector: 'body',
 		
 		events : {
+			'click  #cmEdit' : 'editDiagram',
+			'click  #cmDelete' : 'deleteDiagram',
+			'click  #cmToFront' : 'bringToFront',
+			'click  #cmToBack' : 'bringToBack',
 			'click' : 'destroy'
 		},
 
-		initialize : function(options) {
-			console.log("initialize context menu"); 
-			
+		initialize : function(options) {			
 			this.template = _.template($('#contextmenu-template').html());
 			this.left = options.left;
 			this.top = options.top;
+			this.diagramView = options.diagramView;
 			
 			this.render();
 		},
 
-		render : function() {
-			console.log("render context menu2"); 
-			
+		render : function() {			
 			this.$el.html(this.template());   			
 			this.$el.appendTo(this.parentSelector);
 			
@@ -39,8 +40,7 @@
 			return this;
 		},
 		
-		destroy: function() {
-
+		destroy: function() {			
 		    // COMPLETELY UNBIND THE VIEW
 		    this.undelegateEvents();
 
@@ -49,7 +49,23 @@
 		    // Remove view from DOM
 		    this.remove();  
 		    Backbone.View.prototype.remove.call(this);
-		}
+		},
+		
+		editDiagram : function() {
+			this.diagramView.edit();
+		},
+		
+		deleteDiagram : function() {
+			this.diagramView.deleteDiagram();
+		},
+		
+		bringToFront : function() {
+			console.log("to front");
+		},
+		
+		bringToBack : function() {
+			console.log("to back");
+		},
 	});
 
 })(jQuery);
