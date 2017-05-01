@@ -376,15 +376,30 @@ path {
  * Context Menu
  */
  
-#contextMenu {
+.context-menu {
+	position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    display: block;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+} 
+
+.context-menu-backdrop {
+	height: 100%;
+	position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: #000;
+    opacity: 0;
+}
+
+.context-menu-content {
 	position: absolute;
 	display: inline-block;
 }
- 
-
-/* @page{
-	margin-left: 6cm;
-	margin-right: 6cm;
-	margin-top: 0cm;
-	margin-bottom: 0cm;
-} */

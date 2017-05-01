@@ -6,11 +6,9 @@
 
 	app.ContextMenuView = Backbone.View.extend({
 
-		id : 'contextMenu',
+		className : 'context-menu',
 		
-		className : 'dropdown clearfix',
-		
-		parentSelector: '#canvas',
+		parentSelector: 'body',
 		
 		events : {
 			'click' : 'destroy'
@@ -29,15 +27,17 @@
 		render : function() {
 			console.log("render context menu2"); 
 			
-			var offset = $('#canvas').offset();
+//			var offset = $('#canvas').offset();
 			
-			this.$el.css({ 
-				top: this.top - offset.top + 'px',
-				left: this.left - offset.left + 'px' 
-			});	
+			console.log(this.$('.context-menu-content'));
 			
 			this.$el.html(this.template());   			
 			this.$el.appendTo(this.parentSelector);
+			
+			this.$('.context-menu-content').css({ 
+				top: this.top + 'px', 
+				left: this.left + 'px' 
+			});	
 			
 			return this;
 		},
