@@ -14,7 +14,7 @@
 			'click  #cmEdit' : 'editDiagram',
 			'click  #cmDelete' : 'deleteDiagram',
 			'click  #cmToFront' : 'bringToFront',
-			'click  #cmToBack' : 'bringToBack',
+			'click  #cmToBack' : 'sendToBack',
 			'click' : 'destroy',
 			'contextmenu' : 'rightClick'
 		},
@@ -61,11 +61,11 @@
 		},
 		
 		bringToFront : function() {
-			console.log("to front");
+			this.diagramView.bringToFront();
 		},
 		
-		bringToBack : function() {
-			console.log("to back");
+		sendToBack : function() {
+			this.diagramView.sendToBack(); 
 		},
 		
 		rightClick : function(event) {

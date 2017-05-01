@@ -9,6 +9,8 @@
 		tagName : 'div',
 
 		className : 'diagram-container',
+		
+		parentSelector : '#canvas', 
 				
 		events : {
 			
@@ -138,10 +140,16 @@
 			}
 		},
 		
+		bringToFront : function() {
+			$(this.render().el).appendTo(this.parentSelector);
+		},
+		
+		sendToBack : function() {
+			$(this.render().el).prependTo(this.parentSelector);
+		},
+		
 		openContextMenu : function(event) { 
-			event.preventDefault();
-			console.log("right click"); 
-			
+			event.preventDefault();			
 			app.contextMenuView = new app.ContextMenuView({diagramView : this, left : event.pageX, top : event.pageY});
 		}
 	});
