@@ -148,14 +148,25 @@
 			$(this.render().el).prependTo(this.parentSelector);
 		},
 		
-		duplicate : function() {			
+		duplicate : function() {	
+			
+			var offset = Math.floor(Math.random() * 31);
+			
 			var clone = new app.omtg.Diagram({
 				'type' : this.model.get('type'),
-				'left' : this.model.get('left') + 50,
-				'top' : this.model.get('top') + 50,
+				'left' : this.model.get('left') + 40 + offset,
+				'top' : this.model.get('top') + 40 + offset,
 				'attributes' : this.model.get('attributes').clone()
 			});
-			clone.set('name', this.model.get('name') + '_' + clone.get('id') );
+			
+			for(var i=1; ; i++){
+				var cloneName = this.model.get('name') + '_' + i;
+				if( app.canvas.get('diagrams').findByName(cloneName) == null ){
+					clone.set('name', cloneName );
+					break;
+				}
+			}		
+			
 			app.canvas.get('diagrams').add(clone);  
 		},
 		
