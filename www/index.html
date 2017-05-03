@@ -141,8 +141,8 @@
 		<script type="text/template" id="omtg-connection-editor-spatial-relation-template">
 			<!-- Connection Description -->
 			<div class="form-group">
-				<label for="inputConnectionSpatialRelation" class="col-sm-4 control-label">Spatial Relation:</label>
-				<div class="col-sm-6">
+				<label for="inputConnectionSpatialRelation" class="col-sm-6 control-label">Spatial Relation:</label>
+				<div class="col-sm-4">
 					<div class="btn-group">
 						<button id="inputConnectionSpatialRelation" type="button" class="btn btn-default"></button>
 						<button id="inputConnectionSpatialRelationToggle" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -169,8 +169,8 @@
 			</div>
 			<!-- Connection Distance -->
 			<div class="form-group">
-				<label for="inputConnectionDistance" class="col-sm-4 control-label">Distance:</label>
-				<div class="col-sm-6">
+				<label for="inputConnectionDistance" class="col-sm-6 control-label">Distance:</label>
+				<div class="col-sm-4">
 					<input type="text" class="form-control" id="inputConnectionDistance" placeholder="" maxlength="10" disabled>
 				</div>
 			</div>
@@ -179,8 +179,8 @@
 		<script type="text/template" id="omtg-connection-editor-description-template">
 			<!-- Connection Description -->
 			<div class="form-group">
-				<label for="inputConnectionDescription" class="col-sm-4 control-label">Description:</label>
-				<div class="col-sm-6">
+				<label for="inputConnectionDescription" class="col-sm-6 control-label">Description:</label>
+				<div class="col-sm-4">
 					<input type="text" class="form-control" id="inputConnectionDescription" placeholder="" maxlength="40">
 				</div>
 			</div>
@@ -189,17 +189,17 @@
 		<script type="text/template" id="omtg-connection-editor-cardinalities-template">
 			<!-- Cardinalities -->
 			<div class="form-group">
-				<label for="CardinalityA" class="col-sm-4 control-label">Cardinality A:</label>
-				<div class="col-sm-6">
+				<label id="CardA-label" for="CardinalityA" class="col-sm-6 control-label"></label>
+				<div class="col-sm-4">
 					<div class="input-group">
 						<input type="text" class="form-control inputcard" id="inputMinA" placeholder="min" maxlength="2">
 						<input type="text" class="form-control inputcard" id="inputMaxA" placeholder="max" maxlength="2">
 					</div>
-				</div>
+				</div> 
 			</div>
 			<div class="form-group">
-				<label for="CardinalityB" class="col-sm-4 control-label">Cardinality B:</label>
-				<div class="col-sm-6">
+				<label id="CardB-label" for="CardinalityB" class="col-sm-6 control-label"></label>
+				<div class="col-sm-4">
 					<div class="input-group">
 						<input type="text" class="form-control inputcard" id="inputMinB" placeholder="min" maxlength="2">
 						<input type="text" class="form-control inputcard" id="inputMaxB" placeholder="max" maxlength="2">
@@ -211,8 +211,8 @@
 		<script type="text/template" id="omtg-connection-editor-cartographic-template">
 			<!-- Connection Description -->
 			<div class="form-group">
-				<label for="inlineRadioOptions" class="col-sm-4 control-label">Description:</label>
-				<div class="col-sm-6">
+				<label for="inlineRadioOptions" class="col-sm-6 control-label">Description:</label>
+				<div class="col-sm-4">
 					<label class="radio-inline">
   						<input type="radio" name="inlineRadioOptions" id="scaleRadio" value="scale"> scale
 					</label>
