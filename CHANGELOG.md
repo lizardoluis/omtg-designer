@@ -5,6 +5,11 @@ All notable changes to this project is documented in this file.
 ## May 2, 2017
 ### New functionalities
 
+- Context menu allow copy and paste of diagrams.
+
+## May 2, 2017
+### New functionalities
+
 - Class names associated to the cardinality on connection editor.
 
 ## May 1, 2017
