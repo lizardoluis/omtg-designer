@@ -2,7 +2,7 @@
 
 All notable changes to this project is documented in this file.
 
-## May 2, 2017
+## May 4, 2017
 ### New functionalities
 
 - Context menu allow copy and paste of diagrams.
