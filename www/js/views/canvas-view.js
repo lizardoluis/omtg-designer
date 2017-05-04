@@ -8,6 +8,8 @@
 		
 		events : {
 			'click' : 'clicked',
+			
+			'contextmenu' : 'openContextMenu'
 		},
 
 		initialize : function() {
@@ -157,7 +159,16 @@
 					break;
 				}
 			}
-		}  
+		},
+		
+		openContextMenu : function(event) { 
+			
+			if (event && event.target && !$(event.target).is('.canvas')) return; 
+
+			event.preventDefault();			
+			
+			app.contextMenuView = new app.ContextMenuView({left : event.pageX, top : event.pageY, offsetTop : event.offsetY, offsetLeft : event.offsetX});
+		}
 	});
 
 })(jQuery);

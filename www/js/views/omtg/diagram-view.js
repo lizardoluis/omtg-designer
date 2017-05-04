@@ -170,6 +170,10 @@
 			app.canvas.get('diagrams').add(clone);  
 		},
 		
+		copy : function(){
+			app.canvas.set('clipboard', this.model.clone());
+		},
+		
 		openContextMenu : function(event) { 
 			event.preventDefault();			
 			app.contextMenuView = new app.ContextMenuView({diagramView : this, left : event.pageX, top : event.pageY});
