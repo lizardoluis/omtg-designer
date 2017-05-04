@@ -11,7 +11,8 @@
 				activeTool : null,
 				grid : true,
 				diagramShadow : true,
-				snapToGrid : 10
+				snapToGrid : 10,
+				clipboard : null
 			};
 		},
 		
