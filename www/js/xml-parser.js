@@ -143,18 +143,32 @@ app.XMLParser = {
 			var cardinalityA = element.childNodes[2];
 			var cardinalityB = element.childNodes[4];
 			
-			var connection = app.plumb.connect({
-				source: this.diagramMap[sourceName],
-				target: this.diagramMap[targetName],
-				fireEvent: false
-			});
+			var connection;
+			
+			if(sourceName == targetName){
+				connection = app.plumb.connect({
+					source: this.diagramMap[sourceName],
+					target: this.diagramMap[targetName],
+					anchors : [ [ 0, 0.6, -1, 0 ], [ 0.5, 1, 0, 1 ] ],
+					fireEvent: false
+				});
+				connection.setConnector(["Flowchart", {stub: [50, 50], alwaysRespectStubs: true}]);
+			}
+			else{
+				connection = app.plumb.connect({
+					source: this.diagramMap[sourceName],
+					target: this.diagramMap[targetName],
+					fireEvent: false
+				});
+			}
+			
 			connection.setType('association');
 						
 			connection.getOverlay("description-label").setLabel(description);
 			
 			this.parseOMTGConnectionCardinality(cardinalityA, connection, 'A');
 			this.parseOMTGConnectionCardinality(cardinalityB, connection, 'B');
-			
+						
 			break;
 			
 		case "topological":			

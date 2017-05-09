@@ -13,7 +13,9 @@ app.plumbUtils = {
 		cardLabel.removeClass("cardinality-top");
 		cardLabel.removeClass("cardinality-bottom");
 		
-		switch(edge){
+		console.log(edge);
+		
+		switch(edge){ 
 		case "left":
 			cardLabel.addClass("cardinality-left");
 			break;
@@ -72,46 +74,60 @@ app.plumbUtils = {
 		var type = connection.getType();
 		
 		if(type == "association" || type == "spatial-association"){
-			var sourceEdge = connection.endpoints[0]._continuousAnchorEdge;
-			var targetEdge = connection.endpoints[1]._continuousAnchorEdge;		
-			this.setAssociationLabelClass(connection, "cardinality-labelA", sourceEdge);
-			this.setAssociationLabelClass(connection, "cardinality-labelB", targetEdge);
 			
 			// Get elements
 			var label = connection.getOverlay("description-label");
 			var labelElement = label.getElement();
 			var arrow = connection.getOverlay("description-arrow");
-					
-			// Get center position of diagrams
-			var pSource = this.getPositionAtCenter(connection.source);
-	        var pTarget = this.getPositionAtCenter(connection.target);
 			
-	        // Get orientation of the label segment
+	        // Get the orientation of the label segment
 			var p = connection.connector.pointOnPath( label.loc );
 			var segment = connection.connector.findSegmentForPoint(p.x, p.y);
-	        
-	        // When segment is horizontal
-			if( (segment.y1 == segment.y2 && Math.abs(segment.x1 - segment.x2) > labelElement.offsetWidth) 
-					|| (segment.y1 != segment.y2 && Math.abs(segment.y1 - segment.y2) <= arrow.getElement().width) ){				
+			
+			if(connection.sourceId == connection.targetId){
+				// Set cardinalities position	
+				this.setAssociationLabelClass(connection, "cardinality-labelA", "left");
+				this.setAssociationLabelClass(connection, "cardinality-labelB", "bottom");
 				
-				var angle = Math.PI;
-				if(pSource.x <= pTarget.x){
-					angle = 0;
-				}
-				
-				this.setOverlayTransformation(labelElement, (-1)*labelElement.offsetWidth/2, (-1)*labelElement.offsetHeight/2-11 - Math.abs(segment.y1 - segment.y2)/2, 0);
-				this.setOverlayTransformation(arrow.getElement(), (-1/2)*arrow.getElement().width, (-1)*labelElement.offsetHeight-9 - Math.abs(segment.y1 - segment.y2)/2, angle);
+				// Set label position			
+				this.setOverlayTransformation(labelElement, 40 + (-1)*labelElement.offsetWidth/2, -23, 0);
+				this.setOverlayTransformation(arrow.getElement(), 40 + (-1/2)*arrow.getElement().width, -31, 0);
 			}
-			// When segment is vertical
-			else{
+			else{ 
+				// Set cardinalities position				
+				var sourceEdge = connection.endpoints[0]._continuousAnchorEdge;
+				var targetEdge = connection.endpoints[1]._continuousAnchorEdge;		
+				this.setAssociationLabelClass(connection, "cardinality-labelA", sourceEdge);  	
+				this.setAssociationLabelClass(connection, "cardinality-labelB", targetEdge);			
+					
+				// Get the center position of diagrams
+				var pSource = this.getPositionAtCenter(connection.source);
+		        var pTarget = this.getPositionAtCenter(connection.target);
 				
-				var angle = (-1)*Math.PI/2;				
-				if(pSource.y <= pTarget.y){
-					angle *= -1;
+				// Set label position
+		        // When segment is horizontal
+				if( (segment.y1 == segment.y2 && Math.abs(segment.x1 - segment.x2) > labelElement.offsetWidth) 
+						|| (segment.y1 != segment.y2 && Math.abs(segment.y1 - segment.y2) <= arrow.getElement().width) ){				
+					
+					var angle = Math.PI;
+					if(pSource.x <= pTarget.x){
+						angle = 0;
+					}
+					
+					this.setOverlayTransformation(labelElement, (-1)*labelElement.offsetWidth/2, (-1)*labelElement.offsetHeight/2-11 - Math.abs(segment.y1 - segment.y2)/2, 0);
+					this.setOverlayTransformation(arrow.getElement(), (-1/2)*arrow.getElement().width, (-1)*labelElement.offsetHeight-9 - Math.abs(segment.y1 - segment.y2)/2, angle);
 				}
-				 
-				this.setOverlayTransformation(labelElement, 22 + Math.abs(segment.x1 - segment.x2)/2, (-1)*labelElement.offsetHeight/2, 0);
-				this.setOverlayTransformation(arrow.getElement(), -6 + Math.abs(segment.x1 - segment.x2)/2, (-1/2)*arrow.getElement().height, angle);			 
+				// When segment is vertical
+				else{
+					
+					var angle = (-1)*Math.PI/2;				
+					if(pSource.y <= pTarget.y){
+						angle *= -1;
+					}
+					 
+					this.setOverlayTransformation(labelElement, 22 + Math.abs(segment.x1 - segment.x2)/2, (-1)*labelElement.offsetHeight/2, 0);
+					this.setOverlayTransformation(arrow.getElement(), -6 + Math.abs(segment.x1 - segment.x2)/2, (-1/2)*arrow.getElement().height, angle);			 
+				}
 			}
 			
 			// Hide arrow if the description is empty. 
