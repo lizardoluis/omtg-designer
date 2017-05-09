@@ -7,7 +7,9 @@
 	app.CanvasView = Backbone.View.extend({
 		
 		events : {
-			'click' : 'clicked'
+			'click' : 'clicked',
+			
+			'contextmenu' : 'openContextMenu'
 		},
 
 		initialize : function() {
@@ -20,6 +22,10 @@
 		},
 
 		clicked : function(event) {
+		
+			if (event && event.target && !$(event.target).is('.canvas')) return;
+			
+//			console.log("canvas clicked");
 
 			var tool = this.model.get('activeTool');
 
@@ -153,7 +159,16 @@
 					break;
 				}
 			}
-		}  
+		},
+		
+		openContextMenu : function(event) { 
+			
+			if (event && event.target && !$(event.target).is('.canvas')) return; 
+
+			event.preventDefault();			
+			
+			app.contextMenuView = new app.ContextMenuView({left : event.pageX, top : event.pageY, offsetTop : event.offsetY, offsetLeft : event.offsetX});
+		}
 	});
 
 })(jQuery);

@@ -9,6 +9,8 @@
 		tagName : 'div',
 
 		className : 'diagram-container',
+		
+		parentSelector : '#canvas', 
 				
 		events : {
 			
@@ -18,25 +20,17 @@
 			'click .badge-edit' : 'edit',
 			
 			// Toggle the selection of the diagram
-			'click' : _.debounce(function(e) {
-		            if (this.doucleclicked) {
-		                this.doucleclicked = false;
-		            } else {
-		            	this.model.toggleSelected();
-		            }
-		        }, 200),
-		      
-		    // Open diagram editor popover
-		    'dblclick' : function(e) {
-		            this.doucleclicked = true;
-		            this.edit.call(this, e);
-		        },
+			'click' : 'handleClick',			
+
+		    'dblclick' : 'handleDblClick',
 		        
 		    'mouseenter' : 'handleMouseEnter',
 		    
 		    'mouseleave' : 'handleMouseLeave',
 		        
-		    'mouseup' : 'updatePosition'
+		    'mouseup' : 'updatePosition',
+		    
+		    'contextmenu' : 'openContextMenu'
 		},
 
 		initialize : function() {
@@ -54,13 +48,14 @@
 			
 			console.log("render");
 			
+//			console.log("render");
+			
 			// Check the type of the diagram to use a proper template
 			if (this.model.get("type") == 'conventional') {
 				this.template = _.template(this.$conventional.html());
 			} else {
 				this.template = _.template(this.$georeferenced.html());
 			}
-			
 			
 			// Render class id
 			this.el.id = this.model.get('id');
@@ -103,6 +98,19 @@
 			
 			return this;
 		},
+		
+		handleClick : _.debounce(function(e) {
+            if (this.doubleclicked) {
+                this.doubleclicked = false;
+            } else {
+            	this.model.toggleSelected();
+            }
+        }, 200),
+        
+        handleDblClick : function(e) {
+            this.doubleclicked = true;
+            this.edit.call(this, e);
+        },
 		
 		edit : function() {
 			
@@ -155,6 +163,45 @@
 				this.$('.badge-delete').addClass('hidden');
 				this.$('.badge-edit').addClass('hidden');	
 			}
+		},
+
+		bringToFront : function() {
+			$(this.render().el).appendTo(this.parentSelector);
+		},
+		
+		sendToBack : function() {
+			$(this.render().el).prependTo(this.parentSelector);
+		},
+		
+		duplicate : function() {	
+			
+			var offset = Math.floor(Math.random() * 31);
+			
+			var clone = new app.omtg.Diagram({
+				'type' : this.model.get('type'),
+				'left' : this.model.get('left') + 40 + offset,
+				'top' : this.model.get('top') + 40 + offset,
+				'attributes' : this.model.get('attributes').clone()
+			});
+			
+			for(var i=1; ; i++){
+				var cloneName = this.model.get('name') + '_' + i;
+				if( app.canvas.get('diagrams').findByName(cloneName) == null ){
+					clone.set('name', cloneName );
+					break;
+				}
+			}		
+			
+			app.canvas.get('diagrams').add(clone);  
+		},
+		
+		copy : function(){
+			app.canvas.set('clipboard', this.model.clone());
+		},
+		
+		openContextMenu : function(event) { 
+			event.preventDefault();			
+			app.contextMenuView = new app.ContextMenuView({diagramView : this, left : event.pageX, top : event.pageY});
 		}
 	});
 

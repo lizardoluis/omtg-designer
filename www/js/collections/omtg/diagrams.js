@@ -12,6 +12,8 @@
 	    },
 	    
 	    propagate_selected: function(p) {
+//	    	console.log("propagate");
+	    	
 	    	if(!p.get('selected'))
 	            return;
 	        this.each(function(m) {
@@ -21,6 +23,7 @@
 	    },
 	    
 	    unselectAll: function(){
+//	    	console.log("unselectal");
 	    	this.each(function(m) {
 	    		m.set({ selected: false }, { silent: false });
 	    	});

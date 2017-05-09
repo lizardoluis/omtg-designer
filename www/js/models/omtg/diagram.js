@@ -20,6 +20,7 @@
 		
 		// Toggle the `selected` state of this diagram.
 		toggleSelected: function () {
+//			console.log("toggle");
 			this.set('selected', !this.get('selected'));
 		},
 		

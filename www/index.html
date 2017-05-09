@@ -10,7 +10,8 @@
 	    <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	    <link href="libs/bootstrap-toggle/css/bootstrap-toggle.min.css" rel="stylesheet">
 	    <link href="css/style-min.css" rel="stylesheet">	    
-	    <link rel="icon" href="favicon.ico" />
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	
 	    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -57,6 +58,7 @@
 					          		<li><a href="#"><input id="tgglSnapToGrid" type="checkbox" checked data-toggle="toggle" data-size="mini" > &nbsp&nbspSnap to grid</a></li>
 					          		<li role="separator" class="divider"></li>	
 					          		<li class="dropdown-header dropdown-header-bold">About</li>
+					          		<li><a href="https://github.com/lizardoluis/omtg-designer/blob/master/CHANGELOG.md" target='_blank'>Changelog</a></li>
 					          		<li><a href="https://github.com/lizardoluis/omtg-designer" target='_blank'>Fork this project on GitHub</a></li>
 					          		<li><a href="https://github.com/lizardoluis/omtg-designer/issues" target='_blank'>Feedback / Problems / Suggestions</a></li>
 					          </ul>
@@ -141,8 +143,8 @@
 		<script type="text/template" id="omtg-connection-editor-spatial-relation-template">
 			<!-- Connection Description -->
 			<div class="form-group">
-				<label for="inputConnectionSpatialRelation" class="col-sm-4 control-label">Spatial Relation:</label>
-				<div class="col-sm-6">
+				<label for="inputConnectionSpatialRelation" class="col-sm-6 control-label">Spatial Relation:</label>
+				<div class="col-sm-4">
 					<div class="btn-group">
 						<button id="inputConnectionSpatialRelation" type="button" class="btn btn-default"></button>
 						<button id="inputConnectionSpatialRelationToggle" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -169,8 +171,8 @@
 			</div>
 			<!-- Connection Distance -->
 			<div class="form-group">
-				<label for="inputConnectionDistance" class="col-sm-4 control-label">Distance:</label>
-				<div class="col-sm-6">
+				<label for="inputConnectionDistance" class="col-sm-6 control-label">Distance:</label>
+				<div class="col-sm-4">
 					<input type="text" class="form-control" id="inputConnectionDistance" placeholder="" maxlength="10" disabled>
 				</div>
 			</div>
@@ -179,8 +181,8 @@
 		<script type="text/template" id="omtg-connection-editor-description-template">
 			<!-- Connection Description -->
 			<div class="form-group">
-				<label for="inputConnectionDescription" class="col-sm-4 control-label">Description:</label>
-				<div class="col-sm-6">
+				<label for="inputConnectionDescription" class="col-sm-6 control-label">Description:</label>
+				<div class="col-sm-4">
 					<input type="text" class="form-control" id="inputConnectionDescription" placeholder="" maxlength="40">
 				</div>
 			</div>
@@ -189,17 +191,17 @@
 		<script type="text/template" id="omtg-connection-editor-cardinalities-template">
 			<!-- Cardinalities -->
 			<div class="form-group">
-				<label for="CardinalityA" class="col-sm-4 control-label">Cardinality A:</label>
-				<div class="col-sm-6">
+				<label id="CardA-label" for="CardinalityA" class="col-sm-6 control-label"></label>
+				<div class="col-sm-4">
 					<div class="input-group">
 						<input type="text" class="form-control inputcard" id="inputMinA" placeholder="min" maxlength="2">
 						<input type="text" class="form-control inputcard" id="inputMaxA" placeholder="max" maxlength="2">
 					</div>
-				</div>
+				</div> 
 			</div>
 			<div class="form-group">
-				<label for="CardinalityB" class="col-sm-4 control-label">Cardinality B:</label>
-				<div class="col-sm-6">
+				<label id="CardB-label" for="CardinalityB" class="col-sm-6 control-label"></label>
+				<div class="col-sm-4">
 					<div class="input-group">
 						<input type="text" class="form-control inputcard" id="inputMinB" placeholder="min" maxlength="2">
 						<input type="text" class="form-control inputcard" id="inputMaxB" placeholder="max" maxlength="2">
@@ -211,8 +213,8 @@
 		<script type="text/template" id="omtg-connection-editor-cartographic-template">
 			<!-- Connection Description -->
 			<div class="form-group">
-				<label for="inlineRadioOptions" class="col-sm-4 control-label">Description:</label>
-				<div class="col-sm-6">
+				<label for="inlineRadioOptions" class="col-sm-6 control-label">Description:</label>
+				<div class="col-sm-4">
 					<label class="radio-inline">
   						<input type="radio" name="inlineRadioOptions" id="scaleRadio" value="scale"> scale
 					</label>
@@ -435,6 +437,32 @@
 		<a name="<%= name %>" type="<%= type %>" class="btn btn-default tool" data-toggle="tooltip" data-placement="left" title="<%= tooltip %>"> 
 			<img class="media-object tool-icon" alt="<%= tooltip %>" src="<%= icon %>">
 		</a>
+		</script>
+		
+		<script type="text/template" id="contextmenu-diagram-template">
+		<div class="context-menu-backdrop"></div>
+    	<div class="context-menu-content">
+			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;z-index:1000;">
+      			<li><a id="cmEdit" tabindex="-1" href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a></li>
+				<li class="divider"></li>				
+				<li><a id="cmCopy" tabindex="-1" href="#"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Copy</a></li>
+				<li><a id="cmDuplicate" tabindex="-1" href="#"><span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate</a></li>
+				<li class="divider"></li>
+      			<li><a id="cmToFront" tabindex="-1" href="#"><span class="glyphicon glyphicon-collapse-up" aria-hidden="true"></span> Bring to Front</a></li>
+      			<li><a id="cmToBack" tabindex="-1" href="#"><span class="glyphicon glyphicon-collapse-down" aria-hidden="true"></span> Send to Back</a></li> 
+				<li class="divider"></li>   
+				<li><a id="cmDelete" tabindex="-1" href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</a></li>  			
+    		</ul>
+		</div>
+		</script>
+		
+		<script type="text/template" id="contextmenu-canvas-template">
+		<div class="context-menu-backdrop"></div>
+    	<div class="context-menu-content">
+			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;z-index:1000;">
+      			<li><a id="cmPaste" tabindex="-1" href="#"><span class="glyphicon glyphicon-paste" aria-hidden="true"></span> Paste</a></li> 			
+    		</ul>
+		</div>
 		</script>
     
     

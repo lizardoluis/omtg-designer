@@ -143,18 +143,32 @@ app.XMLParser = {
 			var cardinalityA = element.childNodes[2];
 			var cardinalityB = element.childNodes[4];
 			
-			var connection = app.plumb.connect({
-				source: this.diagramMap[sourceName],
-				target: this.diagramMap[targetName],
-				fireEvent: false
-			});
+			var connection;
+			
+			if(sourceName == targetName){
+				connection = app.plumb.connect({
+					source: this.diagramMap[sourceName],
+					target: this.diagramMap[targetName],
+					anchors : [ [ 0, 0.6, -1, 0 ], [ 0.5, 1, 0, 1 ] ],
+					fireEvent: false
+				});
+				connection.setConnector(["Flowchart", {stub: [50, 50], alwaysRespectStubs: true}]);
+			}
+			else{
+				connection = app.plumb.connect({
+					source: this.diagramMap[sourceName],
+					target: this.diagramMap[targetName],
+					fireEvent: false
+				});
+			}
+			
 			connection.setType('association');
 						
 			connection.getOverlay("description-label").setLabel(description);
 			
 			this.parseOMTGConnectionCardinality(cardinalityA, connection, 'A');
 			this.parseOMTGConnectionCardinality(cardinalityB, connection, 'B');
-			
+						
 			break;
 			
 		case "topological":			
@@ -310,8 +324,17 @@ app.XMLParser = {
 					return ["Image", {src:"imgs/omtg/triangle-circle-black.png", cssClass:"triangle-endpoint"}];
 			};
 			
+			// Duplicated function of the plumb.js.
+			// TODO: crate a global function
+			var generalizationEndpointAnchor = function(type){
+				if(type == "total")
+					return [ 0.5, 1, 0, 1, 0, 20 ];
+				else
+					return [ 0.5, 1, 0, 1, 0, 11 ];
+			}
+			
 			var endpoint = app.plumb.addEndpoint(this.diagramMap[sourceName], {
-				anchor : [ 0.5, 1.2, 0, 1 ],
+				anchor : generalizationEndpointAnchor(participation), 
 				connectionType : "generalization-leg",
 				endpoint : triangleEndpoint(type),
 				isSource : true,

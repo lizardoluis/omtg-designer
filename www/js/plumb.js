@@ -38,6 +38,13 @@ jsPlumb.ready(function() {
 		if(type == "generalization-overlapping-total")
 			return ["Image", {src:"imgs/omtg/triangle-circle-black.png", cssClass:"triangle-endpoint"}];
 	};
+	
+	var generalizationEndpointAnchor = function(type){
+		if(type == "total")
+			return [ 0.5, 1, 0, 1, 0, 20 ];
+		else
+			return [ 0.5, 1, 0, 1, 0, 11 ];
+	}
 
 	var squareOverlay = function(type){ 
 		if(type == "cartographic-generalization-overlapping")
@@ -259,11 +266,33 @@ jsPlumb.ready(function() {
 		
 		switch(type){
 		
-		case "association":
+		case "association":			
+			if(info.connection.sourceId == info.connection.targetId){
+				console.log("same"); 
+				
+				app.plumb.detach(info.connection);
+				
+				var newConn = app.plumb.connect({
+					source : info.connection.sourceId,
+					target : info.connection.targetId,
+					anchors : [ [ 0, 0.6, -1, 0 ], [ 0.5, 1, 0, 1 ] ],
+					fireEvent : false
+				});	
+				
+				newConn.setConnector(["Flowchart", {stub: [50, 50], alwaysRespectStubs: true}]);
+				
+				newConn.setType(type);
+				
+				app.plumbUtils.updateLabelsPosition(newConn);
+			}
+			else{
+				app.plumbUtils.updateLabelsPosition(info.connection);
+			}
+			
+			break;
+			
 		case "spatial-association":
-			// adjust position of the label
-//			info.connection.setConnector(["Flowchart", {stub: [45, 45], alwaysRespectStubs: true}]);
-			app.plumbUtils.updateLabelsPosition(info.connection);
+			app.plumbUtils.updateLabelsPosition(info.connection);				
 			break;
 		
 		//Adds the second line in network relationships
@@ -361,10 +390,10 @@ jsPlumb.ready(function() {
 			
 			// Adds the endpoint to the diagram
 			var endpoint = app.plumb.addEndpoint(info.connection.sourceId, {
-				anchor : [ 0.5, 1.2, 0, 1 ],
+				anchor : generalizationEndpointAnchor(participation),
 				connectionType : "generalization-leg",
 				endpoint : triangleEndpoint(type),
-				isSource : true,
+				isSource : true, 
 				isTarget : false,
 				maxConnections : -1,
 				uniqueEndpoint : true,				
@@ -434,7 +463,7 @@ jsPlumb.ready(function() {
 		var type = info.connection.getType()[0];
 		
 		// Avoid self loop. 
-		if(type != "arc-network" && info.sourceId == info.targetId){
+		if((type != "arc-network" && type != "association")  && info.sourceId == info.targetId){
 			return false;
 		}
 

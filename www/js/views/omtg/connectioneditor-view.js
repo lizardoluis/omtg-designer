@@ -83,14 +83,19 @@
 			if(type == 'association' || type == 'spatial-association'){
 				fieldset.append(_.template($('#omtg-connection-editor-cardinalities-template').html()));
 				
+				var aName = app.canvas.get('diagrams').get(this.connection.sourceId, 'name');
+				var bName = app.canvas.get('diagrams').get(this.connection.targetId, 'name');
+				
+				this.$('#CardA-label').text("Cardinality A ("+ aName + "):");
 				this.cardLabelA = this.connection.getOverlay("cardinality-labelA");			
 				this.$('#inputMinA').val(this.connection.getParameter("minA"));
 				this.$('#inputMaxA').val(this.connection.getParameter("maxA"));
 				
+				this.$('#CardB-label').text("Cardinality B ("+ bName + "):");
 				this.cardLabelB = this.connection.getOverlay("cardinality-labelB");			
 				this.$('#inputMinB').val(this.connection.getParameter("minB"));
 				this.$('#inputMaxB').val(this.connection.getParameter("maxB"));
-			}
+			} 
 			
 			// Add Cartographic component
 			if(type == 'cartographic-generalization-disjoint' || type == 'cartographic-generalization-overlapping'){
@@ -177,7 +182,7 @@
 				this.cartographicLabel.setLabel(this.$('input:radio[name=inlineRadioOptions]:checked').val());
 			}
 			
-			
+			app.plumbUtils.updateLabelsPosition(this.connection);
 			//this.teardown();
 		},
 		
