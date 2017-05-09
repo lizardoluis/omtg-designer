@@ -2,6 +2,11 @@
 
 All notable changes to this project is documented in this file.
 
+## May 8, 2017
+### New functionalities
+
+- Self-relationships on conventional associations.
+
 ## May 4, 2017
 ### New functionalities
 
