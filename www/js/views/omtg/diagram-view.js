@@ -46,10 +46,6 @@
 
 		render : function() {
 			
-			console.log("render");
-			
-//			console.log("render");
-			
 			// Check the type of the diagram to use a proper template
 			if (this.model.get("type") == 'conventional') {
 				this.template = _.template(this.$conventional.html());
@@ -150,19 +146,15 @@
 		},
 		
 		handleMouseEnter : function() {
-			console.log("over");
-//			this.$el.addClass('selected');
+			this.$el.addClass('hovered');
 			this.$('.badge-delete').removeClass('hidden');
 			this.$('.badge-edit').removeClass('hidden');
 		},
 		
-		handleMouseLeave : function() {
-			console.log("out");
-			if(this.model.get('selected') === false){
-//				this.$el.removeClass('selected');
-				this.$('.badge-delete').addClass('hidden');
-				this.$('.badge-edit').addClass('hidden');	
-			}
+		handleMouseLeave : function() {	
+			this.$el.removeClass('hovered');
+			this.$('.badge-delete').addClass('hidden');
+			this.$('.badge-edit').addClass('hidden');	
 		},
 
 		bringToFront : function() {

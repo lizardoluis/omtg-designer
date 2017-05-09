@@ -203,8 +203,8 @@
     min-width: 127px;
     border: 1px solid black;
     font-weight: bold;
-    padding: 8px 5px 5px 5px; 
-    white-space: nowrap;
+    padding: 8px 14px 5px 5px; 
+    white-space: nowrap; 
     text-align: center;
 }
 
@@ -219,6 +219,11 @@
 	border-right: 1px solid black;
 	border-bottom: 1px solid black;
 	font-weight: normal;
+}
+
+.hovered {
+	border: 1px solid black;
+	margin: 4px; 
 }
 
 .selected {
@@ -238,8 +243,8 @@
 
 .diagram-container .badge-delete {
 	position: absolute;
-	top: -9px;
-	right: -10px;
+	top: -7px;
+	right: -8px;
 	background: #333;
 }
 
@@ -249,8 +254,8 @@
 
 .diagram-container .badge-edit {
 	position: absolute;
-	top: 16px;
-	right: -10px;
+	top: 17px;
+	right: -8px;
 	background: #333;
 }
 
