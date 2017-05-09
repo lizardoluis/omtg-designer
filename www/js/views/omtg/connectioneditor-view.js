@@ -182,7 +182,7 @@
 				this.cartographicLabel.setLabel(this.$('input:radio[name=inlineRadioOptions]:checked').val());
 			}
 			
-			
+			app.plumbUtils.updateLabelsPosition(this.connection);
 			//this.teardown();
 		},
 		
