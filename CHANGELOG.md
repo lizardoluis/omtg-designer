@@ -2,6 +2,11 @@
 
 All notable changes to this project is documented in this file.
 
+## May 9, 2017
+### New functionalities
+
+- Diagrams shows edit badge when mouse is over.
+
 ## May 8, 2017
 ### New functionalities
 
