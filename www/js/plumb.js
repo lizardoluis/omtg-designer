@@ -267,8 +267,7 @@ jsPlumb.ready(function() {
 		switch(type){
 		
 		case "association":			
-			if(info.connection.sourceId == info.connection.targetId){
-				console.log("same"); 
+			if(info.connection.sourceId == info.connection.targetId){ 
 				
 				app.plumb.detach(info.connection);
 				

@@ -13,8 +13,6 @@ app.plumbUtils = {
 		cardLabel.removeClass("cardinality-top");
 		cardLabel.removeClass("cardinality-bottom");
 		
-		console.log(edge);
-		
 		switch(edge){ 
 		case "left":
 			cardLabel.addClass("cardinality-left");
