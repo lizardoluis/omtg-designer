@@ -95,10 +95,11 @@
 			return this;
 		},
 		
-		handleClick : _.debounce(function(e) {
+		handleClick : _.debounce(function(event) {
+			
             if (this.doubleclicked) {
-                this.doubleclicked = false;
-            } else {
+                this.doubleclicked = false; 
+            } else {            	
             	this.model.toggleSelected();
             }
         }, 200),
@@ -108,7 +109,9 @@
             this.edit.call(this, e);
         },
 		
-		edit : function() {
+		edit : function(event) {
+			
+			event.stopPropagation();
 			
 			var hasConnections = false;
 			if(app.plumb.getConnections({ source: this.el.id }).length || app.plumb.getConnections({ target: this.el.id }).length)
@@ -117,8 +120,10 @@
 			var modal = new app.omtg.DiagramEditorView({model : this.model, hasConnections : hasConnections});
 		},
 		
-		deleteDiagram : function() {
-						
+		deleteDiagram : function(event) {
+		
+			event.stopPropagation();
+			
 			if (confirm(app.msgs.DELETE_DIAGRAM)){
 			
 				app.plumb.detachAllConnections(this.$el);
