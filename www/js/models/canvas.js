@@ -12,8 +12,9 @@
 				grid : true,
 				diagramShadow : true,
 				snapToGrid : 10,
-				clipboard : null
-			};
+				clipboard : null,
+				undoManager : new app.UndoManager(),
+			}; 
 		},
 		
 		toXML : function() {

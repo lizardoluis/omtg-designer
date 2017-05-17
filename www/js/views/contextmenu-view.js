@@ -18,6 +18,8 @@
 			'click  #cmCopy' : 'copyDiagram',
 			'click  #cmPaste' : 'pasteDiagram',
 			'click  #cmDuplicate' : 'duplicateDiagram',
+			'click  #cmUndo' : 'undo',
+			'click  #cmRedo' : 'redo',
 			'click' : 'destroy',
 			'contextmenu' : 'rightClick'
 		},
@@ -121,8 +123,17 @@
 		rightClick : function(event) {
 			event.preventDefault();
 			this.destroy(); 
-		}
+		},
 		
+		undo : function() {
+			console.log("context-undo");
+			app.canvasView.undoHistory();
+		}, 
+		
+		redo : function() {
+			console.log("context-redo");
+			app.canvasView.redoHistory();
+		}		
 	});
 
 })(jQuery);

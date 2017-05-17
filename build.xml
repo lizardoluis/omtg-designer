@@ -40,6 +40,7 @@
 				<file name="models/tool.js" />
 				<file name="models/toolbox.js" />
 				<file name="models/canvas.js" />
+				<file name="models/undoManager.js" />
 
 				<file name="collections/omtg/attributes.js" />
 				<file name="collections/omtg/diagrams.js" />

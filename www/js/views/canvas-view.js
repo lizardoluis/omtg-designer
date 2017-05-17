@@ -14,14 +14,52 @@
 
 		initialize : function() {
 			this.listenTo(this.model.get('diagrams'), 'add', this.addOMTGDiagram);
+			this.listenTo(this.model.get('diagrams'), 'change', this.updateHistory);
 			this.listenTo(this.model, 'change:activeTool', this.setCursor);
 			this.listenTo(this.model, 'change:grid', this.toggleGrid);
 			this.listenTo(this.model, 'change:diagramShadow', this.toggleDiagramShadow);
 			
 			$(document).on('keydown', this.keyAction);
 		},
+		
+		clearCanvas : function() {
+			console.log("clear");
+//			this.model.get('diagrams').reset();
+			_.invoke(this.model.get('diagrams').toArray(), 'destroy');
+			
+			app.plumb.detachEveryConnection();			
+		},
 
-		clicked : function(event) {
+		updateHistory : function() {
+			console.log("change");
+			this.model.get('undoManager').update();
+		},
+		
+		redoHistory : function() { 
+			console.log("canvas-redo");
+			var undoManager = this.model.get('undoManager');
+			
+			if(undoManager.hasRedo()){
+				this.clearCanvas(); 
+				
+				var xml = undoManager.redo();			
+				app.XMLParser.parseOMTGSchema(xml);
+			}
+		},
+		 
+		undoHistory : function() {
+			console.log("canvas-undo");
+			var undoManager = this.model.get('undoManager');
+			
+			if(undoManager.hasUndo()){
+				this.clearCanvas();  
+				
+				var xml = undoManager.undo();			
+				app.XMLParser.parseOMTGSchema(xml);
+			}
+		},
+			
+		clicked : function(event) { 
 		
 			if (event && event.target && !$(event.target).is('.canvas')) return;
 			
@@ -78,6 +116,8 @@
 		},	
 		
 		addOMTGDiagram : function(diagram) {
+			
+			console.log("add");
 			
 			app.plumb.setSuspendDrawing(true);			
 			
