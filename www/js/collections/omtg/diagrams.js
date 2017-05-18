@@ -13,6 +13,10 @@
 	        this.listenTo(this, 'change:selected', this.propagate_selected);
 	    },
 	    
+	    removeAll : function() {
+	    	_.invoke(this.toArray(), 'destroy');
+		},
+	    
 	    propagate_selected: function(p) { 
     	
 	    	if(!p.get('selected'))
