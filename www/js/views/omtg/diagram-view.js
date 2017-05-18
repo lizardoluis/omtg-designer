@@ -41,7 +41,7 @@
 
 			// Listeners
 			this.listenTo(this.model, 'change', this.render);
-//			this.listenTo(this.model, 'destroy', this.remove);
+			this.listenTo(this.model, 'destroy', this.remove);
 		},
 
 		render : function() {
@@ -124,15 +124,11 @@
 		
 			event.stopPropagation();
 			
-			if (confirm(app.msgs.DELETE_DIAGRAM)){
-			
-				app.plumb.detachAllConnections(this.$el);
+			if (confirm(app.msgs.DELETE_DIAGRAM)){			
+				app.plumb.detachAllConnections(this.$el);						
 				
-				// I could not use collection remove because it was not working, so I set a flag as deleted to avoid to be exported.
-				this.model.set('deleted', true); 						
-				
-				// Remove view
-				this.remove();
+				// Remove view				 
+				this.model.destroy();
 			}
 		},
 		

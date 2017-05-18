@@ -7,7 +7,7 @@
 	app.omtg.Diagrams = Backbone.Collection.extend({
 		model : app.omtg.Diagram,
 		
-//		localStorage: new Backbone.LocalStorage('diagrams'),
+		localStorage: new Backbone.LocalStorage('diagrams'),
 		
 		initialize: function() {	       
 	        this.listenTo(this, 'change:selected', this.propagate_selected);
@@ -24,7 +24,6 @@
 	    },
 	    
 	    unselectAll: function(){ 
-//	    	console.log("unselectal");
 	    	this.each(function(m) {
 	    		m.set({ selected: false }, { silent: false });
 	    	});
@@ -40,8 +39,7 @@
 		findByName : function(name) {
 			var ds = this.where({name : name});
 			for(var i=0; i<ds.length; i++){
-				if(!ds[i].get('deleted'))
-					return ds[i];
+				return ds[i];
 			}
 			return null;
 		},
@@ -50,8 +48,7 @@
 		
 			var xml = "";
 			this.each(function(model) {
-	    		if(!model.get('deleted'))
-	    			xml += model.toXML();
+	    		xml += model.toXML();
 	    	});
 			return "<classes>" + xml + "</classes>";
 		},
