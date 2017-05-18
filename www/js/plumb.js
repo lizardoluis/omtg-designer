@@ -466,8 +466,8 @@ jsPlumb.ready(function() {
 			return false;
 		}
 
-		var sourceType = app.canvas.get('diagrams').get(info.sourceId, 'type');
-		var targetType = app.canvas.get('diagrams').get(info.targetId, 'type');
+		var sourceType = app.canvas.get('diagrams').getAttrById(info.sourceId, 'type');
+		var targetType = app.canvas.get('diagrams').getAttrById(info.targetId, 'type');
 				
 		switch(type){		
 		// Superclass and subclasses must have the same type

@@ -13,8 +13,7 @@
 				attributes : new app.omtg.Attributes(),
 				selected : false,
 				top : 10,
-				left : 10,
-				deleted : false,
+				left : 10
 			};
 		},
 		
