@@ -7,13 +7,14 @@
 	app.omtg.Diagrams = Backbone.Collection.extend({
 		model : app.omtg.Diagram,
 		
+//		localStorage: new Backbone.LocalStorage('diagrams'),
+		
 		initialize: function() {	       
 	        this.listenTo(this, 'change:selected', this.propagate_selected);
 	    },
 	    
-	    propagate_selected: function(p) {
-//	    	console.log("propagate");
-	    	
+	    propagate_selected: function(p) { 
+    	
 	    	if(!p.get('selected'))
 	            return;
 	        this.each(function(m) {
@@ -22,14 +23,14 @@
 	        });
 	    },
 	    
-	    unselectAll: function(){
+	    unselectAll: function(){ 
 //	    	console.log("unselectal");
 	    	this.each(function(m) {
 	    		m.set({ selected: false }, { silent: false });
 	    	});
 	    },
 		
-	    get : function(id, attr) {			
+	    getAttrById : function(id, attr) {		    	
 			var diagram = this.findWhere({id : id});
 			if(diagram)
 				return diagram.get(attr);			

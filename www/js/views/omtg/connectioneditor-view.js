@@ -42,8 +42,8 @@
 				fieldset.append(_.template($('#omtg-connection-editor-spatial-relation-template').html()));				
 				this.descriptionLabel = this.connection.getOverlay("description-label");			
 				
-				var sourceType = app.canvas.get('diagrams').get(this.connection.sourceId, 'type');
-				var targetType = app.canvas.get('diagrams').get(this.connection.targetId, 'type');
+				var sourceType = app.canvas.get('diagrams').getAttrById(this.connection.sourceId, 'type');
+				var targetType = app.canvas.get('diagrams').getAttrById(this.connection.targetId, 'type');
 				
 				if(sourceType != "polygon" && sourceType != "planar-subdivision"){
 					this.$("#contains").addClass('disabled');
