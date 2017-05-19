@@ -20,7 +20,7 @@
 			'click  #cmDuplicate' : 'duplicateDiagram',
 			'click  #cmUndo' : 'undo',
 			'click  #cmRedo' : 'redo',
-			'click' : 'destroy',
+			'click' : 'destroyMenu',
 			'contextmenu' : 'rightClick'
 		},
 
@@ -45,11 +45,22 @@
 		render : function() {			
 			this.$el.html(this.template());   			
 			this.$el.appendTo(this.parentSelector);
-			
-			// set paste inactive if there is nothing on clipboard
-			if(this.diagramView == null && app.canvas.get('clipboard') == null){
-				this.$('#cmPaste').parent().addClass('disabled', true);  
-			}
+					
+			// Context menu of canvas 
+			if(this.diagramView == null){
+				
+				// set paste inactive if there is nothing on clipboard
+				if(app.canvas.get('clipboard') == null){
+					this.$('#cmPaste').parent().addClass('disabled');  
+				} 
+				
+				// set undo and redo inactive
+				var undoManager = app.canvas.get('undoManager');				
+				if(!undoManager.hasUndo())
+					this.$('#cmUndo').parent().addClass('disabled');				
+				if(!undoManager.hasRedo())
+					this.$('#cmRedo').parent().addClass('disabled');  
+			} 
 			
 			//TODO: chose position to better fit the canvas
 			this.$('.context-menu-content').css({ 
@@ -60,7 +71,7 @@
 			return this;
 		},
 		
-		destroy: function() {			
+		destroyMenu: function() {			
 		    // COMPLETELY UNBIND THE VIEW
 		    this.undelegateEvents();
 
@@ -71,8 +82,8 @@
 		    Backbone.View.prototype.remove.call(this);
 		},
 		
-		editDiagram : function() {
-			this.diagramView.edit();
+		editDiagram : function() { 
+			this.diagramView.edit(); 
 		},
 		
 		deleteDiagram : function() {
@@ -95,7 +106,9 @@
 			this.diagramView.copy();
 		}, 
 		
-		pasteDiagram : function() {			
+		pasteDiagram : function() {	
+			console.log("paste"); 
+			
 			var clipboard = app.canvas.get('clipboard');
 			
 			if(clipboard != null){ 

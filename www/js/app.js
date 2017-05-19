@@ -6,6 +6,7 @@ var LEFT_ARROW_KEY = 37;
 var TOP_ARROW_KEY = 38;
 var RIGHT_ARROW_KEY = 39;
 var DOWN_ARROW_KEY = 40;
+var Z_KEY = 90;
 
 var app = {
 	// OMT-G namespace

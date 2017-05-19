@@ -17,53 +17,50 @@
 			this.listenTo(this.model.get('diagrams'), 'change', this.updateHistory);
 			this.listenTo(this.model, 'change:activeTool', this.setCursor);
 			this.listenTo(this.model, 'change:grid', this.toggleGrid);
-			this.listenTo(this.model, 'change:diagramShadow', this.toggleDiagramShadow);
+			this.listenTo(this.model, 'change:diagramShadow', this.toggleDiagramShadow);			
 			
 			$(document).on('keydown', this.keyAction);
 		},
 		
 		clearCanvas : function() {
-			console.log("clear");
-//			this.model.get('diagrams').reset();
-			_.invoke(this.model.get('diagrams').toArray(), 'destroy');
-			
-			app.plumb.detachEveryConnection();			
+			app.plumb.detachEveryConnection();	
+			this.model.get('diagrams').removeAll();					
 		},
 
 		updateHistory : function() {
-			console.log("change");
 			this.model.get('undoManager').update();
 		},
 		
 		redoHistory : function() { 
-			console.log("canvas-redo");
+
 			var undoManager = this.model.get('undoManager');
 			
 			if(undoManager.hasRedo()){
 				this.clearCanvas(); 
 				
-				var xml = undoManager.redo();			
-				app.XMLParser.parseOMTGSchema(xml);
+				var xml = undoManager.redo();
+				if(xml)
+					app.XMLParser.parseOMTGSchema(xml);
 			}
 		},
-		 
+		
 		undoHistory : function() {
-			console.log("canvas-undo");
+
 			var undoManager = this.model.get('undoManager');
 			
 			if(undoManager.hasUndo()){
 				this.clearCanvas();  
 				
-				var xml = undoManager.undo();			
-				app.XMLParser.parseOMTGSchema(xml);
+				var xml = undoManager.undo();
+				if(xml)
+					app.XMLParser.parseOMTGSchema(xml);
 			}
 		},
-			
+		
 		clicked : function(event) { 
 		
-			if (event && event.target && !$(event.target).is('.canvas')) return;
-			
-//			console.log("canvas clicked");
+			if (event && event.target && !$(event.target).is('.canvas')) 
+				return;
 
 			var tool = this.model.get('activeTool');
 
@@ -75,7 +72,8 @@
 						'left' : Math.round(event.offsetX / grid) * grid,
 						'top' : Math.round(event.offsetY / grid) * grid
 					});
-					this.model.get('diagrams').add(diagram);
+					this.model.get('diagrams').add(diagram); 
+					this.updateHistory(); 
 				}
 				tool.toggleActive();
 				this.model.set('activeTool', null);
@@ -96,7 +94,8 @@
 			}			
 		},		
 		
-		toggleGrid : function() {			
+		toggleGrid : function() {		
+			
 			if(this.model.get('grid')){
 				this.$el.addClass('canvas-background');
 			}
@@ -117,8 +116,6 @@
 		
 		addOMTGDiagram : function(diagram) {
 			
-			console.log("add");
-			
 			app.plumb.setSuspendDrawing(true);			
 			
 			var diagramView = new app.omtg.DiagramView({
@@ -127,7 +124,6 @@
 			
 			var dObject = diagramView.render().el;
 			this.$el.append(dObject);
-			
 			
 			//Plumbing			
 			app.plumb.draggable(dObject, {
@@ -148,7 +144,6 @@
 			});
 			
 			app.plumb.makeTarget(dObject);	
-
 			app.plumb.setSuspendDrawing(false, true);
 		},
 		
@@ -163,47 +158,62 @@
 			});
 		},
 		
+		//TODO: move this to document view
 		keyAction : function(event){
 			
-			if($(".modal-dialog").length == 0){
+			// Avoid breaking the dialogs
+			if($(".modal-dialog").length > 0)
+				return
 	
-				var code = event.keyCode || event.which;
+			var code = event.keyCode || event.which;
+			
+			//TODO: move this to diagram model
+			var moveDiagram = function(direction, diff){
+				event.preventDefault();
+				app.canvas.get('diagrams').each(function(d) {
+		    		if(d.get('selected'))		    		
+		    			d.set(direction, d.get(direction) + diff);
+		    	});
+			};
+						
+			switch(code){
+			case LEFT_ARROW_KEY:
+				if(event.shiftKey) moveDiagram('left', -1);
+				else moveDiagram('left', -4);
+				break;
 				
-				var moveDiagram = function(direction, diff){
-					event.preventDefault();
-					app.canvas.get('diagrams').each(function(d) {
-			    		if(d.get('selected'))		    		
-			    			d.set(direction, d.get(direction) + diff);
-			    	});
-				};
-							
-				switch(code){
-				case LEFT_ARROW_KEY:
-					if(event.shiftKey) moveDiagram('left', -1);
-					else moveDiagram('left', -4);
-					break;
-					
-				case TOP_ARROW_KEY:
-					if(event.shiftKey) moveDiagram('top', -1);
-					else moveDiagram('top', -4);
-					break;
-					
-				case RIGHT_ARROW_KEY:
-					if(event.shiftKey) moveDiagram('left', 1);
-					else moveDiagram('left', 4);
-					break;
-					
-				case DOWN_ARROW_KEY:
-					if(event.shiftKey) moveDiagram('top', 1);
-					else moveDiagram('top', 4);
-					break;
+			case TOP_ARROW_KEY:
+				if(event.shiftKey) moveDiagram('top', -1);
+				else moveDiagram('top', -4);
+				break;
+				
+			case RIGHT_ARROW_KEY:
+				if(event.shiftKey) moveDiagram('left', 1);
+				else moveDiagram('left', 4);
+				break;
+				
+			case DOWN_ARROW_KEY:
+				if(event.shiftKey) moveDiagram('top', 1);
+				else moveDiagram('top', 4);
+				break;
+			
+			case Z_KEY:
+				if(event.ctrlKey) {
+					// CTRL + SHIFT + Z
+					if(event.shiftKey) 
+						app.canvasView.redoHistory();
+					// CTRL + Z
+					else						
+						app.canvasView.undoHistory();  
 				}
+				break; 
 			}
 		},
 		
 		openContextMenu : function(event) { 
 			
-			if (event && event.target && !$(event.target).is('.canvas')) return; 
+			if (event && event.target && !$(event.target).is('.canvas')) 
+				return; 
 
 			event.preventDefault();			
 			

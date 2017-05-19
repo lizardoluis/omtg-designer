@@ -12,9 +12,8 @@
 			};
 		},
 		
-		update: function() { 
-			console.log("update"); 
-			
+		update: function() {	
+			console.log("update");
 			var xml = app.canvas.toXML();
 			
 			var history = _.clone(this.get('history'));
@@ -24,37 +23,31 @@
 				
 				history = history.slice(0, index + 1);				
 				history.push(xml);
+				 
+				console.log(xml);
 				
 				this.set('history', history);
-				this.set('historyIndex', ++index);
-			}			
+				this.set('historyIndex', ++index); 
+			}
 		},
 		
-		redo: function () { 
-			
-			console.log("redo");
-			
+		redo: function () {			
 		    var index = this.get('historyIndex');
 			
 			if (index < this.get('history').length){ 
 				this.set('historyIndex', ++index);			
 				return this.get('history')[index];
-			}
-			
+			}			
 			return "";
 		},
 		
-		undo: function () {
-			
-			console.log("undo");
-			
+		undo: function () {			
 			var index = this.get('historyIndex');
 			
 			if (index >= 0){ 
 				this.set('historyIndex', --index);				
 				return this.get('history')[index];
-			}
-			
+			}			
 			return "";
 		},
 		

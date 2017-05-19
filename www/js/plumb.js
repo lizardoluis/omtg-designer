@@ -445,7 +445,9 @@ jsPlumb.ready(function() {
 			info.connection.endpoints[1].setAnchor("Top");
 			info.connection.setConnector(["Flowchart", {stub: [0, 50], alwaysRespectStubs: true}]);
 			break;
-		} 
+		}
+		
+		app.canvasView.updateHistory(); 
 		
 		// Deactivate all tools
 		app.relationshipTools.deactivateAll();

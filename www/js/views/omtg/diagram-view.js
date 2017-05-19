@@ -110,8 +110,9 @@
         },
 		
 		edit : function(event) {
-			
-			event.stopPropagation();
+			 
+			if(event)
+				event.stopPropagation(); 
 			
 			var hasConnections = false;
 			if(app.plumb.getConnections({ source: this.el.id }).length || app.plumb.getConnections({ target: this.el.id }).length)
@@ -122,7 +123,8 @@
 		
 		deleteDiagram : function(event) {
 		
-			event.stopPropagation();
+			if(event) 
+				event.stopPropagation(); 
 			
 			if (confirm(app.msgs.DELETE_DIAGRAM)){			
 				app.plumb.detachAllConnections(this.$el);						
