@@ -12,7 +12,10 @@
 	    },
 	    
 	    removeAll : function() {
-	    	_.invoke(this.toArray(), 'destroy');
+	    	var diagram;
+	    	while (diagram = this.last()) {
+	    		diagram.trigger("destroy", diagram);  
+	    	}
 		},
 	    
 	    propagate_selected: function(p) { 
@@ -23,7 +26,7 @@
 	            if(p.id != m.id)
 	                m.set({ selected: false }, { silent: false });
 	        });
-	    },
+	    }, 
 	    
 	    unselectAll: function(){ 
 	    	this.each(function(m) {
