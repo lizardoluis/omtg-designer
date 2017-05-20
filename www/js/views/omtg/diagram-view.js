@@ -131,6 +131,7 @@
 				
 				// Remove view				 
 				this.model.trigger("destroy", this.model); 
+				app.canvasView.updateHistory();
 			}
 		},
 		

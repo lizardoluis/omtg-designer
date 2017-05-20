@@ -23,8 +23,9 @@
 		},
 		
 		clearCanvas : function() {
-			app.plumb.detachEveryConnection();	
-			this.model.get('diagrams').removeAll();					
+			app.plumb.detachEveryConnection({fireEvent : false});
+			app.plumb.deleteEveryEndpoint();
+			this.model.get('diagrams').removeAll();
 		},
 
 		updateHistory : function() {

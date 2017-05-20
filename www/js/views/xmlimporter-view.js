@@ -73,6 +73,8 @@
 			
 			parser.parseOMTGSchema(this.validXML);
 			
+			app.canvasView.updateHistory();
+			
 			this.teardown();
 		},
 		

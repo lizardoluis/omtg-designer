@@ -13,7 +13,7 @@
 		},
 		
 		update: function() {	
-			console.log("update");
+//			console.log("update");
 			var xml = app.canvas.toXML();
 			
 			var history = _.clone(this.get('history'));
@@ -24,7 +24,7 @@
 				history = history.slice(0, index + 1);				
 				history.push(xml);
 				 
-				console.log(xml);
+//				console.log(xml);
 				
 				this.set('history', history);
 				this.set('historyIndex', ++index); 

@@ -183,7 +183,9 @@
 			}
 			
 			app.plumbUtils.updateLabelsPosition(this.connection);
-			//this.teardown();
+			
+			// Update undo history
+			app.canvasView.updateHistory();
 		},
 		
 		detach : function(event) {

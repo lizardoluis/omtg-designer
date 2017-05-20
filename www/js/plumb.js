@@ -269,7 +269,7 @@ jsPlumb.ready(function() {
 		case "association":			
 			if(info.connection.sourceId == info.connection.targetId){ 
 				
-				app.plumb.detach(info.connection);
+				app.plumb.detach(info.connection, {fireEvent : false}); 
 				
 				var newConn = app.plumb.connect({
 					source : info.connection.sourceId,
@@ -298,7 +298,7 @@ jsPlumb.ready(function() {
 		case "arc-network":
 			
 			if(info.connection.sourceId == info.connection.targetId){
-				app.plumb.detach(info.connection);
+				app.plumb.detach(info.connection, {fireEvent : false});
 
 				var newConn = app.plumb.connect({
 					source : info.connection.sourceId,
@@ -337,7 +337,7 @@ jsPlumb.ready(function() {
 				var tx = app.plumbUtils.NETWORK_DIST/targetWidth;
 				var ty = app.plumbUtils.NETWORK_DIST/targetHeight;
 				
-				app.plumb.detach(info.connection);
+				app.plumb.detach(info.connection, {fireEvent : false});
 
 				var newConn = app.plumb.connect({
 					source : info.connection.sourceId,
@@ -385,7 +385,7 @@ jsPlumb.ready(function() {
 			
 			// Detach the connection to add a new one with the correct
 			// endpoint
-			app.plumb.detach(info.connection);
+			app.plumb.detach(info.connection, {fireEvent : false});
 			
 			// Adds the endpoint to the diagram
 			var endpoint = app.plumb.addEndpoint(info.connection.sourceId, {
@@ -424,7 +424,7 @@ jsPlumb.ready(function() {
 			// change of anchors, default in jsplumb, the
 			// connection must be detached and re-atached
 			// with the Bottom and Top anchors
-			app.plumb.detach(info.connection);
+			app.plumb.detach(info.connection, {fireEvent : false});
 			var newConn = app.plumb.connect({
 				source : info.connection.sourceId,
 				target : info.connection.targetId,
@@ -533,7 +533,7 @@ jsPlumb.ready(function() {
 					|| type == 'cartographic-leg') {
 
 			if (confirm(app.msgs.DELETE_CONNECTION)){
-				app.plumb.detach(param);
+				app.plumb.detach(param); 
 			}
 		}
 		
@@ -577,5 +577,12 @@ jsPlumb.ready(function() {
 		else {
 			new app.omtg.ConnectionEditorView({connection : param});
 		}		
+	});
+	
+	app.plumb.bind("connectionDetached", function(info, originalEvent) {
+//		console.log("detached");
+ 
+		// Update undo history
+		app.canvasView.updateHistory();
 	});
 });
