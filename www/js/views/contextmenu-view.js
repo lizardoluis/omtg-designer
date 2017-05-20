@@ -100,6 +100,7 @@
 		
 		duplicateDiagram : function() {
 			this.diagramView.duplicate();
+			app.canvasView.updateHistory();
 		}, 
 		
 		copyDiagram : function() {
@@ -107,7 +108,7 @@
 		}, 
 		
 		pasteDiagram : function() {	
-			console.log("paste"); 
+//			console.log("paste"); 
 			
 			var clipboard = app.canvas.get('clipboard');
 			
@@ -130,6 +131,7 @@
 				}		
 				 
 				app.canvas.get('diagrams').add(diagram);
+				app.canvasView.updateHistory();
 			}
 		}, 
 		
@@ -139,12 +141,12 @@
 		},
 		
 		undo : function() {
-			console.log("context-undo");
+//			console.log("context-undo");
 			app.canvasView.undoHistory();
 		}, 
 		
 		redo : function() {
-			console.log("context-redo");
+//			console.log("context-redo");
 			app.canvasView.redoHistory();
 		}		
 	});
