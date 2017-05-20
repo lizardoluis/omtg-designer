@@ -2,6 +2,11 @@
 
 All notable changes to this project is documented in this file.
 
+## May 20, 2017
+### New functionalities
+
+- Undo/redo. 
+
 ## May 9, 2017
 ### New functionalities
 
