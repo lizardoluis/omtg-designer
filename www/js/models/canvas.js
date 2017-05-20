@@ -51,16 +51,16 @@
 			
 			switch(type){
 			case "aggregation":
-				var sourceName = this.get('diagrams').get(conn.sourceId, 'name');
-				var targetName = this.get('diagrams').get(conn.targetId, 'name');
+				var sourceName = this.get('diagrams').getAttrById(conn.sourceId, 'name');
+				var targetName = this.get('diagrams').getAttrById(conn.targetId, 'name');
 				return "<conventional-aggregation>" +
 				"<class1>" + sourceName + "</class1>" +
 				"<class2>" + targetName + "</class2>" +
 				"</conventional-aggregation>";
 				
 			case "spatial-aggregation":
-				var sourceName = this.get('diagrams').get(conn.sourceId, 'name');
-				var targetName = this.get('diagrams').get(conn.targetId, 'name');
+				var sourceName = this.get('diagrams').getAttrById(conn.sourceId, 'name');
+				var targetName = this.get('diagrams').getAttrById(conn.targetId, 'name');
 				return "<spatial-aggregation>" +
 				"<class1>" + sourceName + "</class1>" +
 				"<class2>" + targetName + "</class2>" +
@@ -68,8 +68,8 @@
 				
 			case "association":
 				var description = conn.getOverlay("description-label").getLabel();
-				var sourceName = this.get('diagrams').get(conn.sourceId, 'name');
-				var targetName = this.get('diagrams').get(conn.targetId, 'name');
+				var sourceName = this.get('diagrams').getAttrById(conn.sourceId, 'name');
+				var targetName = this.get('diagrams').getAttrById(conn.targetId, 'name');
 				var minA = conn.getParameter("minA");
 				var maxA = conn.getParameter("maxA");
 				var minB = conn.getParameter("minB");
@@ -82,8 +82,8 @@
 				
 			case "spatial-association":
 				var description = conn.getOverlay("description-label").getLabel().split(" ")[0];
-				var sourceName = this.get('diagrams').get(conn.sourceId, 'name');
-				var targetName = this.get('diagrams').get(conn.targetId, 'name');
+				var sourceName = this.get('diagrams').getAttrById(conn.sourceId, 'name');
+				var targetName = this.get('diagrams').getAttrById(conn.targetId, 'name');
 				var minA = conn.getParameter("minA");
 				var maxA = conn.getParameter("maxA");
 				var minB = conn.getParameter("minB");
@@ -98,8 +98,8 @@
 			case "arc-network":
 			case "arc-network-self":
 				var description = conn.getOverlay("description-label").getLabel();
-				var sourceName = this.get('diagrams').get(conn.sourceId, 'name');
-				var targetName = this.get('diagrams').get(conn.targetId, 'name');
+				var sourceName = this.get('diagrams').getAttrById(conn.sourceId, 'name');
+				var targetName = this.get('diagrams').getAttrById(conn.targetId, 'name');
 				return "<network>" +
 				"<name>" + description + "</name>" +
 				"<class1>" + sourceName + "</class1>" +
@@ -110,7 +110,7 @@
 			case "generalization-disjoint-total":
 			case "generalization-overlapping-partial":
 			case "generalization-overlapping-total":				
-				var superName = this.get('diagrams').get(conn.sourceId, 'name');
+				var superName = this.get('diagrams').getAttrById(conn.sourceId, 'name');
 				
 				var endpoint = conn.endpoints[0];				
 				var participation = endpoint.getParameter("participation");
@@ -119,7 +119,7 @@
 				var subClasses = "";
 				var subConns = endpoint.getAttachedElements();
 				for(var i=0; i<subConns.length; i++){
-					var subName = this.get('diagrams').get(subConns[i].targetId, 'name');
+					var subName = this.get('diagrams').getAttrById(subConns[i].targetId, 'name');
 		    		subClasses += "<subclass>" + subName + "</subclass>";
 		    	}
 				
@@ -132,15 +132,15 @@
 				
 			case "cartographic-generalization-disjoint":
 			case "cartographic-generalization-overlapping":
-				var superName = this.get('diagrams').get(conn.sourceId, 'name');
+				var superName = this.get('diagrams').getAttrById(conn.sourceId, 'name');
 				var disjointness = conn.getParameter("disjointness");
 				var description = conn.getOverlay("cartographic-label").getLabel();
 				
-				var subClasses = "<subclass>" + this.get('diagrams').get(conn.targetId, 'name') + "</subclass>";
+				var subClasses = "<subclass>" + this.get('diagrams').getAttrById(conn.targetId, 'name') + "</subclass>";
 				
 				var subConns = app.plumb.getConnections({source : conn.getOverlay("cartographic-square").getElement()});
 				for(var i=0; i<subConns.length; i++) {
-					var subName = this.get('diagrams').get(subConns[i].targetId, 'name');
+					var subName = this.get('diagrams').getAttrById(subConns[i].targetId, 'name');
 		    		subClasses += "<subclass>" + subName + "</subclass>";
 		    	}
 				
