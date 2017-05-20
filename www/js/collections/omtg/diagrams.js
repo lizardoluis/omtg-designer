@@ -6,9 +6,7 @@
 	
 	app.omtg.Diagrams = Backbone.Collection.extend({
 		model : app.omtg.Diagram,
-		
-		localStorage: new Backbone.LocalStorage('diagrams'),
-		
+				
 		initialize: function() {	       
 	        this.listenTo(this, 'change:selected', this.propagate_selected);
 	    },

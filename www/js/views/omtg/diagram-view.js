@@ -128,7 +128,7 @@
 				app.plumb.detachAllConnections(this.$el);						
 				
 				// Remove view				 
-				this.model.destroy();
+				this.model.trigger("destroy", this.model); 
 			}
 		},
 		
