@@ -19,7 +19,7 @@
 			this.listenTo(this.model, 'change:grid', this.toggleGrid);
 			this.listenTo(this.model, 'change:diagramShadow', this.toggleDiagramShadow);			
 			
-			$(document).on('keydown', this.keyAction);
+//			$(document).on('keydown', this.keyAction);
 		},
 		
 		clearCanvas : function() {
@@ -157,58 +157,6 @@
 		        importStyle: false,        
 				printContainer: true
 			});
-		},
-		
-		//TODO: move this to document view
-		keyAction : function(event){
-			
-			// Avoid breaking the dialogs
-			if($(".modal-dialog").length > 0)
-				return
-	
-			var code = event.keyCode || event.which;
-			
-			//TODO: move this to diagram model
-			var moveDiagram = function(direction, diff){
-				event.preventDefault();
-				app.canvas.get('diagrams').each(function(d) {
-		    		if(d.get('selected'))		    		
-		    			d.set(direction, d.get(direction) + diff);
-		    	});
-			};
-						
-			switch(code){
-			case LEFT_ARROW_KEY:
-				if(event.shiftKey) moveDiagram('left', -1);
-				else moveDiagram('left', -4);
-				break;
-				
-			case TOP_ARROW_KEY:
-				if(event.shiftKey) moveDiagram('top', -1);
-				else moveDiagram('top', -4);
-				break;
-				
-			case RIGHT_ARROW_KEY:
-				if(event.shiftKey) moveDiagram('left', 1);
-				else moveDiagram('left', 4);
-				break;
-				
-			case DOWN_ARROW_KEY:
-				if(event.shiftKey) moveDiagram('top', 1);
-				else moveDiagram('top', 4);
-				break;
-			
-			case Z_KEY:
-				if(event.ctrlKey) {
-					// CTRL + SHIFT + Z
-					if(event.shiftKey) 
-						app.canvasView.redoHistory();
-					// CTRL + Z
-					else						
-						app.canvasView.undoHistory();  
-				}
-				break; 
-			}
 		},
 		
 		openContextMenu : function(event) { 

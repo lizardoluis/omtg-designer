@@ -17,9 +17,14 @@
 			};
 		},
 		
+		// Move the diagram
+		move: function(t, l) {
+			this.set('top', this.get('top') + t);
+			this.set('left', this.get('left') + l);
+		},
+		
 		// Toggle the `selected` state of this diagram.
 		toggleSelected: function () {
-//			console.log("toggle");
 			this.set('selected', !this.get('selected'));
 		},
 		

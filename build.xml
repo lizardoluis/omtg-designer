@@ -47,6 +47,7 @@
 				<file name="collections/tools.js" />
 				<file name="collections/toolboxes.js" />
 
+				<file name="views/body-view.js" />
 				<file name="views/omtg/attribute-view.js" />
 				<file name="views/omtg/diagram-view.js" />
 				<file name="views/omtg/diagrameditor-view.js" />

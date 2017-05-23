@@ -17,6 +17,10 @@
 	    		diagram.trigger("destroy", diagram);  
 	    	}
 		},
+		
+		getSelected : function() {
+			return this.where({selected : true});
+		},
 	    
 	    propagate_selected: function(p) { 
     	
