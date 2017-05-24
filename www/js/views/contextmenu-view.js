@@ -71,7 +71,7 @@
 			return this;
 		},
 		
-		destroyMenu: function() {			
+		destroyMenu: function() {				
 		    // COMPLETELY UNBIND THE VIEW
 		    this.undelegateEvents();
 
@@ -107,13 +107,12 @@
 			this.diagramView.copy();
 		}, 
 		
-		pasteDiagram : function() {	
-//			console.log("paste"); 
-			
+		pasteDiagram : function(event) {	
+						
 			var clipboard = app.canvas.get('clipboard');
 			
 			if(clipboard != null){ 
-				
+								
 				var diagram = new app.omtg.Diagram({
 					'type' : clipboard.get('type'),
 					'attributes' : clipboard.get('attributes'),
@@ -133,21 +132,32 @@
 				app.canvas.get('diagrams').add(diagram);
 				app.canvasView.updateHistory();
 			}
+			else {
+				event.stopPropagation(); 
+			}
 		}, 
 		
 		rightClick : function(event) {
 			event.preventDefault();
-			this.destroy(); 
+			this.destroyMenu(); 
 		},
 		
-		undo : function() {
-//			console.log("context-undo");
-			app.canvasView.undoHistory();
+		undo : function(event) {					
+			if(app.canvas.get('undoManager').hasUndo()){
+				app.canvasView.undoHistory();
+			}
+			else{
+				event.stopPropagation(); 
+			}			
 		}, 
 		
-		redo : function() {
-//			console.log("context-redo");
-			app.canvasView.redoHistory();
+		redo : function(event) {
+			if(app.canvas.get('undoManager').hasRedo()){
+				app.canvasView.redoHistory();
+			}
+			else{
+				event.stopPropagation(); 
+			}
 		}		
 	});
 
