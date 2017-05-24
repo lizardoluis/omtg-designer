@@ -2,6 +2,10 @@
 
 All notable changes to this project is documented in this file.
 
+## May 23, 2017
+### Fixes
+- 22 - Not showing classes names on connector editor modal.
+
 ## May 20, 2017
 ### New functionalities
 
