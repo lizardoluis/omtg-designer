@@ -80,11 +80,11 @@
 			}
 			
 			// Add Cardinalities component
-			if(type == 'association' || type == 'spatial-association'){
+			if(type == 'association' || type == 'spatial-association'){ 
 				fieldset.append(_.template($('#omtg-connection-editor-cardinalities-template').html()));
 				
-				var aName = app.canvas.get('diagrams').get(this.connection.sourceId, 'name');
-				var bName = app.canvas.get('diagrams').get(this.connection.targetId, 'name');
+				var aName = app.canvas.get('diagrams').getAttrById(this.connection.sourceId, 'name');
+				var bName = app.canvas.get('diagrams').getAttrById(this.connection.targetId, 'name');
 				
 				this.$('#CardA-label').text("Cardinality A ("+ aName + "):");
 				this.cardLabelA = this.connection.getOverlay("cardinality-labelA");			
