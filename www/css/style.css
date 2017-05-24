@@ -424,3 +424,9 @@ path {
 	position: absolute;
 	display: inline-block;
 }
+
+span.keyboard-shortcut {
+    float: right;
+    padding-left: 50px;
+    color: gray;
+}
