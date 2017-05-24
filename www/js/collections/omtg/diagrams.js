@@ -18,6 +18,12 @@
 	    	}
 		},
 		
+		removeSet : function(set){
+			for (var i = 0; i < set.length; i++){
+	    		set[i].trigger("destroy", set[i]);  
+	    	}
+		},
+		
 		getSelected : function() {
 			return this.where({selected : true});
 		},
