@@ -13,8 +13,8 @@ var app = {
 	omtg : {},
 
 	msgs : {
-		DELETE_CONNECTION: "This connection will be detached. There is no undo. Are you sure?",
-		DELETE_DIAGRAM: "This diagram will be removed. All its connection will be detached. There is no undo. Are you sure?",
+		DELETE_CONNECTION: "This connection will be detached. Are you sure?",
+		DELETE_DIAGRAM: "This diagram will be removed. All its connection will be detached. Are you sure?",
 		EMPTY_PROJECT: "Project is empty, there is nothing to export!",
 		NOT_EMPTY_PROJECT: "Project is not empty",
 	},
