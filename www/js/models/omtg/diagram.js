@@ -7,7 +7,7 @@
 	app.omtg.Diagram = Backbone.Model.extend({
 		defaults : function() {
 			return {
-				id : this.cid,
+				id : this.cid, 
 				type : '',
 				name : 'Class_' + this.cid,
 				attributes : new app.omtg.Attributes(),
@@ -15,6 +15,27 @@
 				top : 10,
 				left : 10
 			};
+		},
+		
+		duplicate: function() {
+			var offset = Math.floor(Math.random() * 31);
+			
+			var newDiagram = new app.omtg.Diagram({
+				'type' : this.get('type'),
+				'left' : this.get('left') + 40 + offset,
+				'top' : this.get('top') + 40 + offset,
+				'attributes' : this.get('attributes').clone()
+			});
+			
+			for(var i=1; ; i++){
+				var cloneName = this.get('name') + '_' + i;
+				if( app.canvas.get('diagrams').findByName(cloneName) == null ){
+					newDiagram.set('name', cloneName );
+					break;
+				}
+			}
+			
+			return newDiagram;
 		},
 		
 		// Move the diagram
