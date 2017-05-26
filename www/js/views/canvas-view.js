@@ -17,9 +17,8 @@
 			this.listenTo(this.model.get('diagrams'), 'change', this.updateHistory);
 			this.listenTo(this.model, 'change:activeTool', this.setCursor);
 			this.listenTo(this.model, 'change:grid', this.toggleGrid);
-			this.listenTo(this.model, 'change:diagramShadow', this.toggleDiagramShadow);			
-			
-//			$(document).on('keydown', this.keyAction);
+			this.listenTo(this.model, 'change:diagramShadow', this.toggleDiagramShadow);
+			this.listenTo(this.model, 'updateHistory', this.updateHistory);
 		},
 		
 		clearCanvas : function() {

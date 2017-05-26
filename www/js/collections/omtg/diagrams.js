@@ -18,10 +18,14 @@
 	    	}
 		},
 		
-		removeSet : function(set){
-			for (var i = 0; i < set.length; i++){
-	    		set[i].trigger("destroy", set[i]);  
-	    	}
+		removeSet : function(set){			
+			if (confirm(app.msgs.DELETE_DIAGRAMS)){			
+				for (var i = 0; i < set.length; i++){
+					app.plumb.detachAllConnections(set[i].id, {fireEvent : false}); 
+		    		set[i].trigger("destroy", set[i]);
+		    	}
+				app.canvasView.updateHistory();
+			}
 		},
 		
 		getSelected : function() {

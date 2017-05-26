@@ -38,6 +38,10 @@
 			return newDiagram;
 		},
 		
+		copy: function() {
+			app.canvas.set('clipboard', this.clone());
+		},
+		
 		// Move the diagram
 		move: function(t, l) {
 			this.set('top', this.get('top') + t);

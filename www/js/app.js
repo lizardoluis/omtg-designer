@@ -6,7 +6,15 @@ var LEFT_ARROW_KEY = 37;
 var TOP_ARROW_KEY = 38;
 var RIGHT_ARROW_KEY = 39;
 var DOWN_ARROW_KEY = 40;
+var DELETE_KEY = 46;
+var B_KEY = 66;
+var C_KEY = 67;
+var D_KEY = 68;
+var F_KEY = 70;
+var V_KEY = 86;
 var Z_KEY = 90;
+var F1_KEY = 112;
+var F2_KEY = 113;
 
 var app = {
 	// OMT-G namespace
@@ -15,6 +23,7 @@ var app = {
 	msgs : {
 		DELETE_CONNECTION: "This connection will be detached. Are you sure?",
 		DELETE_DIAGRAM: "This diagram will be removed. All its connection will be detached. Are you sure?",
+		DELETE_DIAGRAMS: "The selected diagrams will be removed. All their connections will be detached. Are you sure?",
 		EMPTY_PROJECT: "Project is empty, there is nothing to export!",
 		NOT_EMPTY_PROJECT: "Project is not empty",
 	},

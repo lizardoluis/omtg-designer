@@ -28,6 +28,36 @@
 			return xml;
 		},
 		
+		hasClipboard : function() {
+			if(this.get('clipboard') != null)
+				return true;
+			return false;
+		},
+		
+		duplicateDiagram : function(diagram) {
+			var clone = diagram.duplicate();			
+			this.get('diagrams').add(clone);
+			this.trigger('updateHistory', this);
+		},
+		
+		copyDiagram : function(diagram) {
+			diagram.copy();
+		},
+		
+		pasteDiagram : function(top, left) {			
+			var clipboard = this.get('clipboard');
+			
+			if(clipboard != null){ 					
+				var diagram = clipboard.duplicate();
+							
+				diagram.set('top', top);
+				diagram.set('left', left);				 
+				this.get('diagrams').add(diagram);
+			}		
+			
+			this.trigger('updateHistory', this);
+		},
+		
 		// Convert all connections to XML
 		connectionsToXML : function() {
 			var conns = app.plumb.getConnections();

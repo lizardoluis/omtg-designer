@@ -99,42 +99,18 @@
 		},
 		
 		duplicateDiagram : function() {
-			this.diagramView.duplicate();
-			app.canvasView.updateHistory();
+			app.canvas.duplicateDiagram(this.diagramView.model);
 		}, 
 		
 		copyDiagram : function() {
-			this.diagramView.copy();
+			app.canvas.copyDiagram(this.diagramView.model);
 		}, 
 		
-		pasteDiagram : function(event) {	
-						
-			var clipboard = app.canvas.get('clipboard');
-			
-			if(clipboard != null){ 
-								
-				var diagram = new app.omtg.Diagram({
-					'type' : clipboard.get('type'),
-					'attributes' : clipboard.get('attributes'),
-					'left' : this.offsetLeft,
-					'top' : this.offsetTop,	 
-				});
-				
-				//TODO: repetitive code from diagram_view
-				for(var i=1; ; i++){
-					var copyName = clipboard.get('name') + '_' + i;
-					if( app.canvas.get('diagrams').findByName(copyName) == null ){
-						diagram.set('name', copyName );
-						break;
-					}
-				}		
-				 
-				app.canvas.get('diagrams').add(diagram);
-				app.canvasView.updateHistory();
-			}
-			else {
-				event.stopPropagation(); 
-			}
+		pasteDiagram : function(event) {
+			if(app.canvas.hasClipboard())
+				app.canvas.pasteDiagram(this.offsetTop, this.offsetLeft);
+			else
+				event.stopPropagation();
 		}, 
 		
 		rightClick : function(event) {

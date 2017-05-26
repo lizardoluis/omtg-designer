@@ -42,6 +42,9 @@
 			// Listeners
 			this.listenTo(this.model, 'change', this.render);
 			this.listenTo(this.model, 'destroy', this.remove);
+			this.listenTo(this.model, 'edit', this.edit);
+			this.listenTo(this.model, 'bringtofront', this.bringToFront);
+			this.listenTo(this.model, 'sendtoback', this.sendToBack);
 		},
 
 		render : function() {
@@ -111,7 +114,7 @@
 		
 		edit : function(event) {
 			 
-			if(event)
+			if(event && event.stopPropagation) 
 				event.stopPropagation(); 
 			
 			var hasConnections = false;
@@ -122,7 +125,6 @@
 		},
 		
 		deleteDiagram : function(event) {
-		
 			if(event) 
 				event.stopPropagation(); 
 			
@@ -167,32 +169,6 @@
 		
 		sendToBack : function() {
 			$(this.render().el).prependTo(this.parentSelector);
-		},
-		
-		duplicate : function() {	
-			
-			var offset = Math.floor(Math.random() * 31);
-			
-			var clone = new app.omtg.Diagram({
-				'type' : this.model.get('type'),
-				'left' : this.model.get('left') + 40 + offset,
-				'top' : this.model.get('top') + 40 + offset,
-				'attributes' : this.model.get('attributes').clone()
-			});
-			
-			for(var i=1; ; i++){
-				var cloneName = this.model.get('name') + '_' + i;
-				if( app.canvas.get('diagrams').findByName(cloneName) == null ){
-					clone.set('name', cloneName );
-					break;
-				}
-			}		
-			
-			app.canvas.get('diagrams').add(clone);  
-		},
-		
-		copy : function(){
-			app.canvas.set('clipboard', this.model.clone());
 		},
 		
 		openContextMenu : function(event) { 
