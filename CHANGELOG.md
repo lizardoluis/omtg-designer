@@ -2,6 +2,11 @@
 
 All notable changes to this project is documented in this file.
 
+## May 28, 2017
+### New functionalities
+
+- Keyboard shortcuts for basic functionalities, like copy, paste, redo, undo, edit and delete. 
+
 ## May 23, 2017
 ### Fixes
 - 22 - Not showing classes names on connector editor modal.
