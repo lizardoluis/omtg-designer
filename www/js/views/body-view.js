@@ -43,7 +43,9 @@
 					
 				case DELETE_KEY:
 					var selected = app.canvas.get('diagrams').getSelected();
-					app.canvas.get('diagrams').removeSet(selected);
+					if(selected.length >= 1){
+						app.canvas.get('diagrams').removeSet(selected);
+					}
 					break; 
 					
 				case C_KEY:
