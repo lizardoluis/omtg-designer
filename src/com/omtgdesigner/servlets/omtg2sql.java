@@ -57,7 +57,7 @@ public class omtg2sql extends HttpServlet {
 				byte[] byteBuffer = Zip.createZipFile(ddlSW, staticSW, dynamicSW);
 
 				// Sets HTTP header
-				response.setContentType("text/plain; charset=x-user-defined"); 
+				response.setContentType("text/plain; charset=UTF-16"); 
 				response.setContentLength(byteBuffer.length);
 				response.setHeader("Content-Disposition", "attachment; filename=\"OMTG-Oracle.zip\"");
 

@@ -57,28 +57,23 @@
 			app.plumb.doWhileSuspended(function(){				
 
 				var xml = app.canvas.toXML();
-
-				$.ajax({
-					url : "omtg2sql",
-					type: "POST",
-					data : xml,
-					contentType : "application/json; charset=UTF-8",
-					success: function(data, textStatus, jqXHR)
-					{
-						var byteArray = new Uint8Array(data.length);
-						for (var i = 0; i < data.length; i++) {
-							byteArray[i] = data.charCodeAt(i) & 0xff;
-						}
-						var blob = new Blob([byteArray]);
-
-						saveAs(blob, "OMTG-Oracle.zip");
-					},
-					error: function(ajaxrequest, ajaxOptions, thrownError)
-					{
-						alert("The request failed.");
-					}
-				});				
-
+				var xhr = new XMLHttpRequest();
+				
+				xhr.open("POST", "omtg2sql", true);
+				xhr.setRequestHeader("Content-type","application/json");
+				xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+				
+				xhr.onreadystatechange = function() {
+				    if (xhr.readyState == 4 && xhr.status == 200) {				  
+				        var blob = new Blob([xhr.response], {type: "octet/stream"});
+				        var fileName = "OMTG-Oracle.zip";
+				        saveAs(blob, fileName);
+				    }
+				}
+				
+				xhr.responseType = "arraybuffer";
+				xhr.send(xml);
+				
 			}, false);
 		},	
 		
@@ -92,27 +87,22 @@
 			app.plumb.doWhileSuspended(function(){				
 
 				var xml = app.canvas.toXML();
-
-				$.ajax({
-					url : "omtg2postgis",
-					type: "POST",
-					data : xml,
-					contentType : "application/json; charset=UTF-8",
-					success: function(data, textStatus, jqXHR)
-					{
-						var byteArray = new Uint8Array(data.length);
-						for (var i = 0; i < data.length; i++) {
-							byteArray[i] = data.charCodeAt(i) & 0xff;
-						}
-						var blob = new Blob([byteArray]);
-
-						saveAs(blob, "OMTG-Postgis.zip");
-					},
-					error: function(ajaxrequest, ajaxOptions, thrownError)
-					{
-						alert("The request failed.");
-					}
-				});				
+				var xhr = new XMLHttpRequest();
+				
+				xhr.open("POST", "omtg2postgis", true);
+				xhr.setRequestHeader("Content-type","application/json");
+				xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+				
+				xhr.onreadystatechange = function() {
+				    if (xhr.readyState == 4 && xhr.status == 200) {				  
+				        var blob = new Blob([xhr.response], {type: "octet/stream"});
+				        var fileName = "OMTG-Postgis.zip";
+				        saveAs(blob, fileName);
+				    }
+				}
+				
+				xhr.responseType = "arraybuffer";
+				xhr.send(xml);
 
 			}, false);
 		},	

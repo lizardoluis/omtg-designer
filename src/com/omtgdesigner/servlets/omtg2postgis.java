@@ -61,7 +61,7 @@ public class omtg2postgis extends HttpServlet {
 				byte[] byteBuffer = Zip.createZipFile(ddlSW, constraints);
 				
 				// Sets HTTP header
-				response.setContentType("text/plain; charset=x-user-defined"); 
+				response.setContentType("octet/stream; charset=UTF-16"); 
 				response.setContentLength(byteBuffer.length);
 				response.setHeader("Content-Disposition", "attachment; filename=\"OMTG-Postgis.zip\"");
 
