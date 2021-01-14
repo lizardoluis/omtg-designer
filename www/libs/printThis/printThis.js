@@ -201,7 +201,11 @@
             
               $img.each(function() {
             	  var imgsrc = $(this).attr("src");
-            	  $(this).attr("src", "/omtg-designer/" +  imgsrc);
+            	  
+            	  // <lizardo> We need to remove the domain from the image url to avoid having something like
+            	  // http://localhost:8080/omtg-designer/http://localhost:8080/omtg-designer/imgs/omtg/triangle-white.png
+            	  var imgURLWithoutDomain = imgsrc.substr(imgsrc.indexOf("imgs/"));
+            	  $(this).attr("src", "/omtg-designer/" +  imgURLWithoutDomain);
             	});
             
 
