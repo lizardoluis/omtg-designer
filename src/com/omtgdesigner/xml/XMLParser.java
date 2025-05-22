@@ -59,9 +59,8 @@ public class XMLParser {
 	 * @return
 	 */
 	public OMTGSchema parseOMTGSquema(String xml) {
-
 		try {		
-			// validates de XML document
+			// validates the XML document
 			if(!xmlValidator.validateXML("omtg-schema-template.xsd", xml)){
 				System.out.println("Invalid XML document");
 				return null;
