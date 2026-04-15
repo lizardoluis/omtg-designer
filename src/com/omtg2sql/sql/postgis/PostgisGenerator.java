@@ -11,8 +11,13 @@ import com.omtg2sql.omtg.relationships.OMTGConventionalGeneralization;
 import com.omtg2sql.omtg.relationships.OMTGGeneralization;
 import com.omtg2sql.omtg.relationships.OMTGRelationship;
 import com.omtg2sql.omtg.relationships.OMTGTopologicalRelationship;
-//import com.omtg2sql.omtg.relationships.OMTGUserRestriction;
+import com.omtg2sql.omtg.relationships.OMTGUserRestriction;
 
+/**
+ * SQL Generator for native PostgreSQL/PostGIS.
+ * Generates SQL using native PostGIS functions and types without
+ * requiring the ast-postgis extension.
+ */
 public class PostgisGenerator {
 
 	private DDLWriter ddl;
@@ -23,22 +28,18 @@ public class PostgisGenerator {
 			String onLineConstraintsFilePath) {
 
 		this.ddl = new DDLWriter(ddlFilePath);
-		this.offLineConstraints = new OffLineConstraintsWriter(
-				offLineConstraintsFilePath);
-		this.onLineConstraints = new OnLineConstraintsWriter(
-				onLineConstraintsFilePath);
+		this.offLineConstraints = new OffLineConstraintsWriter(offLineConstraintsFilePath);
+		this.onLineConstraints = new OnLineConstraintsWriter(onLineConstraintsFilePath);
 	}
 
 	public PostgisGenerator(StringWriter ddlSW, StringWriter offLineConstraintsSW,
 			StringWriter onLineConstraintsSW) {
 
 		this.ddl = new DDLWriter(ddlSW);
-		this.offLineConstraints = new OffLineConstraintsWriter(
-				offLineConstraintsSW);
-		this.onLineConstraints = new OnLineConstraintsWriter(
-				onLineConstraintsSW);
+		this.offLineConstraints = new OffLineConstraintsWriter(offLineConstraintsSW);
+		this.onLineConstraints = new OnLineConstraintsWriter(onLineConstraintsSW);
 	}
-	
+
 	private void createForeignKeyColumns(OMTGRelationship rel,
 			OMTGClass omtgClassSec, OMTGClass omtgClassMain) {
 
@@ -65,11 +66,6 @@ public class PostgisGenerator {
 				omtgClassN.getName(), omtgClassN.getKeysName());
 	}
 
-//	private void createInsertIntoUserSdoGeomMetadata(OMTGClass omtgClass) {
-//
-//		ddl.appendInsertIntoUserSdoGeomMetadata(omtgClass.getName(), null);
-//	}
-
 	private void createSpatialIndex(OMTGClass omtgClass) {
 
 		ddl.appendCreateSpatialIndex(omtgClass.getName());
@@ -93,8 +89,7 @@ public class PostgisGenerator {
 				omtgClass.getAttributeSize());
 
 		if (omtgClass.isSpatial() && !omtgClass.isTesselation()) {
-//			createSpatialClassConstraint(omtgClass);
-			//createInsertIntoUserSdoGeomMetadata(omtgClass);
+			createSpatialClassConstraint(omtgClass);
 			createSpatialIndex(omtgClass);
 		}
 	}
@@ -122,102 +117,85 @@ public class PostgisGenerator {
 			onLineConstraints.appendTopologicalRelationshipNearConstraint(
 					omtgClassA.getName(), omtgClassB.getName(),
 					omtgClassB.getKeysName(), rel.getDistance(), rel.getUnit());
-		
+
 		} else if (rel.getSpatialRelation().size() == 1
 				&& rel.getSpatialRelation().get(0).equalsIgnoreCase("distant")) {
-			
+
 			onLineConstraints.appendTopologicalRelationshipDistantConstraint(
 					omtgClassA.getName(), omtgClassB.getName(),
 					omtgClassB.getKeysName(), rel.getDistance(), rel.getUnit());
-		}
-		else {
+		} else {
 			onLineConstraints.appendTopologicalRelationshipConstraint(
 					omtgClassA.getName(), omtgClassB.getName(),
 					omtgClassB.getKeysName(), rel.getSpatialRelation());
 		}
 	}
 
-//	private void createUserRestrictionConstraint(OMTGUserRestriction rel,
-//			OMTGClass omtgClassA, OMTGClass omtgClassB) {
-//
-//		if (rel.getSpatialRelation().size() == 1
-//				&& rel.getSpatialRelation().get(0).equalsIgnoreCase("near")) {
-//
-//			onLineConstraints.appendUserRestrictionNearConstraint(
-//					omtgClassA.getName(), omtgClassB.getName(),
-//					omtgClassB.getKeysName(), rel.getDistance(), rel.getUnit(),
-//					rel.isSpatialRelationCanOccur());
-//		} 
-//		else if (rel.getSpatialRelation().size() == 1
-//				&& rel.getSpatialRelation().get(0).equalsIgnoreCase("distant")) {
-//
-//			onLineConstraints.appendUserRestrictionDistantConstraint(
-//					omtgClassA.getName(), omtgClassB.getName(),
-//					omtgClassB.getKeysName(), rel.getDistance(), rel.getUnit(),
-//					rel.isSpatialRelationCanOccur());
-//		}
-//		else {
-//
-//			onLineConstraints.appendUserRestrictionConstraint(
-//					omtgClassA.getName(), omtgClassB.getName(),
-//					omtgClassB.getKeysName(), rel.getSpatialRelation(),
-//					rel.isSpatialRelationCanOccur());
-//		}
-//	}
+	private void createUserRestrictionConstraint(OMTGUserRestriction rel,
+			OMTGClass omtgClassA, OMTGClass omtgClassB) {
 
-//	private void createSpatialClassConstraint(OMTGClass omtgClass) {
-//
-//		if (omtgClass.isIsoline()) {
-//			ddl.createSpatialErrorTable();
-//			offLineConstraints.appendIsolineConstraint(omtgClass.getName(),
-//					omtgClass.getKeysName());
-//		} else if (omtgClass.isPlanarSubdivision()) {
-//			ddl.createSpatialErrorTable();
-//			offLineConstraints.appendPlanarSubdivisionConstraint(
-//					omtgClass.getName(), omtgClass.getKeysName());
-//		} else if (omtgClass.isTIN()) {
-//			ddl.createSpatialErrorTable();
-//			offLineConstraints.appendTINConstraint(omtgClass.getName(),
-//					omtgClass.getKeysName());
-//		}
-//	}
+		if (rel.getSpatialRelation().size() == 1
+				&& rel.getSpatialRelation().get(0).equalsIgnoreCase("near")) {
+
+			onLineConstraints.appendUserRestrictionNearConstraint(
+					omtgClassA.getName(), omtgClassB.getName(),
+					omtgClassB.getKeysName(), rel.getDistance(), rel.getUnit(),
+					rel.isSpatialRelationCanOccur());
+		} else if (rel.getSpatialRelation().size() == 1
+				&& rel.getSpatialRelation().get(0).equalsIgnoreCase("distant")) {
+
+			onLineConstraints.appendUserRestrictionDistantConstraint(
+					omtgClassA.getName(), omtgClassB.getName(),
+					omtgClassB.getKeysName(), rel.getDistance(), rel.getUnit(),
+					rel.isSpatialRelationCanOccur());
+		} else {
+
+			onLineConstraints.appendUserRestrictionConstraint(
+					omtgClassA.getName(), omtgClassB.getName(),
+					omtgClassB.getKeysName(), rel.getSpatialRelation(),
+					rel.isSpatialRelationCanOccur());
+		}
+	}
+
+	private void createSpatialClassConstraint(OMTGClass omtgClass) {
+
+		if (omtgClass.isIsoline()) {
+			ddl.createSpatialErrorTable();
+			offLineConstraints.appendIsolineConstraint(omtgClass.getName(),
+					omtgClass.getKeysName());
+		} else if (omtgClass.isPlanarSubdivision()) {
+			ddl.createSpatialErrorTable();
+			offLineConstraints.appendPlanarSubdivisionConstraint(
+					omtgClass.getName(), omtgClass.getKeysName());
+		} else if (omtgClass.isTIN()) {
+			ddl.createSpatialErrorTable();
+			offLineConstraints.appendTINConstraint(omtgClass.getName(),
+					omtgClass.getKeysName());
+		}
+	}
 
 	private void createSpatialAggregationConstraint(OMTGRelationship omtgRel,
 			OMTGClass omtgClassWhole, OMTGClass omtgClassPart) {
 
-//		ddl.createSpatialErrorTable();
-//		ddl.createSaAuxTable();
-//		ddl.appendInsertIntoUserSdoGeomMetadata("Sa_aux", null, "p_geom");
-//		ddl.appendCreateSpatialIndex("Sa_aux");
-//		offLineConstraints.appendJoinGeometryFunction();
+		ddl.createSpatialErrorTable();
 		offLineConstraints.appendSpatialAggregationConstraint(
 				omtgClassWhole.getName(), omtgClassWhole.getKeysName(),
 				omtgClassPart.getName(), omtgClassPart.getKeysName());
 	}
 
-//	private void createTINConstraint(OMTGRelationship omtgRel,
-//			OMTGClass omtgClass) {
-//
-//		ddl.createSpatialErrorTable();
-//		offLineConstraints.appendTINConstraint(omtgClass.getName(),
-//				omtgClass.getKeysName());
-//	}
-
 	private void createNetworkConstraint(OMTGRelationship omtgRel,
 			OMTGClass omtgArc, OMTGClass omtgNode) {
 
-//		ddl.createSpatialErrorTable();
-//		offLineConstraints.appendGetPointFunction();
+		ddl.createSpatialErrorTable();
 		offLineConstraints.appendNetworkConstraint(omtgArc.getName(),
 				omtgArc.getKeysName(), omtgNode.getName(),
 				omtgNode.getKeysName());
 	}
-	
+
 	private void createNetworkConstraint(OMTGRelationship omtgRel,
 			OMTGClass omtgArc) {
 
-//		ddl.createSpatialErrorTable();
-//		offLineConstraints.appendGetPointFunction();
+		ddl.createSpatialErrorTable();
 		offLineConstraints.appendNetworkConstraint(omtgArc.getName(),
 				omtgArc.getKeysName());
 	}
@@ -355,37 +333,37 @@ public class PostgisGenerator {
 		}
 	}
 
-//	public void mapUserRestriction(OMTGUserRestriction rel,
-//			OMTGClass omtgClassA, OMTGClass omtgClassB,
-//			List<OMTGClass> omtgClassAList, List<OMTGClass> omtgClassBList) {
-//
-//		if (omtgClassAList != null && omtgClassBList != null) {
-//			for (OMTGClass omtgClassAA : omtgClassAList) {
-//				for (OMTGClass omtgClassBB : omtgClassBList) {
-//
-//					createUserRestrictionConstraint(rel, omtgClassAA,
-//							omtgClassBB);
-//				}
-//			}
-//		} else if (omtgClassAList != null) {
-//
-//			for (OMTGClass omtgClass : omtgClassAList) {
-//
-//				createUserRestrictionConstraint(rel, omtgClass, omtgClassB);
-//			}
-//		} else if (omtgClassBList != null) {
-//
-//			for (OMTGClass omtgClass : omtgClassBList) {
-//
-//				createUserRestrictionConstraint(rel, omtgClassA, omtgClass);
-//			}
-//		}
-//
-//		if (omtgClassAList == null && omtgClassBList == null) {
-//
-//			createUserRestrictionConstraint(rel, omtgClassA, omtgClassB);
-//		}
-//	}
+	public void mapUserRestriction(OMTGUserRestriction rel,
+			OMTGClass omtgClassA, OMTGClass omtgClassB,
+			List<OMTGClass> omtgClassAList, List<OMTGClass> omtgClassBList) {
+
+		if (omtgClassAList != null && omtgClassBList != null) {
+			for (OMTGClass omtgClassAA : omtgClassAList) {
+				for (OMTGClass omtgClassBB : omtgClassBList) {
+
+					createUserRestrictionConstraint(rel, omtgClassAA,
+							omtgClassBB);
+				}
+			}
+		} else if (omtgClassAList != null) {
+
+			for (OMTGClass omtgClass : omtgClassAList) {
+
+				createUserRestrictionConstraint(rel, omtgClass, omtgClassB);
+			}
+		} else if (omtgClassBList != null) {
+
+			for (OMTGClass omtgClass : omtgClassBList) {
+
+				createUserRestrictionConstraint(rel, omtgClassA, omtgClass);
+			}
+		}
+
+		if (omtgClassAList == null && omtgClassBList == null) {
+
+			createUserRestrictionConstraint(rel, omtgClassA, omtgClassB);
+		}
+	}
 
 	public void mapConventionalAggregation(OMTGRelationship rel,
 			OMTGClass omtgClass1, OMTGClass omtgClassN,
@@ -431,23 +409,18 @@ public class PostgisGenerator {
 		}
 	}
 
-//	public void mapTIN(OMTGRelationship omtgRel, OMTGClass omtgClass) {
-//
-//		createTINConstraint(omtgRel, omtgClass);
-//	}
-
 	public void mapNetwork(OMTGRelationship omtgRel, OMTGClass omtgArc,
 			OMTGClass omtgNode, List<OMTGClass> omtgArcList,
 			List<OMTGClass> omtgNodeList) {
 
 		createNetworkConstraint(omtgRel, omtgArc, omtgNode);
 	}
-	
-	public void mapNetwork(OMTGRelationship omtgRel, OMTGClass omtgArc, List<OMTGClass> omtgArcList) {
+
+	public void mapNetwork(OMTGRelationship omtgRel, OMTGClass omtgArc,
+			List<OMTGClass> omtgArcList) {
 
 		createNetworkConstraint(omtgRel, omtgArc);
 	}
-
 
 	public void mapGeneralizationTotal(OMTGGeneralization omtgRel,
 			OMTGClass superClass, List<OMTGClass> subClasses)
@@ -455,13 +428,9 @@ public class PostgisGenerator {
 
 		for (OMTGClass omtgSubClass : subClasses) {
 
-			// List<OMTGAttribute> newAttributes =
-			// superClass.getKeysAttribute();
 			List<OMTGAttribute> newAttributes = superClass
 					.getAttributesWithPrefix(superClass.getName());
 
-			// OMTGClass subClassAux = (OMTGClass)omtgSubClass.clone();
-			// join superclass and subclass attributes to subClassAux
 			newAttributes.addAll(omtgSubClass.getAttributes());
 			omtgSubClass.setAttributes(newAttributes);
 
@@ -483,44 +452,36 @@ public class PostgisGenerator {
 		}
 	}
 
-//	private void createDisjointConstraint(OMTGGeneralization omtgRel,
-//			OMTGClass superClass, List<OMTGClass> subClasses) {
-//
-//		for (int i = 0; i < subClasses.size(); i++) {
-//
-//			OMTGClass subClass = subClasses.get(i);
-//			onLineConstraints.appendDisjointConstraint(subClass.getName(),
-//					subClass.getKeysName(), omtgRel.getSubclasses());
-//		}
-//	}
+	private void createDisjointConstraint(OMTGGeneralization omtgRel,
+			OMTGClass superClass, List<OMTGClass> subClasses) {
 
-//	private void createDisjointConstraintWithPartial(
-//			OMTGGeneralization omtgRel, OMTGClass superClass,
-//			List<OMTGClass> subClasses) {
-//
-//		for (int i = 0; i < subClasses.size(); i++) {
-//
-//			OMTGClass subClass = subClasses.get(i);
-////			onLineConstraints.appendDisjointConstraintWithPartial(
-////					subClass.getName(), superClass.getKeysName(),
-////					omtgRel.getSubclasses(), superClass.getName());
-//		}
-//	}
+		for (int i = 0; i < subClasses.size(); i++) {
 
-//	private void createPartialConstraint(
-//			OMTGConventionalGeneralization omtgRel, OMTGClass superClass,
-//			List<OMTGClass> subClasses) {
-//
-//		onLineConstraints.appendPartialConstraint(superClass.getName(),
-//				superClass.getKeysName(), omtgRel.getSubclasses());
-//	}
+			OMTGClass subClass = subClasses.get(i);
+			onLineConstraints.appendDisjointConstraint(subClass.getName(),
+					subClass.getKeysName(), omtgRel.getSubclasses());
+		}
+	}
+
+	private void createDisjointConstraintWithPartial(
+			OMTGGeneralization omtgRel, OMTGClass superClass,
+			List<OMTGClass> subClasses) {
+
+		for (int i = 0; i < subClasses.size(); i++) {
+
+			OMTGClass subClass = subClasses.get(i);
+			onLineConstraints.appendDisjointConstraintWithPartial(
+					subClass.getName(), superClass.getKeysName(),
+					omtgRel.getSubclasses(), superClass.getName());
+		}
+	}
 
 	public void mapConventionalGeneralizationTotalDisjoint(
 			OMTGConventionalGeneralization omtgRel, OMTGClass superClass,
 			List<OMTGClass> subClasses) throws CloneNotSupportedException {
 
 		mapGeneralizationTotal(omtgRel, superClass, subClasses);
-		//createDisjointConstraint(omtgRel, superClass, subClasses);
+		createDisjointConstraint(omtgRel, superClass, subClasses);
 	}
 
 	public void mapConventionalGeneralizationTotalOverlap(
@@ -535,8 +496,7 @@ public class PostgisGenerator {
 			List<OMTGClass> subClasses) throws CloneNotSupportedException {
 
 		mapGeneralizationPartial(omtgRel, superClass, subClasses);
-		//createDisjointConstraintWithPartial(omtgRel, superClass, subClasses);
-		// createPartialConstraint(omtgRel, superClass, subClasses);
+		createDisjointConstraintWithPartial(omtgRel, superClass, subClasses);
 	}
 
 	public void mapConventionalGeneralizationPartialOverlap(
@@ -544,7 +504,6 @@ public class PostgisGenerator {
 			List<OMTGClass> subClasses) throws CloneNotSupportedException {
 
 		mapGeneralizationPartial(omtgRel, superClass, subClasses);
-		// createPartialConstraint(omtgRel, superClass, subClasses);
 	}
 
 	public void mapConceptualGeneralizationDisjoint(
@@ -552,7 +511,7 @@ public class PostgisGenerator {
 			List<OMTGClass> subClasses) throws CloneNotSupportedException {
 
 		mapGeneralizationTotal(omtgRel, superClass, subClasses);
-		//createDisjointConstraint(omtgRel, superClass, subClasses);
+		createDisjointConstraint(omtgRel, superClass, subClasses);
 	}
 
 	public void mapConceptualGeneralizationOverlap(
@@ -568,7 +527,6 @@ public class PostgisGenerator {
 			offLineConstraints.close();
 			onLineConstraints.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

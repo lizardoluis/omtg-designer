@@ -52,6 +52,41 @@
     margin-top: -12px;
 }
 
+input.project-name-input.navbar-brand {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background: transparent;
+	font-size: 18px;
+	font-weight: 500;
+	color: #777;
+	padding: 6px 10px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	outline: none;
+	width: 280px;
+	max-width: 300px;
+	height: 34px;
+	line-height: 1.2;
+	text-overflow: ellipsis;
+	transition: border-color 0.2s, background-color 0.2s;
+}
+
+input.project-name-input.navbar-brand:hover {
+	border-color: #ccc;
+}
+
+input.project-name-input.navbar-brand:focus {
+	border-color: #66afe9;
+	color: #333;
+	background: #fff;
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 4px rgba(102,175,233,.4);
+}
+
+input.project-name-input::placeholder {
+	color: #999;
+	font-style: italic;
+}
+
 .dropdown-header-bold{
 	font-weight: bold !important;
 }
@@ -394,6 +429,17 @@ path {
 
 
 /*
+ * Selection Rectangle
+ */
+.selection-rectangle {
+	position: absolute;
+	border: 1px dashed #337ab7;
+	background-color: rgba(51, 122, 183, 0.08);
+	pointer-events: none;
+	z-index: 1000;
+}
+
+/*
  * Context Menu
  */
  
@@ -429,4 +475,60 @@ span.keyboard-shortcut {
     float: right;
     padding-left: 50px;
     color: gray;
+}
+
+
+/*
+ * Print
+ */
+@media print {
+	.navbar-fixed-top,
+	.navbar-fixed-bottom,
+	.section-sidebar {
+		display: none !important;
+	}
+
+	.section-canvas {
+		position: absolute !important;
+		overflow: visible !important;
+		top: 0 !important;
+		bottom: auto !important;
+		right: auto !important;
+		left: 0 !important;
+	}
+
+	#canvas {
+		padding: 0 !important;
+	}
+
+	.canvas-background {
+		background-image: none !important;
+	}
+
+	.diagram-container-shadow {
+		box-shadow: none !important;
+	}
+
+	.badge-delete,
+	.badge-edit {
+		display: none !important;
+	}
+
+	.diagram-container {
+		background-color: #fff !important;
+	}
+
+	.diagram-container .d-header .d-icon {
+		border-width: 0.5mm !important;
+	}
+
+	.diagram-container .d-header .d-title {
+		border-width: 0.5mm !important;
+	}
+
+	.diagram-container .d-body {
+		border-left-width: 0.5mm !important;
+		border-right-width: 0.5mm !important;
+		border-bottom-width: 0.5mm !important;
+	}
 }

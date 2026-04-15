@@ -40,14 +40,11 @@ public class XMLImporter extends HttpServlet {
 
 		if (bufferedReader != null) {
 			String xml = bufferedReader.readLine();
-//			System.out.println(xml);
 
 			if(!xmlValidator.validateXML("omtg-schema-template.xsd", xml)){
-//				System.out.println("Invalid XML document");
 				response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
 			}
 			else{
-//				System.out.println("Valid XML document");
 				response.setStatus(HttpServletResponse.SC_ACCEPTED);
 			}			
 		}

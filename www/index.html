@@ -23,7 +23,7 @@
   <body>
 
 		<!-- Header -->
-		<nav class="navbar navbar-default navbar-fixed-top">
+		<nav id="main-navbar" class="navbar navbar-default navbar-fixed-top">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -33,13 +33,14 @@
 			            <span class="icon-bar"></span>
 			        </button>
 					<a class="navbar-brand" href="http://www.labcsx.dcc.ufmg.br/" target='_blank'><img id="labcsx-logo" src="imgs/labcsx-logo.png" alt="Interdisciplinary Laboratory Logo"></a>
-					<a class="navbar-brand" href="#">OMT-G Designer</a>
+					<input id="projectNameInput" class="navbar-brand project-name-input" type="text" placeholder="Untitled Project" value="" spellcheck="false" autocomplete="off">
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-left">
 						<li><a id='btnImportXML' href="#"><span class="glyphicon glyphicon-floppy-open" ></span> Import XML</a></li> 
 						<li><a id='btnExportXML' href="#"><span class="glyphicon glyphicon-floppy-save" ></span> Export to XML</a></li> 
 						<li><a id='btnExportSQL' href="#"><span class="glyphicon glyphicon-export" ></span> Export to Oracle/SQL</a></li> 
+						<li><a id='btnExportAstPostgis' href="#"><span class="glyphicon glyphicon-export" ></span> Export to AST-PostGIS</a></li> 
 						<li><a id='btnExportPostgis' href="#"><span class="glyphicon glyphicon-export" ></span> Export to PostGIS</a></li> 
      					<li><a id='btnPrint' href="#"><span class="glyphicon glyphicon-print" ></span> Print Project</a></li>
 						<li><a href="http://homepages.dcc.ufmg.br/~clodoveu/DocuWiki/doku.php?id=omtg" target='_blank'><span class="glyphicon glyphicon-education" aria-hidden="true"></span> Learn OMT-G</a></li>

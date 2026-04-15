@@ -14,13 +14,15 @@
 				snapToGrid : 10,
 				clipboard : null,
 				undoManager : new app.UndoManager(),
+				projectName : '',
 			}; 
 		},
 		
 		toXML : function() {
-						
+			var projectName = this.get('projectName') || '';
 			var xml = '<?xml version="1.0" encoding="UTF-8"?>'
 				+ '<omtg-conceptual-schema xsi:noNamespaceSchemaLocation="omtg-schema-template.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'
+				+ '<project-name>' + projectName + '</project-name>'
 				+ this.get('diagrams').toXML()
 				+ this.connectionsToXML()
 				+ '</omtg-conceptual-schema>';

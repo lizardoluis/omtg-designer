@@ -4,6 +4,7 @@
 	<xs:element name="omtg-conceptual-schema">
 		<xs:complexType>
 			<xs:sequence>
+				<xs:element name="project-name" type="xs:string" minOccurs="0"/>
 				<xs:element name="classes">
 					<xs:complexType>
 						<xs:sequence>

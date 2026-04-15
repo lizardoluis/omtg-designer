@@ -15,11 +15,6 @@ public class OMTGSchemaLoader {
 		this.xmlParser = new XMLParser(xmlfilePath);
 		this.xmlParser.createOMTGSchema(xmlfilePath);
 	}
-	
-//	public OMTGSchemaLoader(StringReader xml) throws SecurityException, IOException {
-//		this.xmlParser = new XMLParser("OMTG-Tool");
-//		this.xmlParser.createOMTGSchema(xml);
-//	}
 
 	public OMTGSchema getOMTGModel() throws CloneNotSupportedException {
 		Map<String, OMTGClass> classes = xmlParser.getClasses();

@@ -6,7 +6,9 @@
 	
 	app.omtg.Diagrams = Backbone.Collection.extend({
 		model : app.omtg.Diagram,
-				
+
+		_multiSelecting: false,
+
 		initialize: function() {	       
 	        this.listenTo(this, 'change:selected', this.propagate_selected);
 	    },
@@ -33,7 +35,7 @@
 		},
 	    
 	    propagate_selected: function(p) { 
-    	
+	    	if (this._multiSelecting) return;
 	    	if(!p.get('selected'))
 	            return;
 	        this.each(function(m) {
@@ -45,6 +47,20 @@
 	    unselectAll: function(){ 
 	    	this.each(function(m) {
 	    		m.set({ selected: false }, { silent: false });
+	    	});
+	    },
+
+	    selectMultiple: function(models) {
+	    	this._multiSelecting = true;
+	    	this.each(function(m) {
+	    		m.set({ selected: false }, { silent: true });
+	    	});
+	    	for (var i = 0; i < models.length; i++) {
+	    		models[i].set({ selected: true }, { silent: true });
+	    	}
+	    	this._multiSelecting = false;
+	    	this.each(function(m) {
+	    		m.trigger('change', m);
 	    	});
 	    },
 		

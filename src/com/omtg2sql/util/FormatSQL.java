@@ -81,6 +81,72 @@ public class FormatSQL {
 		return output;
 	}
 
+	/**
+	 * Generates PostgreSQL RAISE EXCEPTION format string with % placeholders.
+	 * E.g. for ["City_id"] returns "City_id = %"
+	 * For ["City_id", "name"] returns "City_id = %, name = %"
+	 */
+	public static String columnsToFormatString(List<String> list) {
+		String output = "";
+		for (int i = 0; i < list.size(); i++) {
+			output += list.get(i) + " = %";
+			if (i < list.size() - 1) {
+				output += ", ";
+			}
+		}
+		return output;
+	}
+
+	/**
+	 * Generates PostgreSQL RAISE EXCEPTION argument list.
+	 * E.g. for ["City_id"], prefix1="NEW.", prefix2="" returns "NEW.City_id"
+	 * For ["City_id", "name"] returns "NEW.City_id, NEW.name"
+	 */
+	public static String columnsToArgsList(List<String> list, String prefix1, String prefix2) {
+		if (!prefix2.equals("")) {
+			prefix2 += "_";
+		}
+		String output = "";
+		for (int i = 0; i < list.size(); i++) {
+			output += prefix1 + prefix2 + list.get(i);
+			if (i < list.size() - 1) {
+				output += ", ";
+			}
+		}
+		return output;
+	}
+
+	/**
+	 * PostgreSQL version of keysToString (uses NEW. instead of Oracle's :NEW.)
+	 */
+	public static String keysToStringPostgis(List<String> subClasseTablekeys, String prefix) {
+		String output = "";
+		if (!prefix.equals("")) {
+			prefix += "_";
+		}
+		for (int k = 0; k < subClasseTablekeys.size(); k++) {
+			String k1 = "NEW." + prefix + subClasseTablekeys.get(k);
+			String k2 = "sub." + prefix + subClasseTablekeys.get(k);
+			if (k == subClasseTablekeys.size() - 1) {
+				output += k1 + " = " + k2;
+			} else {
+				output += k1 + " = " + k2 + " AND ";
+			}
+		}
+		return output;
+	}
+
+	/**
+	 * Generates column key expressions for use in SELECT ... as keys.
+	 * When the key list is empty, returns a fallback using ctid.
+	 */
+	public static String columnsToStringWithFallback(List<String> list) {
+		if (list == null || list.isEmpty()) {
+			return "'ctid = ' || ctid::text";
+		}
+		return columnsToString(list);
+	}
+
 	public static String replaceAll(String main, String regex, String replacement) {
 		return main.replaceAll(regex, replacement);
 	}

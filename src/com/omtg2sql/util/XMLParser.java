@@ -35,16 +35,12 @@ public class XMLParser {
 		this.relationships = new HashMap<String, OMTGRelationship>();
 		new Log(xmlDocName);
 		this.logger = Logger.getLogger(xmlDocName+"-log");
-		//this.generalizations = new HashMap<String, OMTGGeneralization>();		
 	}
 
 	private boolean getXMLDocument(String xmlFilePath) {
 
-		//SAXBuilder parser = new SAXBuilder();
-
 		try {
 			doc = new JDOMValidator().createSaxBuilder("../omtg-schema-template/omtg-schema-template.xsd", xmlFilePath);
-			//doc = parser.build(xmlFilePath);
 			return true;
 		} catch (Exception e) {
 
@@ -437,72 +433,4 @@ public class XMLParser {
 		return relationships;
 	}
 
-	//	public static void main(String[] args) {
-	//
-	//		XMLParser xmlParser;
-	//		try {
-	//			xmlParser = new XMLParser();
-	//			xmlParser.createOMTGSchema("XML/teste.xml");
-	//		} catch (SecurityException e1) {
-	//			// TODO Auto-generated catch block
-	//			e1.printStackTrace();
-	//		} catch (IOException e1) {
-	//			e1.printStackTrace();
-	//		} catch (JDOMException e) {
-	//			e.printStackTrace();
-	//		}
-	//	}
-
-	//		public static void main(String[] args) throws JDOMException, IOException {
-	//	
-	//			SAXBuilder parser = new SAXBuilder();
-	//			Document doc = parser.build("XMLs/conceptual-model-document.xml");
-	//	
-	//			Element rootElement = doc.getRootElement();
-	//	
-	//			Element dbPropertiesElement = rootElement.getChild("db-properties");
-	//	
-	//			String dbType = dbPropertiesElement.getChildText("db-type");
-	//		String database = dbPropertiesElement.getChildText("database");
-	//		String username = dbPropertiesElement.getChildText("username");
-	//		String password = dbPropertiesElement.getChildText("password");
-	//		String portNumber = dbPropertiesElement.getChildText("port-number");
-	//		String xmlDocName = dbPropertiesElement.getChildText("xml-doc-name");
-	//
-	//		List<Element> classesList = rootElement.getChild("conceptual-model").getChild("classes").getChildren("class");
-	//		for (Element classElement : classesList) {
-	//
-	//			String name = classElement.getChildText("name");
-	//			String type = classElement.getChildText("type");
-	//			String tableName = classElement.getChildText("table-name");
-	//			String geometryColumn = classElement.getChildText("geometry-column");
-	//			String numberOfRegisters = classElement.getChildText("number-of-registers");
-	//
-	//			//System.out.println(name);
-	//
-	//			List<Element> attributesList = classElement.getChild("attributes").getChildren("attribute");
-	//			for (Element attributeElement : attributesList) {
-	//
-	//				String nameAtt = attributeElement.getChildText("name");
-	//				String typeAtt = attributeElement.getChildText("type");
-	//				String columnNameAtt = attributeElement.getChildText("column-name");
-	//
-	//				//System.out.println(columnNameAtt);
-	//
-	//			}
-	//		}
-	//
-	//		List<Element> relationsShipList = rootElement.getChild("conceptual-model").getChild("relationships").getChildren("relationship");
-	//		for (Element relationshipElement : relationsShipList) {
-	//
-	//			String name = relationshipElement.getChildText("name");
-	//			String class1 = relationshipElement.getChildText("class1");
-	//			String min1 = relationshipElement.getChild("cardinality1").getChildText("min");
-	//			String max1 = relationshipElement.getChild("cardinality1").getChildText("max");
-	//			String min2 = relationshipElement.getChild("cardinality2").getChildText("min");
-	//			String max2 = relationshipElement.getChild("cardinality2").getChildText("max");
-	//
-	//			System.out.println(name);
-	//		}
-	//	}
 }

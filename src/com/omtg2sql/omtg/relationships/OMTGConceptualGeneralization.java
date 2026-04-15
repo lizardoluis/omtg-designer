@@ -4,9 +4,6 @@ import java.util.List;
 
 public class OMTGConceptualGeneralization extends OMTGGeneralization {
 
-//	private static final String DISJOINT = "disjoint";
-//	private static final String OVERLAPPING = "overlapping";
-
 	/*
 	 * completeness = (t)/(p) total, partial disjointness = (d)/(o) disjoint,
 	 * overlapping

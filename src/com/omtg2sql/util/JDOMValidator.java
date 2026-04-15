@@ -48,13 +48,11 @@ public class JDOMValidator {
 		} catch (JDOMException e) {
 			logger.info(xmlDocumentUrl + " is not well-formed");
 			System.out.println(xmlDocumentUrl + " is not well-formed");
-//			throw new Exception(xmlDocumentUrl + " is not well-formed");
 			return null;
 		} catch (IOException e) {
 			logger.info("Could not check " + xmlDocumentUrl);
 			System.out.println("Could not check " + xmlDocumentUrl);
 			return null;
-//			throw new Exception("Could not check " + xmlDocumentUrl);
 		}
 		return doc;
 	}

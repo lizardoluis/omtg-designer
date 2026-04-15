@@ -102,6 +102,8 @@
 			
             if (this.doubleclicked) {
                 this.doubleclicked = false; 
+            } else if (app._wasDragging) {
+            	app._wasDragging = false;
             } else {            	
             	this.model.toggleSelected();
             }

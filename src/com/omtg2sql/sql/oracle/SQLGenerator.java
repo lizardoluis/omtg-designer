@@ -426,13 +426,9 @@ public class SQLGenerator {
 
 		for (OMTGClass omtgSubClass : subClasses) {
 
-			// List<OMTGAttribute> newAttributes =
-			// superClass.getKeysAttribute();
 			List<OMTGAttribute> newAttributes = superClass
 					.getAttributesWithPrefix(superClass.getName());
 
-			// OMTGClass subClassAux = (OMTGClass)omtgSubClass.clone();
-			// join superclass and subclass attributes to subClassAux
 			newAttributes.addAll(omtgSubClass.getAttributes());
 			omtgSubClass.setAttributes(newAttributes);
 
@@ -478,14 +474,6 @@ public class SQLGenerator {
 		}
 	}
 
-//	private void createPartialConstraint(
-//			OMTGConventionalGeneralization omtgRel, OMTGClass superClass,
-//			List<OMTGClass> subClasses) {
-//
-//		onLineConstraints.appendPartialConstraint(superClass.getName(),
-//				superClass.getKeysName(), omtgRel.getSubclasses());
-//	}
-
 	public void mapConventionalGeneralizationTotalDisjoint(
 			OMTGConventionalGeneralization omtgRel, OMTGClass superClass,
 			List<OMTGClass> subClasses) throws CloneNotSupportedException {
@@ -507,7 +495,6 @@ public class SQLGenerator {
 
 		mapGeneralizationPartial(omtgRel, superClass, subClasses);
 		createDisjointConstraintWithPartial(omtgRel, superClass, subClasses);
-		// createPartialConstraint(omtgRel, superClass, subClasses);
 	}
 
 	public void mapConventionalGeneralizationPartialOverlap(
@@ -515,7 +502,6 @@ public class SQLGenerator {
 			List<OMTGClass> subClasses) throws CloneNotSupportedException {
 
 		mapGeneralizationPartial(omtgRel, superClass, subClasses);
-		// createPartialConstraint(omtgRel, superClass, subClasses);
 	}
 
 	public void mapConceptualGeneralizationDisjoint(

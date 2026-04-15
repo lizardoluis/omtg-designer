@@ -10,6 +10,15 @@ app.XMLParser = {
 		var domParser = new DOMParser();
 		var xmlDoc = domParser.parseFromString (xml, "text/xml");
 
+		// Restore project name if present in XML
+		var projectNameEls = xmlDoc.getElementsByTagName("project-name");
+		if (projectNameEls.length > 0 && projectNameEls[0].firstChild) {
+			var name = projectNameEls[0].firstChild.nodeValue;
+			app.canvas.set('projectName', name);
+			$('#projectNameInput').val(name);
+			document.title = name ? name + ' \u2013 OMT-G Designer' : 'OMT-G Designer';
+		}
+
 		// Maps diagrams names into diagrams ids
 		this.diagramMap = {};
 

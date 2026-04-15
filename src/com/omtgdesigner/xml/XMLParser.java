@@ -115,8 +115,6 @@ public class XMLParser {
 		String className = element.getChildTextTrim("name");
 		String classType = element.getChildTextTrim("type");
 
-//		System.out.println("className: " + className);
-//		System.out.println("classType: " + classType);
 
 		List<OMTGAttribute> classAtrributes = parseOMTGAttributes(element);
 
@@ -157,14 +155,6 @@ public class XMLParser {
 		String attributeDefault = element.getChildTextTrim("default");
 		String attributeSize = element.getChildTextTrim("size");
 
-//		System.out.println("attributeName: " + attributeName);
-//		System.out.println("attributeType: " + attributeType);
-//		System.out.println("attributeLength: " + attributeLength);
-//		System.out.println("attributeScale: " + attributeScale);
-//		System.out.println("attributeKey: " + attributeKey);
-//		System.out.println("attributeNotNull: " + attributeNotNull);
-//		System.out.println("attributeDefault: " + attributeDefault);
-//		System.out.println("attributeSize: " + attributeSize);
 
 		List<String> domain = parseAttributeDomain(element);
 
@@ -209,7 +199,6 @@ public class XMLParser {
 			domain.add(domainElement.getTextTrim());
 		}
 
-//		System.out.println("domain: " + domain);
 
 		return domain;
 	}
@@ -229,7 +218,6 @@ public class XMLParser {
 		List<Element> relationshipsList = element.getChild("relationships")
 				.getChildren("conventional");
 		for (Element relationshipElement : relationshipsList) {
-//			System.out.println("relationship conventional");
 			rel = parseOMTGConventionalRelationship(relationshipElement);
 			relationships.put(rel.getName(), rel);
 		}
@@ -237,7 +225,6 @@ public class XMLParser {
 		relationshipsList = element.getChild("relationships").getChildren(
 				"topological");
 		for (Element relationshipElement : relationshipsList) {
-//			System.out.println("relationship topological");
 			rel = parseOMTGTopologicalRelationship(relationshipElement);
 			relationships.put(rel.getName(), rel);
 		}
@@ -245,7 +232,6 @@ public class XMLParser {
 		relationshipsList = element.getChild("relationships").getChildren(
 				"conventional-aggregation");
 		for (Element relationshipElement : relationshipsList) {
-//			System.out.println("relationship conventional-aggregation");
 			rel = parseOMTGConventionalAggregation(relationshipElement);
 			relationships.put(rel.getName(), rel);
 		}
@@ -253,7 +239,6 @@ public class XMLParser {
 		relationshipsList = element.getChild("relationships").getChildren(
 				"spatial-aggregation");
 		for (Element relationshipElement : relationshipsList) {
-//			System.out.println("relationship spatial-aggregation");
 			rel = parseOMTGSpatialAggregation(relationshipElement);
 			relationships.put(rel.getName(), rel);
 		}
@@ -261,7 +246,6 @@ public class XMLParser {
 		relationshipsList = element.getChild("relationships").getChildren(
 				"network");
 		for (Element relationshipElement : relationshipsList) {
-//			System.out.println("relationship network");
 			rel = parseOMTGNetwork(relationshipElement);
 			relationships.put(rel.getName(), rel);
 		}
@@ -269,7 +253,6 @@ public class XMLParser {
 		relationshipsList = element.getChild("relationships").getChildren(
 				"generalization");
 		for (Element relationshipElement : relationshipsList) {
-//			System.out.println("relationship generalization");
 			rel = parseOMTGConventionalGeneralization(relationshipElement);
 			relationships.put(rel.getName(), rel);
 		}
@@ -277,7 +260,6 @@ public class XMLParser {
 		relationshipsList = element.getChild("relationships").getChildren(
 				"conceptual-generalization");
 		for (Element relationshipElement : relationshipsList) {
-//			System.out.println("relationship conceptual-generalization");
 			rel = parseOMTGConceptualGeneralization(relationshipElement);
 			relationships.put(rel.getName(), rel);
 		}
@@ -285,7 +267,6 @@ public class XMLParser {
 		relationshipsList = element.getChild("relationships").getChildren(
 				"user-restriction");
 		for (Element relationshipElement : relationshipsList) {
-//			System.out.println("user restriction");
 			rel = parseOMTGUserRestriction(relationshipElement);
 			relationships.put(rel.getName(), rel);
 		}
@@ -309,11 +290,6 @@ public class XMLParser {
 		OMTGCardinality cardinality1 = new OMTGCardinality(cardinality1Min,
 				cardinality1Max);
 
-//		System.out.println("name: " + name);
-//		System.out.println("class1Name: " + class1Name);
-//		System.out.println("cardinality1Min: " + cardinality1Min);
-//		System.out.println("cardinality1Max: " + cardinality1Max);
-//		System.out.println("cardinality1: " + cardinality1);
 
 		String class2Name = element.getChildTextTrim("class2");
 		String cardinality2Min = element.getChild("cardinality2").getChildText(
@@ -323,10 +299,6 @@ public class XMLParser {
 		OMTGCardinality cardinality2 = new OMTGCardinality(cardinality2Min,
 				cardinality2Max);
 
-//		System.out.println("class2Name: " + class2Name);
-//		System.out.println("cardinality2Min: " + cardinality2Min);
-//		System.out.println("cardinality2Max: " + cardinality2Max);
-//		System.out.println("cardinality2: " + cardinality2);
 
 		return new OMTGConventionalRelationship(name, class1Name, cardinality1,
 				class2Name, cardinality2);
@@ -351,7 +323,6 @@ public class XMLParser {
 			spatialRelation = spatialRelationElement.getTextTrim();
 			spatialRelations.add(spatialRelation);
 		}
-//		System.out.println("spatialRelations: " + spatialRelations);
 
 		List<Element> spatialRelationList2 = element
 				.getChildren("spatial-relations");
@@ -360,8 +331,6 @@ public class XMLParser {
 			distance = spatialRelationElement.getChildTextTrim("distance");
 			unit = spatialRelationElement.getChildTextTrim("unit");
 		}
-//		System.out.println("distance: " + distance);
-//		System.out.println("unit: " + unit);
 
 		String class1Name = element.getChildTextTrim("class1");
 		String cardinality1Min = element.getChild("cardinality1").getChildText(
@@ -371,10 +340,6 @@ public class XMLParser {
 		OMTGCardinality cardinality1 = new OMTGCardinality(cardinality1Min,
 				cardinality1Max);
 
-//		System.out.println("class1Name: " + class1Name);
-//		System.out.println("cardinality1Min: " + cardinality1Min);
-//		System.out.println("cardinality1Max: " + cardinality1Max);
-//		System.out.println("cardinality1: " + cardinality1);
 
 		String class2Name = element.getChildTextTrim("class2");
 		String cardinality2Min = element.getChild("cardinality2").getChildText(
@@ -384,10 +349,6 @@ public class XMLParser {
 		OMTGCardinality cardinality2 = new OMTGCardinality(cardinality2Min,
 				cardinality2Max);
 
-//		System.out.println("class2Name: " + class2Name);
-//		System.out.println("cardinality2Min: " + cardinality2Min);
-//		System.out.println("cardinality2Max: " + cardinality2Max);
-//		System.out.println("cardinality2: " + cardinality2);
 
 		return new OMTGTopologicalRelationship(spatialRelations, distance,
 				unit, class1Name, cardinality1, class2Name, cardinality2);
@@ -402,8 +363,6 @@ public class XMLParser {
 		String class1Name = element.getChildTextTrim("class1");
 		String class2Name = element.getChildTextTrim("class2");
 
-//		System.out.println("class1Name: " + class1Name);
-//		System.out.println("class2Name: " + class2Name);
 
 		return new OMTGConventionalAggregation(class1Name, class2Name);
 	}
@@ -417,8 +376,6 @@ public class XMLParser {
 		String class1Name = element.getChildTextTrim("class1");
 		String class2Name = element.getChildTextTrim("class2");
 
-//		System.out.println("class1Name: " + class1Name);
-//		System.out.println("class2Name: " + class2Name);
 
 		return new OMTGSpatialAggregation(class1Name, class2Name);
 	}
@@ -433,9 +390,6 @@ public class XMLParser {
 		String class1Name = element.getChildTextTrim("class1");
 		String class2Name = element.getChildTextTrim("class2");
 
-//		System.out.println("networkName: " + networkName);
-//		System.out.println("class1Name: " + class1Name);
-//		System.out.println("class2Name: " + class2Name);
 
 		return new OMTGNetwork(networkName, class1Name, class2Name);
 	}
@@ -451,9 +405,6 @@ public class XMLParser {
 		String participation = element.getChildTextTrim("participation");
 		String disjointness = element.getChildTextTrim("disjointness");
 
-//		System.out.println("superclass: " + superclass);
-//		System.out.println("participation: " + participation);
-//		System.out.println("disjointness: " + disjointness);
 
 		List<String> subclasses = parseSubclasses(element);
 
@@ -471,9 +422,6 @@ public class XMLParser {
 		String scaleShape = element.getChildTextTrim("scale-shape");
 		String disjointness = element.getChildTextTrim("disjointness");
 
-//		System.out.println("superclass: " + superclass);
-//		System.out.println("scaleShape: " + scaleShape);
-//		System.out.println("disjointness: " + disjointness);
 
 		List<String> subclasses = parseSubclasses(element);
 
@@ -489,11 +437,8 @@ public class XMLParser {
 	private OMTGRelationship parseOMTGUserRestriction(Element element) {
 
 		String class1Name = element.getChildTextTrim("class1");
-//		System.out.println("class1Name: " + class1Name);
 
 		String spatialRelation = null;
-//		String distance = null;
-//		String unit = null;
 
 		List<String> spatialRelations = new ArrayList<String>();
 		List<Element> spatialRelationList = element.getChild(
@@ -503,23 +448,10 @@ public class XMLParser {
 			spatialRelation = spatialRelationElement.getTextTrim();
 			spatialRelations.add(spatialRelation);
 		}
-//		System.out.println("spatialRelations: " + spatialRelations);
-
-//		List<Element> spatialRelationList2 = element
-//				.getChildren("spatial-relations");
-//		for (Element spatialRelationElement : spatialRelationList2) {
-
-//			distance = spatialRelationElement.getChildTextTrim("distance");
-//			unit = spatialRelationElement.getChildTextTrim("unit");
-//		}
-//		System.out.println("distance: " + distance);
-//		System.out.println("unit: " + unit);
 
 		String canOccur = element.getChildTextTrim("can-occur");
-//		System.out.println("canOccur: " + canOccur);
 
 		String class2Name = element.getChildTextTrim("class2");
-//		System.out.println("class2Name: " + class2Name);
 
 		boolean spatialRelationCanOccur = false;
 		if (canOccur.equalsIgnoreCase("true")) {
@@ -545,7 +477,6 @@ public class XMLParser {
 			subclasses.add(subclassElement.getTextTrim());
 		}
 
-//		System.out.println("subclasses: " + subclasses);
 
 		return subclasses;
 	}

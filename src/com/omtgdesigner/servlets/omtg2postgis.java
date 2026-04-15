@@ -17,7 +17,10 @@ import com.omtgdesigner.utils.Zip;
 import com.omtgdesigner.xml.XMLParser;
 
 /**
- * Servlet implementation class omtg2postgis
+ * Servlet implementation class omtg2postgis.
+ * Handles requests to convert OMTG schema to native PostgreSQL/PostGIS SQL.
+ * Unlike the ast-postgis module, this generates SQL using native PostGIS
+ * types (GEOMETRY) and functions (ST_*) without requiring the ast-postgis extension.
  */
 public class omtg2postgis extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -30,8 +33,7 @@ public class omtg2postgis extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -52,27 +54,24 @@ public class omtg2postgis extends HttpServlet {
 				StringWriter staticSW = new StringWriter();
 				StringWriter dynamicSW = new StringWriter();
 
-				// Maps the omtg to sql
+				// Maps the omtg to native PostGIS SQL
 				OMTG2Postgis omtg2postgis = new OMTG2Postgis(omtgSchema, ddlSW, staticSW, dynamicSW);
 				omtg2postgis.mapOMTGSchemaToPostgis();
-				
-				StringWriter constraints = dynamicSW.append(staticSW.toString());
-				
-				byte[] byteBuffer = Zip.createZipFile(ddlSW, constraints);
-				
+
+				byte[] byteBuffer = Zip.createZipFile(ddlSW, staticSW, dynamicSW);
+
 				// Sets HTTP header
-				response.setContentType("octet/stream; charset=UTF-16"); 
+				response.setContentType("octet/stream; charset=UTF-16");
 				response.setContentLength(byteBuffer.length);
-				response.setHeader("Content-Disposition", "attachment; filename=\"OMTG-Postgis.zip\"");
+				response.setHeader("Content-Disposition", "attachment; filename=\"OMTG-PostGIS.zip\"");
 
 				// Writes the response data
-				ServletOutputStream servletOutputStream = response.getOutputStream(); 
+				ServletOutputStream servletOutputStream = response.getOutputStream();
 				servletOutputStream.write(byteBuffer);
 				servletOutputStream.close();
 
 			}
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

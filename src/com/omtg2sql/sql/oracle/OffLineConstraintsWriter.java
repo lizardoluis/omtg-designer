@@ -65,22 +65,6 @@ public class OffLineConstraintsWriter extends SQLWriter {
 		in = new Scanner(getClass().getResourceAsStream(validationFilePath));
 	}
 
-	//	private void readFile(String validationFilePath) {
-	//
-	//		JarFile jarFile;
-	//		try {			
-	//			jarFile = new JarFile("omtg2sql.jar");
-	//			JarEntry entry = jarFile.getJarEntry(validationFilePath);
-	//			InputStream input = jarFile.getInputStream(entry);
-	//			InputStreamReader isr = new InputStreamReader(input);
-	//			BufferedReader br = new BufferedReader(isr);
-	//
-	//			in = new Scanner(br);
-	//		} catch (IOException e1) {
-	//			e1.printStackTrace();
-	//		}
-	//	}
-
 	private String processSpatialAggegationConstraint(String sql,
 			String wholeTableName, List<String> wholeTableKeys,
 			String partTableName, List<String> partTableKeys) {

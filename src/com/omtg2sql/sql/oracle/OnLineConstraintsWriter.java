@@ -63,22 +63,6 @@ public class OnLineConstraintsWriter extends SQLWriter {
 		in = new Scanner(getClass().getResourceAsStream(validationFilePath));
 	}
 
-//	private void readFile(String validationFilePath) {
-//
-//		JarFile jarFile;
-//		try {
-//			jarFile = new JarFile("omtg2sql.jar");
-//			JarEntry entry = jarFile.getJarEntry(validationFilePath);
-//			InputStream input = jarFile.getInputStream(entry);
-//			InputStreamReader isr = new InputStreamReader(input);
-//			BufferedReader br = new BufferedReader(isr);
-//
-//			in = new Scanner(br);
-//		} catch (IOException e1) {
-//			e1.printStackTrace();
-//		}
-//	}
-
 	private String processSpatialRelationNear(String sql, String aTableName,
 			String bTableName, List<String> bTableKeys, String distance,
 			String unit) {
@@ -96,11 +80,6 @@ public class OnLineConstraintsWriter extends SQLWriter {
 
 			sql = FormatSQL.replace(sql, DISTANCE, distance);
 		}
-
-//		if (sql.contains(UNIT)) {
-//
-//			sql = FormatSQL.replace(sql, UNIT, unit);
-//		}
 
 		return sql;
 	}
@@ -277,12 +256,6 @@ public class OnLineConstraintsWriter extends SQLWriter {
 					.replace(sql, SUBCLASS_TABLE_NAME, subClassTableName);
 		}
 
-		// if (sql.contains(SUBCLASSES_TABLE_NAMES)) {
-		//
-		// sql = FormatSQL.replace(sql, SUBCLASSES_TABLE_NAMES,
-		// FormatSQL.tableToString(subClassesTableNames, subClassTableName));
-		// }
-
 		if (sql.contains(SELECTS)) {
 			// -1 : removes the subClassTableName
 			sql = FormatSQL.replace(
@@ -292,21 +265,6 @@ public class OnLineConstraintsWriter extends SQLWriter {
 							subClassTableKeys, superClassTableName,
 							subClassTableName));
 		}
-
-		// if (sql.contains(DISJOINT_CONDITION)) {
-		// // -1 : removes the subClassTableName
-		// sql = FormatSQL.replace(sql, DISJOINT_CONDITION,
-		// FormatSQL.keysToString(subClassTableKeys,
-		// subClassesTableNames.size()-1,
-		// superClassTableName, superClassTableName));
-		// }
-
-		// if (sql.contains(SUBCLASS_TABLE_KEYS)) {
-		//
-		// sql = FormatSQL.replace(sql, SUBCLASS_TABLE_KEYS,
-		// FormatSQL.columnsToString2(subClassTableKeys, ":NEW.",
-		// superClassTableName));
-		// }
 
 		return sql;
 	}

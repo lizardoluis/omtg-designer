@@ -79,3 +79,7 @@ local.properties
 
 # Agent tools directory (Cursor AI)
 agent-tools/
+
+#Firebase
+.firebaserc
+firebase.json

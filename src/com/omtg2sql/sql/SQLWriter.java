@@ -76,6 +76,5 @@ public class SQLWriter {
 	public void close() throws IOException {
 		bw.flush();
 		bw.close();
-//		fw.close();
 	}
 }

@@ -2,6 +2,16 @@
 
 All notable changes to this project is documented in this file.
 
+## Apr 15, 2026
+### New functionalities
+
+- SQL generator for native PostgreSQL/PostGIS.
+- Project title can be defined by the user.
+- Selection rectangle for dragging or deleting multiple classes.
+
+### Fixes
+- Comma in last column of conventional classes bug.
+
 ## May 28, 2017
 ### New functionalities
 
